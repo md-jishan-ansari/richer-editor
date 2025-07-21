@@ -1,0 +1,153 @@
+.richer-editor-toolbar {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 0.375rem 0.375rem 0 0;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+.dark .richer-editor-toolbar {
+  background: #111827;
+  border-bottom: 1px solid #374151;
+}
+
+.richer-editor-button {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.richer-editor-buttonActive {
+  background: #bfdbfe;
+}
+.dark .richer-editor-buttonActive {
+  background: #1e40af;
+  color: #f3f4f6;
+}
+.dark .richer-editor-button {
+  color: #f3f4f6;
+}
+
+.richer-editor-input {
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  color: #111827;
+  background: #fff;
+  outline: none;
+  margin-bottom: 0.5rem;
+}
+.richer-editor-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px #2563eb33;
+}
+.dark .richer-editor-input {
+  border: 1px solid #374151;
+  color: #f3f4f6;
+  background: #1f2937;
+}
+
+.richer-editor-flexRow {
+  display: flex;
+  gap: 0.5rem;
+}
+.richer-editor-flexRowMb2 {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.richer-editor-textXs {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+.dark .richer-editor-textXs {
+  color: #9ca3af;
+}
+
+.richer-editor-primaryBtn {
+  background: #2563eb;
+  color: #fff;
+  padding: 0.375rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.richer-editor-primaryBtn:hover {
+  background: #1d4ed8;
+}
+.dark .richer-editor-primaryBtn {
+  background: #2563eb;
+  color: #fff;
+}
+.dark .richer-editor-primaryBtn:hover {
+  background: #1d4ed8;
+}
+
+.richer-editor-secondaryBtn {
+  background: #e5e7eb;
+  color: #111827;
+  padding: 0.375rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.richer-editor-secondaryBtn:hover {
+  background: #d1d5db;
+}
+.dark .richer-editor-secondaryBtn {
+  background: #374151;
+  color: #f3f4f6;
+}
+.dark .richer-editor-secondaryBtn:hover {
+  background: #4b5563;
+}
+
+.richer-editor-colorInput {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.richer-editor-roundedMdBorder {
+  border-radius: 0.375rem;
+  border: 1px solid #e5e7eb;
+}
+.dark .richer-editor-roundedMdBorder {
+  border: 1px solid #374151;
+  background: #111827;
+}
+
+.richer-editor-overflowAuto {
+  overflow: auto;
+  max-height: calc(100vh - 250px);
+}
+.dark .richer-editor-overflowAuto {
+  background: #111827;
+}
+
+.richer-editor-ml2 {
+  margin-left: 0.5rem;
+}
+
+.richer-editor-prose {
+  /* Add prose styles as needed or import from a prose.css if you want to keep typography */
+}
+.dark .richer-editor-prose {
+  color: #f3f4f6;
+  background: #111827;
+}
+
