@@ -175,82 +175,95 @@ const MenuBar = ({ editor, imageUploadUrl }: { editor: any, imageUploadUrl?: str
           onChange={val => editor.chain().focus().setFontSize(val).run()}
           className="richer-editor-select"
           placeholder="Font Size"
+          aria-label="Font Size"
         />
+        <div className="toolbar-divider" />
         {/* Bold */}
-        <button onClick={() => editor.chain().focus().toggleBold().run()} className={`richer-editor-button${editor.isActive("bold") ? ' richer-editor-buttonActive' : ''}`} type="button"><BoldIcon size={18} /></button>
+        <button onClick={() => editor.chain().focus().toggleBold().run()} className={`richer-editor-button${editor.isActive("bold") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label="Bold" title="Bold (Ctrl+B)"><BoldIcon size={16} /></button>
         {/* Underline */}
-        <button onClick={() => editor.chain().focus().toggleUnderline().run()} className={`richer-editor-button${editor.isActive("underline") ? ' richer-editor-buttonActive' : ''}`} type="button"><UnderlineIcon size={18} /></button>
+        <button onClick={() => editor.chain().focus().toggleUnderline().run()} className={`richer-editor-button${editor.isActive("underline") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label="Underline" title="Underline (Ctrl+U)"><UnderlineIcon size={16} /></button>
         {/* Highlighter (single color) */}
-        <button onClick={() => editor.chain().focus().toggleHighlight({ color: '#fff59d' }).run()} className={`richer-editor-button${editor.isActive("highlight") ? ' richer-editor-buttonActive' : ''}`} type="button"><Highlighter size={18} /></button>
+        <button onClick={() => editor.chain().focus().toggleHighlight({ color: '#fff59d' }).run()} className={`richer-editor-button${editor.isActive("highlight") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label="Highlight" title="Highlight"><Highlighter size={16} /></button>
         {/* Code block */}
-        <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button${editor.isActive("codeBlock") ? ' richer-editor-buttonActive' : ''}`} type="button"><CodeIcon size={18} /></button>
+        <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button${editor.isActive("codeBlock") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label="Code Block" title="Code Block"><CodeIcon size={16} /></button>
+        <div className="toolbar-divider" />
         {/* Unordered List */}
-        <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={`richer-editor-button${editor.isActive("bulletList") ? ' richer-editor-buttonActive' : ''}`} type="button"><BulletListIcon size={18} /></button>
+        <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={`richer-editor-button${editor.isActive("bulletList") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label="Bullet List" title="Bullet List"><BulletListIcon size={16} /></button>
         {/* Ordered List */}
-        <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`richer-editor-button${editor.isActive("orderedList") ? ' richer-editor-buttonActive' : ''}`} type="button"><OrderedListIcon size={18} /></button>
+        <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`richer-editor-button${editor.isActive("orderedList") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label="Ordered List" title="Ordered List"><OrderedListIcon size={16} /></button>
+        <div className="toolbar-divider" />
         {/* Link Popover */}
-        <>
-          <button
-            ref={linkButtonRef}
-            onClick={() => {
-              setLinkPopoverOpen((open) => !open);
-              setLinkUrl(editor.getAttributes('link').href || '');
-            }}
-            className={`richer-editor-button${editor.isActive("link") ? ' richer-editor-buttonActive' : ''}`}
-            type="button"
-          >
-            <LinkIcon size={18} />
-          </button>
-          <CustomPopover
-            open={linkPopoverOpen}
-            onOpenChange={setLinkPopoverOpen}
-            anchorEl={linkButtonRef.current}
-          >
-            <div className="mb-2 font-semibold text-base">Insert Link</div>
-            <input
-              type="text"
-              placeholder="Paste link URL here..."
-              value={linkUrl}
-              onChange={e => setLinkUrl(e.target.value)}
-              className="richer-editor-input"
-              autoFocus
-            />
-            <div className="richer-editor-flexRow">
-              <button
-                className="richer-editor-primaryBtn"
-                onClick={handleLinkInsert}
-                disabled={!linkUrl}
-              >
-                Insert
-              </button>
-              <button
-                className="richer-editor-secondaryBtn"
-                onClick={handleLinkUnset}
-                disabled={!editor.isActive('link')}
-              >
-                Remove
-              </button>
-            </div>
-          </CustomPopover>
-        </>
+        <button
+          ref={linkButtonRef}
+          onClick={() => {
+            setLinkPopoverOpen((open) => !open);
+            setLinkUrl(editor.getAttributes('link').href || '');
+          }}
+          className={`richer-editor-button${editor.isActive("link") ? ' richer-editor-buttonActive' : ''}`}
+          type="button"
+          aria-label="Link"
+          title="Insert/Edit Link"
+        >
+          <LinkIcon size={16} />
+        </button>
+        <CustomPopover
+          open={linkPopoverOpen}
+          onOpenChange={setLinkPopoverOpen}
+          anchorEl={linkButtonRef.current}
+          closeButton
+          onEsc={() => setLinkPopoverOpen(false)}
+        >
+          <div className="mb-2 font-semibold text-base">Insert Link</div>
+          <input
+            type="text"
+            placeholder="Paste link URL here..."
+            value={linkUrl}
+            onChange={e => setLinkUrl(e.target.value)}
+            className="richer-editor-input"
+            autoFocus
+          />
+          <div className="richer-editor-flexRow">
+            <button
+              className="richer-editor-primaryBtn"
+              onClick={handleLinkInsert}
+              disabled={!linkUrl}
+            >
+              Insert
+            </button>
+            <button
+              className="richer-editor-secondaryBtn"
+              onClick={handleLinkUnset}
+              disabled={!editor.isActive('link')}
+            >
+              Remove
+            </button>
+          </div>
+        </CustomPopover>
         {/* Image Popover */}
         <>
           <button
             ref={imageButtonRef}
-            onClick={() => setImagePopoverOpen((open) => !open)}
+            onClick={() => {
+              setImagePopoverOpen((open) => !open);
+              if (!imageUploadUrl) setImageTab('url');
+            }}
             className="richer-editor-button"
             type="button"
           >
-            <ImageIcon size={18} />
+            <ImageIcon size={16} />
           </button>
           <CustomPopover
             open={imagePopoverOpen}
             onOpenChange={setImagePopoverOpen}
             anchorEl={imageButtonRef.current}
+            closeButton
+            onEsc={() => setImagePopoverOpen(false)}
           >
             <div className="mb-2 font-semibold text-base flex gap-4 border-b pb-2">
               <button className={`richer-editor-button${imageTab === 'url' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('url')}>URL</button>
-              <button className={`richer-editor-button${imageTab === 'upload' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('upload')}>Upload</button>
+              {imageUploadUrl && (
+                <button className={`richer-editor-button${imageTab === 'upload' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('upload')}>Upload</button>
+              )}
             </div>
             {imageTab === 'url' && (
               <>
@@ -288,7 +301,7 @@ const MenuBar = ({ editor, imageUploadUrl }: { editor: any, imageUploadUrl?: str
                 </button>
               </>
             )}
-            {imageTab === 'upload' && (
+            {imageTab === 'upload' && imageUploadUrl && (
               <>
                 {!uploadedImageUrl && (
                   <>
@@ -358,12 +371,14 @@ const MenuBar = ({ editor, imageUploadUrl }: { editor: any, imageUploadUrl?: str
             className="richer-editor-button"
             type="button"
           >
-            <VideoIcon size={18} />
+            <VideoIcon size={16} />
           </button>
           <CustomPopover
             open={videoPopoverOpen}
             onOpenChange={setVideoPopoverOpen}
             anchorEl={videoButtonRef.current}
+            closeButton
+            onEsc={() => setVideoPopoverOpen(false)}
           >
             <div className="mb-2 font-semibold text-base">Insert YouTube Video</div>
             <input
@@ -453,7 +468,7 @@ const SmallTiptapEditor  = ({ content = '', onChange, imageUploadUrl, placeholde
     content,
     editorProps: {
       attributes: {
-        class: "prose dark:prose-invert prose-sm prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full      focus:outline-none min-h-[130px] p-2 bg-background rounded-b-md border border-gray-200 dark:border-gray-700",
+        class: "richer-editor-textarea prose dark:prose-invert prose-sm prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full      focus:outline-none min-h-[130px] p-2 bg-background rounded-b-md border border-gray-200 dark:border-gray-700",
       },
     },
     onUpdate({ editor }) {
