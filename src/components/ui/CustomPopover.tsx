@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './CustomPopover.css';
+import { cn } from "@/lib/utils";
 
 interface CustomPopoverProps {
   open: boolean;
@@ -53,7 +54,7 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({ open, onOpenChange, ancho
   return ReactDOM.createPortal(
     <div
       ref={popoverRef}
-      className={`popover ${className || ''}`}
+      className={cn("popover", className)}
       style={{ top: position.top, left: position.left, position: 'absolute', zIndex: 1000 }}
       tabIndex={-1}
       role="dialog"

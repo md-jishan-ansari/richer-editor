@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import SmallTiptapEditor from "@/components/SmallRicherEditor";
 import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle";
 import TiptapEditor from "@/components/RicherEditor";
-import RichTextContent from "@/components/RichTextContent";
+import RicherContent from "@/components/RicherContent";
 
 export default function Home() {
   // Store JSON as object for large editor
@@ -51,7 +51,9 @@ export default function Home() {
         i18n={i18nLarge}
         imageUploadUrl="/api/temp-image-upload"
       />
-      <RichTextContent content={largeContent} />
+      <RicherContent content={largeContent} />
+
+
       <h2>Small Editor (SmallRicherEditor)</h2>
       <SmallTiptapEditor
         minHeight="150px"
@@ -66,7 +68,7 @@ export default function Home() {
         i18n={i18nSmall}
         imageUploadUrl="/api/temp-image-upload"
       />
-      <RichTextContent content={smallContent} />
+      <RicherContent content={smallContent} />
     </div>
   );
 }

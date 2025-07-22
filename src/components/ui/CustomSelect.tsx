@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './CustomSelect.css';
+import { cn } from "@/lib/utils";
 
 interface Option {
   value: string;
@@ -100,7 +101,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, options, onChange, c
   const selectedOption = options.find(o => o.value === value);
 
   return (
-    <div className={`selectWrapper ${className || ''}`}
+    <div className={cn("selectWrapper", className)}
       tabIndex={0}
       onBlur={e => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
