@@ -144,10 +144,17 @@ const orderedListStyles = [
 ];
 
 // Update TiptapEditor to accept props
-interface TiptapEditorProps {
-  content?: string;
-  onChange?: (html: string) => void;
+interface RicherEditorProps {
+  content?: string | object;
+  onChange?: (value: string | object) => void;
   imageUploadUrl?: string;
+  minHeight?: string;
+  maxHeight?: string;
+  editorProps?: any;
+  outputFormat?: 'html' | 'json';
+  readOnly?: boolean;
+  placeholder?: string;
+  className?: string;
 }
 
 const MenuBar = ({ editor, imageUploadUrl }: { editor: any, imageUploadUrl?: string }) => {
@@ -199,6 +206,7 @@ const MenuBar = ({ editor, imageUploadUrl }: { editor: any, imageUploadUrl?: str
         method: 'POST',
         body: formData,
       });
+      console.log(response);
       if (!response.ok) throw new Error('Upload failed');
       const data = await response.json();
       const url = data.link || data.url || data.src || '';
@@ -640,7 +648,18 @@ const MenuBar = ({ editor, imageUploadUrl }: { editor: any, imageUploadUrl?: str
   );
 };
 
-const TiptapEditor = ({ content = '', onChange, imageUploadUrl }: TiptapEditorProps) => {
+const RicherEditor = ({
+  content = '',
+  onChange,
+  imageUploadUrl,
+  minHeight,
+  maxHeight,
+  editorProps = {},
+  outputFormat = 'html',
+  readOnly = false,
+  placeholder,
+  className = '',
+}: RicherEditorProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -688,36 +707,48 @@ const TiptapEditor = ({ content = '', onChange, imageUploadUrl }: TiptapEditorPr
     ],
     content,
     editorProps: {
+      ...editorProps,
       attributes: {
-        class: "richer-editor-textarea prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg     sm:prose-base prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full      focus:outline-none min-h-[300px] p-4 bg-background rounded-b-md border border-gray-200 dark:border-gray-700",
+        class: `richer-editor-textarea prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg     sm:prose-base prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full      focus:outline-none p-4 bg-background rounded-b-md border border-gray-200 dark:border-gray-700 ${className || ''}`,
+        style: `${minHeight ? `min-height:${minHeight};` : ''}${maxHeight ? `max-height:${maxHeight};` : ''}${editorProps?.attributes?.style || ''}`,
+        spellCheck: 'true',
+        readOnly: readOnly ? 'true' : undefined,
+        placeholder: placeholder || undefined,
+        ...editorProps?.attributes,
       },
     },
     onUpdate({ editor }) {
       if (onChange) {
-        onChange(editor.getHTML());
+        if (outputFormat === 'json') {
+          onChange(editor.getJSON());
+        } else {
+          onChange(editor.getHTML());
+        }
       }
     },
+    editable: !readOnly,
     immediatelyRender: false,
   });
 
   // If content prop changes, update the editor content
   React.useEffect(() => {
-    if (editor && content !== undefined && editor.getHTML() !== content) {
-      editor.commands.setContent(content);
+    if (editor && content !== undefined) {
+      const current = outputFormat === 'json' ? editor.getJSON() : editor.getHTML();
+      if (current !== content) {
+        editor.commands.setContent(content);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content]);
 
   return (
-
-      <div className="richer-editor-roundedMdBorder">
-        <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} />
-        <div className="richer-editor-overflowAuto">
-          <EditorContent editor={editor} />
-        </div>
+    <div className={`richer-editor-roundedMdBorder ${className || ''}`}>
+      <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} />
+      <div className="richer-editor-overflowAuto">
+        <EditorContent editor={editor} />
       </div>
-
+    </div>
   );
 };
 
-export default TiptapEditor;
+export default RicherEditor;

@@ -428,15 +428,32 @@ const MenuBar = ({ editor, imageUploadUrl }: { editor: any, imageUploadUrl?: str
   );
 };
 
-// Update SmallTiptapEditor to accept imageUploadUrl prop
-interface TiptapEditorProps {
-  content?: string;
-  onChange?: (html: string) => void;
+// Update SmallRicherEditorProps to accept imageUploadUrl prop
+interface SmallRicherEditorProps {
+  content?: string | object;
+  onChange?: (value: string | object) => void;
   imageUploadUrl?: string;
   placeholderText?: string;
+  minHeight?: string;
+  maxHeight?: string;
+  editorProps?: any;
+  outputFormat?: 'html' | 'json';
+  readOnly?: boolean;
+  className?: string;
 }
 
-const SmallTiptapEditor  = ({ content = '', onChange, imageUploadUrl, placeholderText }: TiptapEditorProps) => {
+const SmallRicherEditor  = ({
+  content = '',
+  onChange,
+  imageUploadUrl,
+  placeholderText,
+  minHeight,
+  maxHeight,
+  editorProps = {},
+  outputFormat = 'html',
+  readOnly = false,
+  className = '',
+}: SmallRicherEditorProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -467,28 +484,41 @@ const SmallTiptapEditor  = ({ content = '', onChange, imageUploadUrl, placeholde
     ],
     content,
     editorProps: {
+      ...editorProps,
       attributes: {
-        class: "richer-editor-textarea prose dark:prose-invert prose-sm prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full      focus:outline-none min-h-[130px] p-2 bg-background rounded-b-md border border-gray-200 dark:border-gray-700",
+        class: `richer-editor-textarea prose dark:prose-invert prose-sm prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full      focus:outline-none p-2 bg-background rounded-b-md border border-gray-200 dark:border-gray-700 ${className || ''}`,
+        style: `${minHeight ? `min-height:${minHeight};` : ''}${maxHeight ? `max-height:${maxHeight};` : ''}${editorProps?.attributes?.style || ''}`,
+        spellCheck: 'true',
+        readOnly: readOnly ? 'true' : undefined,
+        ...editorProps?.attributes,
       },
     },
     onUpdate({ editor }) {
       if (onChange) {
-        onChange(editor.getHTML());
+        if (outputFormat === 'json') {
+          onChange(editor.getJSON());
+        } else {
+          onChange(editor.getHTML());
+        }
       }
     },
+    editable: !readOnly,
     immediatelyRender: false,
   });
 
   // If content prop changes, update the editor content
   React.useEffect(() => {
-    if (editor && content !== undefined && editor.getHTML() !== content) {
-      editor.commands.setContent(content);
+    if (editor && content !== undefined) {
+      const current = outputFormat === 'json' ? editor.getJSON() : editor.getHTML();
+      if (current !== content) {
+        editor.commands.setContent(content);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content]);
 
   return (
-      <div className="richer-editor-roundedMdBorder">
+      <div className={`richer-editor-roundedMdBorder ${className || ''}`}>
         <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} />
         <div className="richer-editor-overflowAuto">
           <EditorContent editor={editor} />
@@ -497,4 +527,4 @@ const SmallTiptapEditor  = ({ content = '', onChange, imageUploadUrl, placeholde
   );
 };
 
-export default SmallTiptapEditor;
+export default SmallRicherEditor;

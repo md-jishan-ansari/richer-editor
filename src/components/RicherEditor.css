@@ -50,8 +50,6 @@
 .richer-editor-textarea {
   padding: 12px;
   outline: unset;
-  min-height: 300px;
-  max-height: 60vh;
 }
 
 .richer-editor-toolbar::-webkit-scrollbar {
