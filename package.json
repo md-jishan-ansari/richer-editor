@@ -1,6 +1,6 @@
 {
   "name": "richer-editor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A reusable Tiptap-based rich text editor for React and Next.js (JS/TS)",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -16,6 +16,8 @@
     "README.md",
     "LICENSE"
   ],
+  "sideEffects": false,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "tsup",
@@ -27,7 +29,7 @@
     "@tiptap/core": ">=2",
     "@tiptap/extension-color": ">=2",
     "@tiptap/extension-font-family": ">=2",
-    "@tiptap/extension-font-size": ">=2",
+    "@tiptap/extension-font-size": ">=3.0.0-0",
     "@tiptap/extension-highlight": ">=2",
     "@tiptap/extension-image": ">=2",
     "@tiptap/extension-link": ">=2",
