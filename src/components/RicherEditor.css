@@ -20,7 +20,7 @@
   --editor-border: #e5e7eb;
   --editor-border-dark: #374151;
   --editor-shadow: 0 2px 8px 0 rgba(30, 41, 59, 0.08);
-  --editor-radius: 0.75rem;
+  --editor-radius: 0.45rem;
   --editor-font: 'Inter', 'Segoe UI', Arial, sans-serif;
   --editor-text: #181c25;
   --editor-text-dark: #f3f4f6;
@@ -50,6 +50,8 @@
 .richer-editor-textarea {
   padding: 12px;
   outline: unset;
+  width: 100%;
+  max-width: 100%;
 }
 
 .richer-editor-toolbar::-webkit-scrollbar {

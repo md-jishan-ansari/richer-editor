@@ -39,6 +39,8 @@ export default function Home() {
   const i18nLarge = { bold: "Bold (Large)", image: "Insert Image (Large)", code: "Code (Large)" };
   const i18nSmall = { bold: "Bold (Small)", image: "Insert Image (Small)", code: "Code (Small)" };
 
+  const classes = "prose dark:prose-invert prose-sm lg:prose-lg prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full";
+
 
   return (
     <div className="bg-white dark:bg-black">
@@ -53,12 +55,12 @@ export default function Home() {
         // excludeToolbarButtons={["image", "code", "video"]}
         readOnly={false}
         placeholder="Start typing in the large editor..."
-        className="my-large-editor"
+        className={classes}
         style={{ minHeight: 300 }}
         i18n={i18nLarge}
         imageUploadUrl="/api/temp-image-upload"
       />
-      <RicherContent content={largeContent} />
+      <RicherContent content={largeContent} className={classes} />
 
 
       <h2>Small Editor (SmallRicherEditor)</h2>
@@ -70,7 +72,7 @@ export default function Home() {
         outputFormat="html"
         // excludeToolbarButtons={["video", "code", "bold"]}
         placeholder="Read-only small editor..."
-        className="my-small-editor"
+        className={classes}
         style={{ minHeight: 150 }}
         i18n={i18nSmall}
         imageUploadUrl="/api/temp-image-upload"
