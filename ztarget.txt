@@ -1,0 +1,10 @@
+npm run build
+
+
+
+4. Bump the Version
+Update the version field in your package.json (e.g., from 0.1.0 to 0.1.1 or 0.2.0).
+You can do this manually, or with:
+
+
+npm publish --access public

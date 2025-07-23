@@ -1,0 +1,22 @@
+# File: .npmignore
+# Exclude everything except dist, README.md, and LICENSE
+src/
+node_modules/
+.next/
+.git/
+.gitignore
+.eslintrc.json
+tsconfig.json
+tailwind.config.ts
+postcss.config.mjs
+next.config.mjs
+package-lock.json
+*.log
+*.test.*
+*.spec.*
+*.md
+!README.md
+LICENSE
+!.npmignore
+dist/
+!dist/

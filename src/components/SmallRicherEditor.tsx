@@ -33,6 +33,8 @@ import AlignCenter from '../icons/AlignCenter';
 import AlignRight from '../icons/AlignRight';
 import AlignJustify from '../icons/AlignJustify';
 import FontSizeIcon from '../icons/FontSizeIcon';
+
+// Import CSS inside the component so it is bundled
 import './RicherEditor.css';
 
 const fontSizes = [

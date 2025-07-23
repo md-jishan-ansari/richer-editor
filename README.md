@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Richer Editor
 
-## Getting Started
+A reusable, modern rich text editor for React and Next.js, built on Tiptap. Supports both JavaScript and TypeScript projects.
 
-First, run the development server:
+## Features
+- Full-featured Tiptap-based editor
+- Works in React and Next.js (JS/TS)
+- ESM and CJS support
+- TypeScript types included
+- Customizable toolbar, image/video upload, and more
 
+## Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install richer-editor @tiptap/react @tiptap/core react react-dom
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> **Note:** `@tiptap/react`, `@tiptap/core`, `react`, and `react-dom` are peer dependencies and must be installed in your project.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage (JavaScript)
+```jsx
+import { RicherEditor } from 'richer-editor';
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+function MyEditor() {
+  const [content, setContent] = React.useState('');
+  return (
+    <RicherEditor
+      content={content}
+      onChange={setContent}
+      placeholder="Write something..."
+    />
+  );
+}
+```
 
-## Learn More
+## Usage (TypeScript)
+```tsx
+import { RicherEditor } from 'richer-editor';
 
-To learn more about Next.js, take a look at the following resources:
+const MyEditor: React.FC = () => {
+  const [content, setContent] = React.useState<string>('');
+  return (
+    <RicherEditor
+      content={content}
+      onChange={setContent}
+      placeholder="Write something..."
+    />
+  );
+};
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Components
+- `RicherEditor` – Main editor
+- `SmallRicherEditor` – Compact version
+- `RicherContent` – Read-only renderer
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Custom Extensions
+- `CustomBulletList`
+- `CustomOrderedList`
 
-## Deploy on Vercel
+## Styles
+Import the CSS in your app:
+```js
+import 'richer-editor/dist/RicherEditor.css';
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+MIT

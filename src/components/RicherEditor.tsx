@@ -70,6 +70,8 @@ import { CustomBulletList } from './tiptap-extensions/CustomBulletList';
 import { CustomOrderedList } from './tiptap-extensions/CustomOrderedList';
 import CustomSelect from './ui/CustomSelect';
 import CustomPopover from './ui/CustomPopover';
+
+// Import CSS inside the component so it is bundled
 import './RicherEditor.css';
 
 
@@ -159,7 +161,6 @@ interface RicherEditorProps {
   excludeToolbarButtons?: string[];
   style?: React.CSSProperties;
   i18n?: Record<string, string>;
-  onImageUpload?: (file: File) => Promise<string>;
 }
 
 type ToolbarButtonKey =
@@ -227,12 +228,11 @@ const defaultI18n = {
   cancel: 'Cancel',
 };
 
-const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, onImageUpload }: {
+const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }: {
   editor: any,
   imageUploadUrl?: string,
   excludeToolbarButtons?: string[],
   i18n?: Record<string, string>,
-  onImageUpload?: (file: File) => Promise<string>,
 }) => {
   // Popover state for link, image, video
   const [imagePopoverOpen, setImagePopoverOpen] = useState(false);
@@ -276,9 +276,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
     setUploadedImageUrl('');
     try {
       let url = '';
-      if (onImageUpload) {
-        url = await onImageUpload(file);
-      } else if (imageUploadUrl) {
+      if (imageUploadUrl) {
         const formData = new FormData();
         formData.append('file', file);
         const response = await fetch(imageUploadUrl, {
@@ -726,7 +724,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       )}
       {/* Text Color Picker */}
       {!excludeToolbarButtons.includes('textColor') && (
-        <div className="flex items-center gap-1 border border-gray-300 dark:border-gray-600 rounded px-1 py-0.5" style={{height: 28}} title={t.textColor} aria-label={t.textColor}>
+        <div className="richer-editor-colorpicker" style={{height: 28}} title={t.textColor} aria-label={t.textColor}>
           <TextColorIcon size={16} />
           <input
             type="color"
@@ -742,7 +740,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       )}
       {/* Background Color Picker */}
       {!excludeToolbarButtons.includes('bgColor') && (
-        <div className="flex items-center gap-1 border border-gray-300 dark:border-gray-600 rounded px-1 py-0.5" style={{height: 28}} title={t.bgColor} aria-label={t.bgColor}>
+        <div className="richer-editor-colorpicker" style={{height: 28}} title={t.bgColor} aria-label={t.bgColor}>
           <PaintBucket size={16} />
           <input
             type="color"
@@ -836,7 +834,6 @@ const RicherEditor = ({
   excludeToolbarButtons = [],
   style = {},
   i18n = {},
-  onImageUpload,
 }: RicherEditorProps) => {
   // Use safe content conversion
   const safeContent = React.useMemo(() => getSafeContent(content, outputFormat), [content, outputFormat]);
@@ -942,7 +939,7 @@ const RicherEditor = ({
 
   return (
     <div className={`richer-editor-roundedMdBorder ${className || ''}`} style={style}>
-      <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} onImageUpload={onImageUpload} />
+      <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} />
       <div className="richer-editor-overflowAuto" style={{maxHeight: maxHeight}}>
         <EditorContent editor={editor} />
       </div>

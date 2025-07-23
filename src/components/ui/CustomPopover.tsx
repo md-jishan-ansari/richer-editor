@@ -1,8 +1,10 @@
 // File: src/components/ui/CustomPopover.tsx
 import React, { useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import './CustomPopover.css';
 import { cn } from "@/lib/utils";
+
+// Import CSS inside the component so it is bundled
+import './CustomPopover.css';
 
 interface CustomPopoverProps {
   open: boolean;

@@ -1,3 +1,4 @@
+import React from 'react';
 import { cn } from "@/lib/utils"
 
 const RicherContent = ({ content, className = '' }: { content: string, className?: string }) => {
