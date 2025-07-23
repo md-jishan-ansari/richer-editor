@@ -59,6 +59,15 @@ export default function Home() {
         style={{ minHeight: 300 }}
         i18n={i18nLarge}
         imageUploadUrl="/api/temp-image-upload"
+        fontSizeOptions={[
+          { name: '66px', value: '66px' },
+          { name: '68px', value: '68px' },
+        ]}
+        fontFamilyOptions={[
+          { name: 'Arial', value: 'Arial, sans-serif' },
+          { name: 'Georgia', value: 'Georgia, serif' },
+          { name: 'Inter', value: 'Inter, sans-serif' },
+        ]}
       />
       <RicherContent content={largeContent} className={classes} />
 
@@ -70,7 +79,7 @@ export default function Home() {
         content={smallContent}
         onChange={handleSmallChange}
         outputFormat="html"
-        // excludeToolbarButtons={["video", "code", "bold"]}
+        excludeToolbarButtons={["fontFamily"]}
         placeholder="Read-only small editor..."
         className={classes}
         style={{ minHeight: 150 }}

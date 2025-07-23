@@ -52,6 +52,7 @@
   outline: unset;
   width: 100%;
   max-width: 100%;
+  /* font-size and font-family are set via inline style or style attribute for customization */
 }
 
 .richer-editor-toolbar::-webkit-scrollbar {

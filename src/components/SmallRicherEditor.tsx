@@ -1,5 +1,4 @@
-'use client';
-// File: frontend/src/components/tiptap/SmallTiptapEditor.tsx
+
 import React, { useCallback, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -52,6 +51,15 @@ const fontSizes = [
   { name: '32px', value: '32px' },
 ];
 
+const fontFamilies = [
+  { name: 'Sans-serif', value: 'sans-serif' },
+  { name: 'Serif', value: 'serif' },
+  { name: 'Monospace', value: 'monospace' },
+  { name: 'Arial', value: 'Arial, sans-serif' },
+  { name: 'Georgia', value: 'Georgia, serif' },
+  { name: 'Inter', value: 'Inter, sans-serif' },
+];
+
 const alignmentOptions = [
   { value: 'left', label: <AlignLeft size={18} />, name: 'Left' },
   { value: 'center', label: <AlignCenter size={18} />, name: 'Center' },
@@ -79,7 +87,7 @@ const defaultI18n = {
 };
 
 // Update MenuBar to accept excludeToolbarButtons and i18n
-const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }: { editor: any, imageUploadUrl?: string, excludeToolbarButtons?: string[], i18n?: Record<string, string> }) => {
+const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, fontSizeOptions, fontFamilyOptions }: { editor: any, imageUploadUrl?: string, excludeToolbarButtons?: string[], i18n?: Record<string, string>, fontSizeOptions?: { name: string; value: string }[], fontFamilyOptions?: { name: string; value: string }[] }) => {
   const [imagePopoverOpen, setImagePopoverOpen] = useState(false);
   const [imageTab, setImageTab] = useState<'url' | 'upload'>('url');
   const [imageUrl, setImageUrl] = useState('');
@@ -95,6 +103,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   const [videoHeight, setVideoHeight] = useState('');
   const [linkPopoverOpen, setLinkPopoverOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState('');
+  const [linkTarget, setLinkTarget] = useState('_blank');
   const linkButtonRef = React.useRef<HTMLButtonElement>(null);
   const imageButtonRef = React.useRef<HTMLButtonElement>(null);
   const videoButtonRef = React.useRef<HTMLButtonElement>(null);
@@ -183,11 +192,12 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   // Helper for link insertion (popover)
   const handleLinkInsert = useCallback(() => {
     if (linkUrl) {
-      editor.chain().focus().setLink({ href: linkUrl }).run();
+      editor.chain().focus().setLink({ href: linkUrl, target: linkTarget }).run();
       setLinkPopoverOpen(false);
       setLinkUrl('');
+      setLinkTarget('_blank');
     }
-  }, [editor, linkUrl]);
+  }, [editor, linkUrl, linkTarget]);
   const handleLinkUnset = useCallback(() => {
     editor.chain().focus().unsetLink().run();
     setLinkPopoverOpen(false);
@@ -203,11 +213,22 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         {!excludeToolbarButtons.includes('fontSize') && (
           <CustomSelect
             value={editor.getAttributes('fontSize').fontSize || ''}
-            options={fontSizes.map(f => ({ value: f.value, label: f.name }))}
+            options={(fontSizeOptions || fontSizes).map(f => ({ value: f.value, label: f.name }))}
             onChange={val => editor.chain().focus().setFontSize(val).run()}
             className="richer-editor-select"
             placeholder={labels.fontSize || 'Font Size'}
             aria-label={labels.fontSize || 'Font Size'}
+          />
+        )}
+        {/* Font Family Dropdown */}
+        {!excludeToolbarButtons.includes('fontFamily') && (
+          <CustomSelect
+            value={editor.getAttributes('fontFamily').fontFamily || ''}
+            options={(fontFamilyOptions || fontFamilies).map(f => ({ value: f.value, label: <span style={{ fontFamily: f.value }}>{f.name}</span> }))}
+            onChange={val => editor.chain().focus().setFontFamily(val).run()}
+            className="richer-editor-select"
+            placeholder="Font Family"
+            aria-label="Font Family"
           />
         )}
         <div className="toolbar-divider" />
@@ -245,6 +266,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               onClick={() => {
                 setLinkPopoverOpen((open) => !open);
                 setLinkUrl(editor.getAttributes('link').href || '');
+                setLinkTarget(editor.getAttributes('link').target || '_blank');
               }}
               className={`richer-editor-button${editor.isActive("link") ? ' richer-editor-buttonActive' : ''}`}
               type="button"
@@ -269,6 +291,18 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 className="richer-editor-input"
                 autoFocus
               />
+              <select
+                name="target"
+                value={linkTarget}
+                onChange={e => setLinkTarget(e.target.value)}
+                className="richer-editor-input"
+                style={{ marginBottom: 8 }}
+              >
+                <option value="_blank">New Tab (_blank)</option>
+                <option value="_self">Same Tab (_self)</option>
+                <option value="_parent">Parent Frame (_parent)</option>
+                <option value="_top">Top Frame (_top)</option>
+              </select>
               <div className="richer-editor-flexRow">
                 <button
                   className="richer-editor-primaryBtn"
@@ -502,6 +536,8 @@ interface SmallRicherEditorProps {
   style?: React.CSSProperties;
   excludeToolbarButtons?: string[];
   i18n?: Record<string, string>;
+  fontSizeOptions?: { name: string; value: string }[];
+  fontFamilyOptions?: { name: string; value: string }[];
 }
 
 const getSafeContent = (content: any, outputFormat: 'html' | 'json') => {
@@ -549,6 +585,8 @@ const SmallRicherEditor  = ({
   style = {},
   excludeToolbarButtons = [],
   i18n = {},
+  fontSizeOptions,
+  fontFamilyOptions,
 }: SmallRicherEditorProps) => {
   // Use safe content conversion
   const safeContent = React.useMemo(() => getSafeContent(content, outputFormat), [content, outputFormat]);
@@ -633,7 +671,7 @@ const SmallRicherEditor  = ({
 
   return (
       <div className={`richer-editor-roundedMdBorder`}>
-        <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} />
+        <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} fontSizeOptions={fontSizeOptions} fontFamilyOptions={fontFamilyOptions} />
         <div className="richer-editor-overflowAuto" style={{maxHeight: maxHeight}}>
           <EditorContent editor={editor} />
         </div>

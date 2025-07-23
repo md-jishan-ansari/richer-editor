@@ -1,5 +1,4 @@
-'use client';
-// File: src/components/Editor.tsx
+
 import React, { useCallback, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -161,6 +160,8 @@ interface RicherEditorProps {
   excludeToolbarButtons?: string[];
   style?: React.CSSProperties;
   i18n?: Record<string, string>;
+  fontSizeOptions?: { name: string; value: string }[];
+  fontFamilyOptions?: { name: string; value: string }[];
 }
 
 type ToolbarButtonKey =
@@ -228,11 +229,13 @@ const defaultI18n = {
   cancel: 'Cancel',
 };
 
-const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }: {
+const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, fontSizeOptions, fontFamilyOptions }: {
   editor: any,
   imageUploadUrl?: string,
   excludeToolbarButtons?: string[],
   i18n?: Record<string, string>,
+  fontSizeOptions?: { name: string; value: string }[],
+  fontFamilyOptions?: { name: string; value: string }[],
 }) => {
   // Popover state for link, image, video
   const [imagePopoverOpen, setImagePopoverOpen] = useState(false);
@@ -250,6 +253,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   const [videoHeight, setVideoHeight] = useState('');
   const [linkPopoverOpen, setLinkPopoverOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState('');
+  const [linkTarget, setLinkTarget] = useState('_blank');
 
   const linkButtonRef = React.useRef<HTMLButtonElement>(null);
   const imageButtonRef = React.useRef<HTMLButtonElement>(null);
@@ -337,11 +341,12 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   // Helper for link insertion (popover)
   const handleLinkInsert = useCallback(() => {
     if (linkUrl) {
-      editor.chain().focus().setLink({ href: linkUrl }).run();
+      editor.chain().focus().setLink({ href: linkUrl, target: linkTarget }).run();
       setLinkPopoverOpen(false);
       setLinkUrl('');
+      setLinkTarget('_blank');
     }
-  }, [editor, linkUrl]);
+  }, [editor, linkUrl, linkTarget]);
   const handleLinkUnset = useCallback(() => {
     editor.chain().focus().unsetLink().run();
     setLinkPopoverOpen(false);
@@ -379,7 +384,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       {/* Font Size Dropdown */}
       <CustomSelect
         value={editor.getAttributes('fontSize').fontSize || ''}
-        options={fontSizes.map(f => ({ value: f.value, label: f.name }))}
+        options={(fontSizeOptions || fontSizes).map(f => ({ value: f.value, label: f.name }))}
         onChange={(val: string) => editor.chain().focus().setFontSize(val).run()}
         className="richer-editor-select"
         placeholder="Font Size"
@@ -388,7 +393,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       {/* Font Family Dropdown */}
       <CustomSelect
         value={editor.getAttributes('fontFamily').fontFamily || ''}
-        options={fontFamilies.map(f => ({
+        options={(fontFamilyOptions || fontFamilies).map(f => ({
           value: f.value,
           label: <span style={{ fontFamily: f.value }}>{f.name}</span>
         }))}
@@ -486,6 +491,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             onClick={() => {
               setLinkPopoverOpen((open) => !open);
               setLinkUrl(editor.getAttributes('link').href || '');
+              setLinkTarget(editor.getAttributes('link').target || '_blank');
             }}
             className={`richer-editor-button${editor.isActive("link") ? ' richer-editor-buttonActive' : ''}`}
             type="button"
@@ -510,6 +516,18 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               className="richer-editor-input"
               autoFocus
             />
+            <select
+              name="target"
+              value={linkTarget}
+              onChange={e => setLinkTarget(e.target.value)}
+              className="richer-editor-input"
+              style={{ marginBottom: 8 }}
+            >
+              <option value="_blank">New Tab (_blank)</option>
+              <option value="_self">Same Tab (_self)</option>
+              <option value="_parent">Parent Frame (_parent)</option>
+              <option value="_top">Top Frame (_top)</option>
+            </select>
             <div className="richer-editor-flexRow">
               <button
                 className="richer-editor-primaryBtn"
@@ -834,6 +852,8 @@ const RicherEditor = ({
   excludeToolbarButtons = [],
   style = {},
   i18n = {},
+  fontSizeOptions,
+  fontFamilyOptions,
 }: RicherEditorProps) => {
   // Use safe content conversion
   const safeContent = React.useMemo(() => getSafeContent(content, outputFormat), [content, outputFormat]);
@@ -939,7 +959,7 @@ const RicherEditor = ({
 
   return (
     <div className={`richer-editor-roundedMdBorder`}>
-      <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} />
+      <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} fontSizeOptions={fontSizeOptions} fontFamilyOptions={fontFamilyOptions} />
       <div className="richer-editor-overflowAuto" style={{maxHeight: maxHeight}}>
         <EditorContent editor={editor} />
       </div>
