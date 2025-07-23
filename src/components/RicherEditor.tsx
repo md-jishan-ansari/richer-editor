@@ -422,41 +422,47 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       <div className="toolbar-divider" />
       {/* Lists */}
       {!excludeToolbarButtons.includes('bulletList') && (
-        <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={`richer-editor-button ${editor.isActive("bulletList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={t.bulletList} title={t.bulletList}><BulletListIcon size={16} /></button>
+        <>
+          <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={`richer-editor-button ${editor.isActive("bulletList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={t.bulletList} title={t.bulletList}><BulletListIcon size={16} /></button>
+          {/* Unordered List Style Dropdown */}
+          <CustomSelect
+            value={editor.getAttributes('bulletList').listStyleType || ''}
+            options={unorderedListStyles.map(opt => ({ value: opt.value, label: <>{opt.icon} {opt.name}</> }))}
+            onChange={(val: string) => {
+              if (editor.isActive('bulletList')) {
+                editor.chain().focus().updateAttributes('bulletList', { listStyleType: val }).run();
+              } else {
+                window.alert('Please place the cursor inside an unordered list to change its style.');
+              }
+            }}
+            className="richer-editor-select"
+            placeholder="UL Style"
+            aria-label="Unordered List Style"
+          />
+        </>
       )}
-      {/* Unordered List Style Dropdown */}
-      <CustomSelect
-        value={editor.getAttributes('bulletList').listStyleType || ''}
-        options={unorderedListStyles.map(opt => ({ value: opt.value, label: <>{opt.icon} {opt.name}</> }))}
-        onChange={(val: string) => {
-          if (editor.isActive('bulletList')) {
-            editor.chain().focus().updateAttributes('bulletList', { listStyleType: val }).run();
-          } else {
-            window.alert('Please place the cursor inside an unordered list to change its style.');
-          }
-        }}
-        className="richer-editor-select"
-        placeholder="UL Style"
-        aria-label="Unordered List Style"
-      />
+
       {!excludeToolbarButtons.includes('orderedList') && (
-        <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`richer-editor-button ${editor.isActive("orderedList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={t.orderedList} title={t.orderedList}><OrderedListIcon size={16} /></button>
+        <>
+          <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`richer-editor-button ${editor.isActive("orderedList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={t.orderedList} title={t.orderedList}><OrderedListIcon size={16} /></button>
+          {/* Ordered List Style Dropdown */}
+          <CustomSelect
+            value={editor.getAttributes('orderedList').listStyleType || ''}
+            options={orderedListStyles.map(opt => ({ value: opt.value, label: <>{opt.icon} {opt.name}</> }))}
+            onChange={(val: string) => {
+              if (editor.isActive('orderedList')) {
+                editor.chain().focus().updateAttributes('orderedList', { listStyleType: val }).run();
+              } else {
+                window.alert('Please place the cursor inside an ordered list to change its style.');
+              }
+            }}
+            className="richer-editor-select"
+            placeholder="OL Style"
+            aria-label="Ordered List Style"
+          />
+        </>
       )}
-      {/* Ordered List Style Dropdown */}
-      <CustomSelect
-        value={editor.getAttributes('orderedList').listStyleType || ''}
-        options={orderedListStyles.map(opt => ({ value: opt.value, label: <>{opt.icon} {opt.name}</> }))}
-        onChange={(val: string) => {
-          if (editor.isActive('orderedList')) {
-            editor.chain().focus().updateAttributes('orderedList', { listStyleType: val }).run();
-          } else {
-            window.alert('Please place the cursor inside an ordered list to change its style.');
-          }
-        }}
-        className="richer-editor-select"
-        placeholder="OL Style"
-        aria-label="Ordered List Style"
-      />
+
       {!excludeToolbarButtons.includes('taskList') && (
         <button onClick={() => editor.chain().focus().toggleTaskList().run()} className={`richer-editor-button ${editor.isActive("taskList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={t.taskList} title={t.taskList}><TaskListIcon size={16} /></button>
       )}
@@ -785,6 +791,37 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   );
 };
 
+const getSafeContent = (content: any, outputFormat: 'html' | 'json') => {
+  if (outputFormat === 'json') {
+    if (typeof content === 'object' && content !== null) {
+      return content;
+    }
+    if (typeof content === 'string') {
+      try {
+        const parsed = JSON.parse(content);
+        if (typeof parsed === 'object' && parsed !== null) {
+          return parsed;
+        }
+      } catch {
+        // ignore
+      }
+    }
+    // fallback to empty doc
+    return { type: 'doc', content: [{ type: 'paragraph' }] };
+  } else {
+    // outputFormat === 'html'
+    if (typeof content === 'string') {
+      return content;
+    }
+    if (typeof content === 'object' && content !== null) {
+      // Try to convert JSON to HTML using Tiptap's generateHTML if available
+      // But since we don't have access here, fallback to empty string
+      return '';
+    }
+    return '';
+  }
+};
+
 const RicherEditor = ({
   content = '',
   onChange,
@@ -801,6 +838,8 @@ const RicherEditor = ({
   i18n = {},
   onImageUpload,
 }: RicherEditorProps) => {
+  // Use safe content conversion
+  const safeContent = React.useMemo(() => getSafeContent(content, outputFormat), [content, outputFormat]);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -849,7 +888,7 @@ const RicherEditor = ({
         placeholder: placeholder || 'Write something...'
       }),
     ],
-    content,
+    content: safeContent,
     editorProps: {
       ...editorProps,
       attributes: {
@@ -878,8 +917,24 @@ const RicherEditor = ({
   React.useEffect(() => {
     if (editor && content !== undefined) {
       const current = outputFormat === 'json' ? editor.getJSON() : editor.getHTML();
-      if (current !== content) {
-        editor.commands.setContent(content);
+      // Only update if different
+      if (outputFormat === 'json') {
+        let parsed: any = content;
+        if (typeof content === 'string') {
+          try {
+            parsed = JSON.parse(content);
+          } catch {
+            parsed = { type: 'doc', content: [{ type: 'paragraph' }] };
+          }
+        }
+        if (JSON.stringify(current) !== JSON.stringify(parsed)) {
+          editor.commands.setContent(getSafeContent(content, outputFormat));
+        }
+      } else {
+        // html
+        if (current !== content) {
+          editor.commands.setContent(getSafeContent(content, outputFormat));
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

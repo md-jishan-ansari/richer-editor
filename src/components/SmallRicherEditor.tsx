@@ -40,6 +40,14 @@ const fontSizes = [
   { name: '12px', value: '12px' },
   { name: '14px', value: '14px' },
   { name: '16px', value: '16px' },
+  { name: '18px', value: '18px' },
+  { name: '20px', value: '20px' },
+  { name: '22px', value: '22px' },
+  { name: '24px', value: '24px' },
+  { name: '26px', value: '26px' },
+  { name: '28px', value: '28px' },
+  { name: '30px', value: '30px' },
+  { name: '32px', value: '32px' },
 ];
 
 const alignmentOptions = [
@@ -494,6 +502,37 @@ interface SmallRicherEditorProps {
   i18n?: Record<string, string>;
 }
 
+const getSafeContent = (content: any, outputFormat: 'html' | 'json') => {
+  if (outputFormat === 'json') {
+    if (typeof content === 'object' && content !== null) {
+      return content;
+    }
+    if (typeof content === 'string') {
+      try {
+        const parsed = JSON.parse(content);
+        if (typeof parsed === 'object' && parsed !== null) {
+          return parsed;
+        }
+      } catch {
+        // ignore
+      }
+    }
+    // fallback to empty doc
+    return { type: 'doc', content: [{ type: 'paragraph' }] };
+  } else {
+    // outputFormat === 'html'
+    if (typeof content === 'string') {
+      return content;
+    }
+    if (typeof content === 'object' && content !== null) {
+      // Try to convert JSON to HTML using Tiptap's generateHTML if available
+      // But since we don't have access here, fallback to empty string
+      return '';
+    }
+    return '';
+  }
+};
+
 const SmallRicherEditor  = ({
   content = '',
   onChange,
@@ -509,6 +548,8 @@ const SmallRicherEditor  = ({
   excludeToolbarButtons = [],
   i18n = {},
 }: SmallRicherEditorProps) => {
+  // Use safe content conversion
+  const safeContent = React.useMemo(() => getSafeContent(content, outputFormat), [content, outputFormat]);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -537,7 +578,7 @@ const SmallRicherEditor  = ({
         placeholder: placeholder || 'Write something...'
       }),
     ],
-    content,
+    content: safeContent,
     editorProps: {
       ...editorProps,
       attributes: {
@@ -561,12 +602,28 @@ const SmallRicherEditor  = ({
     immediatelyRender: false,
   });
 
-  // If content prop changes, update the editor content
+  // In the useEffect, compare against safeContent instead of content
   React.useEffect(() => {
     if (editor && content !== undefined) {
       const current = outputFormat === 'json' ? editor.getJSON() : editor.getHTML();
-      if (current !== content) {
-        editor.commands.setContent(content);
+      // Only update if different
+      if (outputFormat === 'json') {
+        let parsed: any = content;
+        if (typeof content === 'string') {
+          try {
+            parsed = JSON.parse(content);
+          } catch {
+            parsed = { type: 'doc', content: [{ type: 'paragraph' }] };
+          }
+        }
+        if (JSON.stringify(current) !== JSON.stringify(parsed)) {
+          editor.commands.setContent(getSafeContent(content, outputFormat));
+        }
+      } else {
+        // html
+        if (current !== content) {
+          editor.commands.setContent(getSafeContent(content, outputFormat));
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
