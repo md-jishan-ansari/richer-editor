@@ -39,32 +39,16 @@ __export(index_exports, {
 module.exports = __toCommonJS(index_exports);
 
 // src/components/RicherEditor.tsx
-var import_react33 = __toESM(require("react"));
-var import_react34 = require("@tiptap/react");
+var import_react32 = __toESM(require("react"));
+var import_react33 = require("@tiptap/react");
 var import_starter_kit = __toESM(require("@tiptap/starter-kit"));
 var import_extension_link = __toESM(require("@tiptap/extension-link"));
-var import_extension_image = __toESM(require("@tiptap/extension-image"));
-var import_extension_heading = __toESM(require("@tiptap/extension-heading"));
-var import_extension_list_item = __toESM(require("@tiptap/extension-list-item"));
-var import_extension_bold = __toESM(require("@tiptap/extension-bold"));
-var import_extension_italic = __toESM(require("@tiptap/extension-italic"));
-var import_extension_underline = __toESM(require("@tiptap/extension-underline"));
-var import_extension_strike = __toESM(require("@tiptap/extension-strike"));
-var import_extension_blockquote = __toESM(require("@tiptap/extension-blockquote"));
-var import_extension_code_block = __toESM(require("@tiptap/extension-code-block"));
-var import_extension_horizontal_rule = __toESM(require("@tiptap/extension-horizontal-rule"));
 var import_extension_text_align = __toESM(require("@tiptap/extension-text-align"));
-var import_extension_table = require("@tiptap/extension-table");
-var import_extension_table_row = __toESM(require("@tiptap/extension-table-row"));
-var import_extension_table_cell = __toESM(require("@tiptap/extension-table-cell"));
-var import_extension_table_header = __toESM(require("@tiptap/extension-table-header"));
-var import_extension_dropcursor = __toESM(require("@tiptap/extension-dropcursor"));
-var import_extension_gapcursor = __toESM(require("@tiptap/extension-gapcursor"));
 var import_extension_task_list = __toESM(require("@tiptap/extension-task-list"));
 var import_extension_task_item = __toESM(require("@tiptap/extension-task-item"));
 var import_extension_superscript = __toESM(require("@tiptap/extension-superscript"));
 var import_extension_subscript = __toESM(require("@tiptap/extension-subscript"));
-var import_extension_typography = __toESM(require("@tiptap/extension-typography"));
+var import_extension_image = __toESM(require("@tiptap/extension-image"));
 var import_extension_youtube = __toESM(require("@tiptap/extension-youtube"));
 var import_extension_highlight = __toESM(require("@tiptap/extension-highlight"));
 var import_extension_placeholder = __toESM(require("@tiptap/extension-placeholder"));
@@ -309,34 +293,9 @@ var ImageIcon = ({ size = 24, color = "currentColor", className = "", ...props }
 );
 var ImageIcon_default = ImageIcon;
 
-// src/icons/TableIcon.tsx
-var import_react12 = __toESM(require("react"));
-var TableIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react12.default.createElement(
-  "svg",
-  {
-    xmlns: "http://www.w3.org/2000/svg",
-    width: size,
-    height: size,
-    fill: "none",
-    viewBox: "0 0 24 24",
-    stroke: color,
-    strokeWidth: 2,
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    className,
-    ...props
-  },
-  /* @__PURE__ */ import_react12.default.createElement("rect", { x: "3", y: "3", width: "18", height: "18", rx: "2" }),
-  /* @__PURE__ */ import_react12.default.createElement("path", { d: "M3 9h18" }),
-  /* @__PURE__ */ import_react12.default.createElement("path", { d: "M3 15h18" }),
-  /* @__PURE__ */ import_react12.default.createElement("path", { d: "M9 3v18" }),
-  /* @__PURE__ */ import_react12.default.createElement("path", { d: "M15 3v18" })
-);
-var TableIcon_default = TableIcon;
-
 // src/icons/UndoIcon.tsx
-var import_react13 = __toESM(require("react"));
-var UndoIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react13.default.createElement(
+var import_react12 = __toESM(require("react"));
+var UndoIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react12.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -351,14 +310,14 @@ var UndoIcon = ({ size = 24, color = "currentColor", className = "", ...props })
     className,
     ...props
   },
-  /* @__PURE__ */ import_react13.default.createElement("path", { d: "M3 7v6h6" }),
-  /* @__PURE__ */ import_react13.default.createElement("path", { d: "M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" })
+  /* @__PURE__ */ import_react12.default.createElement("path", { d: "M3 7v6h6" }),
+  /* @__PURE__ */ import_react12.default.createElement("path", { d: "M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" })
 );
 var UndoIcon_default = UndoIcon;
 
 // src/icons/RedoIcon.tsx
-var import_react14 = __toESM(require("react"));
-var RedoIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react14.default.createElement(
+var import_react13 = __toESM(require("react"));
+var RedoIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react13.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -373,14 +332,37 @@ var RedoIcon = ({ size = 24, color = "currentColor", className = "", ...props })
     className,
     ...props
   },
-  /* @__PURE__ */ import_react14.default.createElement("path", { d: "M21 7v6h-6" }),
-  /* @__PURE__ */ import_react14.default.createElement("path", { d: "M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7" })
+  /* @__PURE__ */ import_react13.default.createElement("path", { d: "M21 7v6h-6" }),
+  /* @__PURE__ */ import_react13.default.createElement("path", { d: "M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7" })
 );
 var RedoIcon_default = RedoIcon;
 
 // src/icons/AlignLeft.tsx
+var import_react14 = __toESM(require("react"));
+var AlignLeft = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react14.default.createElement(
+  "svg",
+  {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: size,
+    height: size,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: color,
+    strokeWidth: 2,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className,
+    ...props
+  },
+  /* @__PURE__ */ import_react14.default.createElement("line", { x1: "21", x2: "3", y1: "6", y2: "6" }),
+  /* @__PURE__ */ import_react14.default.createElement("line", { x1: "15", x2: "3", y1: "12", y2: "12" }),
+  /* @__PURE__ */ import_react14.default.createElement("line", { x1: "17", x2: "3", y1: "18", y2: "18" })
+);
+var AlignLeft_default = AlignLeft;
+
+// src/icons/AlignCenter.tsx
 var import_react15 = __toESM(require("react"));
-var AlignLeft = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react15.default.createElement(
+var AlignCenter = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react15.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -396,14 +378,14 @@ var AlignLeft = ({ size = 24, color = "currentColor", className = "", ...props }
     ...props
   },
   /* @__PURE__ */ import_react15.default.createElement("line", { x1: "21", x2: "3", y1: "6", y2: "6" }),
-  /* @__PURE__ */ import_react15.default.createElement("line", { x1: "15", x2: "3", y1: "12", y2: "12" }),
-  /* @__PURE__ */ import_react15.default.createElement("line", { x1: "17", x2: "3", y1: "18", y2: "18" })
+  /* @__PURE__ */ import_react15.default.createElement("line", { x1: "17", x2: "7", y1: "12", y2: "12" }),
+  /* @__PURE__ */ import_react15.default.createElement("line", { x1: "19", x2: "5", y1: "18", y2: "18" })
 );
-var AlignLeft_default = AlignLeft;
+var AlignCenter_default = AlignCenter;
 
-// src/icons/AlignCenter.tsx
+// src/icons/AlignRight.tsx
 var import_react16 = __toESM(require("react"));
-var AlignCenter = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react16.default.createElement(
+var AlignRight = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react16.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -419,14 +401,14 @@ var AlignCenter = ({ size = 24, color = "currentColor", className = "", ...props
     ...props
   },
   /* @__PURE__ */ import_react16.default.createElement("line", { x1: "21", x2: "3", y1: "6", y2: "6" }),
-  /* @__PURE__ */ import_react16.default.createElement("line", { x1: "17", x2: "7", y1: "12", y2: "12" }),
-  /* @__PURE__ */ import_react16.default.createElement("line", { x1: "19", x2: "5", y1: "18", y2: "18" })
+  /* @__PURE__ */ import_react16.default.createElement("line", { x1: "21", x2: "9", y1: "12", y2: "12" }),
+  /* @__PURE__ */ import_react16.default.createElement("line", { x1: "21", x2: "7", y1: "18", y2: "18" })
 );
-var AlignCenter_default = AlignCenter;
+var AlignRight_default = AlignRight;
 
-// src/icons/AlignRight.tsx
+// src/icons/AlignJustify.tsx
 var import_react17 = __toESM(require("react"));
-var AlignRight = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react17.default.createElement(
+var AlignJustify = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react17.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -442,37 +424,14 @@ var AlignRight = ({ size = 24, color = "currentColor", className = "", ...props 
     ...props
   },
   /* @__PURE__ */ import_react17.default.createElement("line", { x1: "21", x2: "3", y1: "6", y2: "6" }),
-  /* @__PURE__ */ import_react17.default.createElement("line", { x1: "21", x2: "9", y1: "12", y2: "12" }),
-  /* @__PURE__ */ import_react17.default.createElement("line", { x1: "21", x2: "7", y1: "18", y2: "18" })
-);
-var AlignRight_default = AlignRight;
-
-// src/icons/AlignJustify.tsx
-var import_react18 = __toESM(require("react"));
-var AlignJustify = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react18.default.createElement(
-  "svg",
-  {
-    xmlns: "http://www.w3.org/2000/svg",
-    width: size,
-    height: size,
-    fill: "none",
-    viewBox: "0 0 24 24",
-    stroke: color,
-    strokeWidth: 2,
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    className,
-    ...props
-  },
-  /* @__PURE__ */ import_react18.default.createElement("line", { x1: "21", x2: "3", y1: "6", y2: "6" }),
-  /* @__PURE__ */ import_react18.default.createElement("line", { x1: "21", x2: "3", y1: "12", y2: "12" }),
-  /* @__PURE__ */ import_react18.default.createElement("line", { x1: "21", x2: "3", y1: "18", y2: "18" })
+  /* @__PURE__ */ import_react17.default.createElement("line", { x1: "21", x2: "3", y1: "12", y2: "12" }),
+  /* @__PURE__ */ import_react17.default.createElement("line", { x1: "21", x2: "3", y1: "18", y2: "18" })
 );
 var AlignJustify_default = AlignJustify;
 
 // src/icons/Highlighter.tsx
-var import_react19 = __toESM(require("react"));
-var Highlighter = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react19.default.createElement(
+var import_react18 = __toESM(require("react"));
+var Highlighter = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react18.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -487,14 +446,38 @@ var Highlighter = ({ size = 24, color = "currentColor", className = "", ...props
     className,
     ...props
   },
-  /* @__PURE__ */ import_react19.default.createElement("path", { d: "m9 11-6 6v3h9l3-3" }),
-  /* @__PURE__ */ import_react19.default.createElement("path", { d: "M22 15 11 4l-3 3 11 11 3-3Z" })
+  /* @__PURE__ */ import_react18.default.createElement("path", { d: "m9 11-6 6v3h9l3-3" }),
+  /* @__PURE__ */ import_react18.default.createElement("path", { d: "M22 15 11 4l-3 3 11 11 3-3Z" })
 );
 var Highlighter_default = Highlighter;
 
 // src/icons/Heading1.tsx
+var import_react19 = __toESM(require("react"));
+var Heading1 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react19.default.createElement(
+  "svg",
+  {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: size,
+    height: size,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: color,
+    strokeWidth: 2,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className,
+    ...props
+  },
+  /* @__PURE__ */ import_react19.default.createElement("path", { d: "M4 12h8" }),
+  /* @__PURE__ */ import_react19.default.createElement("path", { d: "M4 18V6" }),
+  /* @__PURE__ */ import_react19.default.createElement("path", { d: "M12 18V6" }),
+  /* @__PURE__ */ import_react19.default.createElement("path", { d: "M17 12v-1h-2V9h3" })
+);
+var Heading1_default = Heading1;
+
+// src/icons/Heading2.tsx
 var import_react20 = __toESM(require("react"));
-var Heading1 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react20.default.createElement(
+var Heading2 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react20.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -512,13 +495,14 @@ var Heading1 = ({ size = 24, color = "currentColor", className = "", ...props })
   /* @__PURE__ */ import_react20.default.createElement("path", { d: "M4 12h8" }),
   /* @__PURE__ */ import_react20.default.createElement("path", { d: "M4 18V6" }),
   /* @__PURE__ */ import_react20.default.createElement("path", { d: "M12 18V6" }),
-  /* @__PURE__ */ import_react20.default.createElement("path", { d: "M17 12v-1h-2V9h3" })
+  /* @__PURE__ */ import_react20.default.createElement("path", { d: "M17 12a2 2 0 1 1 0 4h-3" }),
+  /* @__PURE__ */ import_react20.default.createElement("path", { d: "M19 16v.01" })
 );
-var Heading1_default = Heading1;
+var Heading2_default = Heading2;
 
-// src/icons/Heading2.tsx
+// src/icons/Heading3.tsx
 var import_react21 = __toESM(require("react"));
-var Heading2 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react21.default.createElement(
+var Heading3 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react21.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -536,14 +520,14 @@ var Heading2 = ({ size = 24, color = "currentColor", className = "", ...props })
   /* @__PURE__ */ import_react21.default.createElement("path", { d: "M4 12h8" }),
   /* @__PURE__ */ import_react21.default.createElement("path", { d: "M4 18V6" }),
   /* @__PURE__ */ import_react21.default.createElement("path", { d: "M12 18V6" }),
-  /* @__PURE__ */ import_react21.default.createElement("path", { d: "M17 12a2 2 0 1 1 0 4h-3" }),
-  /* @__PURE__ */ import_react21.default.createElement("path", { d: "M19 16v.01" })
+  /* @__PURE__ */ import_react21.default.createElement("path", { d: "M17 14a2 2 0 1 0 0-4h-2" }),
+  /* @__PURE__ */ import_react21.default.createElement("path", { d: "M15 16a2 2 0 1 0 0 4h2" })
 );
-var Heading2_default = Heading2;
+var Heading3_default = Heading3;
 
-// src/icons/Heading3.tsx
+// src/icons/Heading4.tsx
 var import_react22 = __toESM(require("react"));
-var Heading3 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react22.default.createElement(
+var Heading4 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react22.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -561,14 +545,14 @@ var Heading3 = ({ size = 24, color = "currentColor", className = "", ...props })
   /* @__PURE__ */ import_react22.default.createElement("path", { d: "M4 12h8" }),
   /* @__PURE__ */ import_react22.default.createElement("path", { d: "M4 18V6" }),
   /* @__PURE__ */ import_react22.default.createElement("path", { d: "M12 18V6" }),
-  /* @__PURE__ */ import_react22.default.createElement("path", { d: "M17 14a2 2 0 1 0 0-4h-2" }),
-  /* @__PURE__ */ import_react22.default.createElement("path", { d: "M15 16a2 2 0 1 0 0 4h2" })
+  /* @__PURE__ */ import_react22.default.createElement("path", { d: "M17 18v-8l-2 2" }),
+  /* @__PURE__ */ import_react22.default.createElement("path", { d: "M15 14h4" })
 );
-var Heading3_default = Heading3;
+var Heading4_default = Heading4;
 
-// src/icons/Heading4.tsx
+// src/icons/Heading5.tsx
 var import_react23 = __toESM(require("react"));
-var Heading4 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react23.default.createElement(
+var Heading5 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react23.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -586,14 +570,13 @@ var Heading4 = ({ size = 24, color = "currentColor", className = "", ...props })
   /* @__PURE__ */ import_react23.default.createElement("path", { d: "M4 12h8" }),
   /* @__PURE__ */ import_react23.default.createElement("path", { d: "M4 18V6" }),
   /* @__PURE__ */ import_react23.default.createElement("path", { d: "M12 18V6" }),
-  /* @__PURE__ */ import_react23.default.createElement("path", { d: "M17 18v-8l-2 2" }),
-  /* @__PURE__ */ import_react23.default.createElement("path", { d: "M15 14h4" })
+  /* @__PURE__ */ import_react23.default.createElement("path", { d: "M17 13.5V12a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2v2h4" })
 );
-var Heading4_default = Heading4;
+var Heading5_default = Heading5;
 
-// src/icons/Heading5.tsx
+// src/icons/Heading6.tsx
 var import_react24 = __toESM(require("react"));
-var Heading5 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react24.default.createElement(
+var Heading6 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react24.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -611,38 +594,14 @@ var Heading5 = ({ size = 24, color = "currentColor", className = "", ...props })
   /* @__PURE__ */ import_react24.default.createElement("path", { d: "M4 12h8" }),
   /* @__PURE__ */ import_react24.default.createElement("path", { d: "M4 18V6" }),
   /* @__PURE__ */ import_react24.default.createElement("path", { d: "M12 18V6" }),
-  /* @__PURE__ */ import_react24.default.createElement("path", { d: "M17 13.5V12a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2v2h4" })
-);
-var Heading5_default = Heading5;
-
-// src/icons/Heading6.tsx
-var import_react25 = __toESM(require("react"));
-var Heading6 = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react25.default.createElement(
-  "svg",
-  {
-    xmlns: "http://www.w3.org/2000/svg",
-    width: size,
-    height: size,
-    fill: "none",
-    viewBox: "0 0 24 24",
-    stroke: color,
-    strokeWidth: 2,
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    className,
-    ...props
-  },
-  /* @__PURE__ */ import_react25.default.createElement("path", { d: "M4 12h8" }),
-  /* @__PURE__ */ import_react25.default.createElement("path", { d: "M4 18V6" }),
-  /* @__PURE__ */ import_react25.default.createElement("path", { d: "M12 18V6" }),
-  /* @__PURE__ */ import_react25.default.createElement("circle", { cx: "19", cy: "16", r: "2" }),
-  /* @__PURE__ */ import_react25.default.createElement("path", { d: "M19 14v-2" })
+  /* @__PURE__ */ import_react24.default.createElement("circle", { cx: "19", cy: "16", r: "2" }),
+  /* @__PURE__ */ import_react24.default.createElement("path", { d: "M19 14v-2" })
 );
 var Heading6_default = Heading6;
 
 // src/icons/VideoIcon.tsx
-var import_react26 = __toESM(require("react"));
-var VideoIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react26.default.createElement(
+var import_react25 = __toESM(require("react"));
+var VideoIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react25.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -657,14 +616,14 @@ var VideoIcon = ({ size = 24, color = "currentColor", className = "", ...props }
     className,
     ...props
   },
-  /* @__PURE__ */ import_react26.default.createElement("path", { d: "m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5" }),
-  /* @__PURE__ */ import_react26.default.createElement("rect", { x: "2", y: "6", width: "14", height: "12", rx: "2" })
+  /* @__PURE__ */ import_react25.default.createElement("path", { d: "m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5" }),
+  /* @__PURE__ */ import_react25.default.createElement("rect", { x: "2", y: "6", width: "14", height: "12", rx: "2" })
 );
 var VideoIcon_default = VideoIcon;
 
 // src/icons/SubscriptIcon.tsx
-var import_react27 = __toESM(require("react"));
-var SubscriptIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react27.default.createElement(
+var import_react26 = __toESM(require("react"));
+var SubscriptIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react26.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -679,15 +638,15 @@ var SubscriptIcon = ({ size = 24, color = "currentColor", className = "", ...pro
     className,
     ...props
   },
-  /* @__PURE__ */ import_react27.default.createElement("path", { d: "m4 5 8 8" }),
-  /* @__PURE__ */ import_react27.default.createElement("path", { d: "m12 5-8 8" }),
-  /* @__PURE__ */ import_react27.default.createElement("path", { d: "M20 19h-4c0-1.5.44-2 1.5-2.5S20 15.33 20 14c0-.47-.17-.93-.48-1.29a2.11 2.11 0 0 0-2.62-.44c-.42.24-.74.62-.9 1.07" })
+  /* @__PURE__ */ import_react26.default.createElement("path", { d: "m4 5 8 8" }),
+  /* @__PURE__ */ import_react26.default.createElement("path", { d: "m12 5-8 8" }),
+  /* @__PURE__ */ import_react26.default.createElement("path", { d: "M20 19h-4c0-1.5.44-2 1.5-2.5S20 15.33 20 14c0-.47-.17-.93-.48-1.29a2.11 2.11 0 0 0-2.62-.44c-.42.24-.74.62-.9 1.07" })
 );
 var SubscriptIcon_default = SubscriptIcon;
 
 // src/icons/SuperscriptIcon.tsx
-var import_react28 = __toESM(require("react"));
-var SuperscriptIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react28.default.createElement(
+var import_react27 = __toESM(require("react"));
+var SuperscriptIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react27.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -702,15 +661,15 @@ var SuperscriptIcon = ({ size = 24, color = "currentColor", className = "", ...p
     className,
     ...props
   },
-  /* @__PURE__ */ import_react28.default.createElement("path", { d: "m4 19 8-8" }),
-  /* @__PURE__ */ import_react28.default.createElement("path", { d: "m12 19-8-8" }),
-  /* @__PURE__ */ import_react28.default.createElement("path", { d: "M20 12h-4c0-1.5.442-2 1.5-2.5S20 8.334 20 7.002c0-.472-.17-.93-.484-1.29a2.105 2.105 0 0 0-2.617-.436c-.42.239-.738.614-.899 1.06" })
+  /* @__PURE__ */ import_react27.default.createElement("path", { d: "m4 19 8-8" }),
+  /* @__PURE__ */ import_react27.default.createElement("path", { d: "m12 19-8-8" }),
+  /* @__PURE__ */ import_react27.default.createElement("path", { d: "M20 12h-4c0-1.5.442-2 1.5-2.5S20 8.334 20 7.002c0-.472-.17-.93-.484-1.29a2.105 2.105 0 0 0-2.617-.436c-.42.239-.738.614-.899 1.06" })
 );
 var SuperscriptIcon_default = SuperscriptIcon;
 
 // src/icons/PaintBucket.tsx
-var import_react29 = __toESM(require("react"));
-var PaintBucket = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react29.default.createElement(
+var import_react28 = __toESM(require("react"));
+var PaintBucket = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react28.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -725,16 +684,16 @@ var PaintBucket = ({ size = 24, color = "currentColor", className = "", ...props
     className,
     ...props
   },
-  /* @__PURE__ */ import_react29.default.createElement("path", { d: "m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z" }),
-  /* @__PURE__ */ import_react29.default.createElement("path", { d: "m5 2 5 5" }),
-  /* @__PURE__ */ import_react29.default.createElement("path", { d: "M2 13h15" }),
-  /* @__PURE__ */ import_react29.default.createElement("path", { d: "M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z" })
+  /* @__PURE__ */ import_react28.default.createElement("path", { d: "m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z" }),
+  /* @__PURE__ */ import_react28.default.createElement("path", { d: "m5 2 5 5" }),
+  /* @__PURE__ */ import_react28.default.createElement("path", { d: "M2 13h15" }),
+  /* @__PURE__ */ import_react28.default.createElement("path", { d: "M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z" })
 );
 var PaintBucket_default = PaintBucket;
 
 // src/icons/TextColorIcon.tsx
-var import_react30 = __toESM(require("react"));
-var TextColorIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react30.default.createElement(
+var import_react29 = __toESM(require("react"));
+var TextColorIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => /* @__PURE__ */ import_react29.default.createElement(
   "svg",
   {
     xmlns: "http://www.w3.org/2000/svg",
@@ -749,9 +708,9 @@ var TextColorIcon = ({ size = 24, color = "currentColor", className = "", ...pro
     className,
     ...props
   },
-  /* @__PURE__ */ import_react30.default.createElement("path", { d: "M12 4v16" }),
-  /* @__PURE__ */ import_react30.default.createElement("path", { d: "M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2" }),
-  /* @__PURE__ */ import_react30.default.createElement("path", { d: "M9 20h6" })
+  /* @__PURE__ */ import_react29.default.createElement("path", { d: "M12 4v16" }),
+  /* @__PURE__ */ import_react29.default.createElement("path", { d: "M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2" }),
+  /* @__PURE__ */ import_react29.default.createElement("path", { d: "M9 20h6" })
 );
 var TextColorIcon_default = TextColorIcon;
 
@@ -761,10 +720,643 @@ var import_extension_font_family = __toESM(require("@tiptap/extension-font-famil
 var import_extension_font_size = __toESM(require("@tiptap/extension-font-size"));
 var import_extension_color = __toESM(require("@tiptap/extension-color"));
 
-// src/components/tiptap-extensions/CustomBulletList.ts
-var import_extension_bullet_list = require("@tiptap/extension-bullet-list");
+// node_modules/@tiptap/extension-list/dist/index.js
 var import_core = require("@tiptap/core");
-var CustomBulletList = import_extension_bullet_list.BulletList.extend({
+var import_core2 = require("@tiptap/core");
+var import_core3 = require("@tiptap/core");
+var import_core4 = require("@tiptap/core");
+var import_core5 = require("@tiptap/core");
+var import_core6 = require("@tiptap/core");
+var import_core7 = require("@tiptap/core");
+var import_core8 = require("@tiptap/core");
+var import_core9 = require("@tiptap/core");
+var import_core10 = require("@tiptap/core");
+var import_core11 = require("@tiptap/core");
+var import_core12 = require("@tiptap/core");
+var __defProp2 = Object.defineProperty;
+var __export2 = (target, all) => {
+  for (var name in all)
+    __defProp2(target, name, { get: all[name], enumerable: true });
+};
+var ListItemName = "listItem";
+var TextStyleName = "textStyle";
+var bulletListInputRegex = /^\s*([-+*])\s$/;
+var BulletList = import_core.Node.create({
+  name: "bulletList",
+  addOptions() {
+    return {
+      itemTypeName: "listItem",
+      HTMLAttributes: {},
+      keepMarks: false,
+      keepAttributes: false
+    };
+  },
+  group: "block list",
+  content() {
+    return `${this.options.itemTypeName}+`;
+  },
+  parseHTML() {
+    return [{ tag: "ul" }];
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ["ul", (0, import_core.mergeAttributes)(this.options.HTMLAttributes, HTMLAttributes), 0];
+  },
+  addCommands() {
+    return {
+      toggleBulletList: () => ({ commands, chain }) => {
+        if (this.options.keepAttributes) {
+          return chain().toggleList(this.name, this.options.itemTypeName, this.options.keepMarks).updateAttributes(ListItemName, this.editor.getAttributes(TextStyleName)).run();
+        }
+        return commands.toggleList(this.name, this.options.itemTypeName, this.options.keepMarks);
+      }
+    };
+  },
+  addKeyboardShortcuts() {
+    return {
+      "Mod-Shift-8": () => this.editor.commands.toggleBulletList()
+    };
+  },
+  addInputRules() {
+    let inputRule = (0, import_core.wrappingInputRule)({
+      find: bulletListInputRegex,
+      type: this.type
+    });
+    if (this.options.keepMarks || this.options.keepAttributes) {
+      inputRule = (0, import_core.wrappingInputRule)({
+        find: bulletListInputRegex,
+        type: this.type,
+        keepMarks: this.options.keepMarks,
+        keepAttributes: this.options.keepAttributes,
+        getAttributes: () => {
+          return this.editor.getAttributes(TextStyleName);
+        },
+        editor: this.editor
+      });
+    }
+    return [inputRule];
+  }
+});
+var ListItem = import_core2.Node.create({
+  name: "listItem",
+  addOptions() {
+    return {
+      HTMLAttributes: {},
+      bulletListTypeName: "bulletList",
+      orderedListTypeName: "orderedList"
+    };
+  },
+  content: "paragraph block*",
+  defining: true,
+  parseHTML() {
+    return [
+      {
+        tag: "li"
+      }
+    ];
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ["li", (0, import_core2.mergeAttributes)(this.options.HTMLAttributes, HTMLAttributes), 0];
+  },
+  addKeyboardShortcuts() {
+    return {
+      Enter: () => this.editor.commands.splitListItem(this.name),
+      Tab: () => this.editor.commands.sinkListItem(this.name),
+      "Shift-Tab": () => this.editor.commands.liftListItem(this.name)
+    };
+  }
+});
+var listHelpers_exports = {};
+__export2(listHelpers_exports, {
+  findListItemPos: () => findListItemPos,
+  getNextListDepth: () => getNextListDepth,
+  handleBackspace: () => handleBackspace,
+  handleDelete: () => handleDelete,
+  hasListBefore: () => hasListBefore,
+  hasListItemAfter: () => hasListItemAfter,
+  hasListItemBefore: () => hasListItemBefore,
+  listItemHasSubList: () => listItemHasSubList,
+  nextListIsDeeper: () => nextListIsDeeper,
+  nextListIsHigher: () => nextListIsHigher
+});
+var findListItemPos = (typeOrName, state) => {
+  const { $from } = state.selection;
+  const nodeType = (0, import_core4.getNodeType)(typeOrName, state.schema);
+  let currentNode = null;
+  let currentDepth = $from.depth;
+  let currentPos = $from.pos;
+  let targetDepth = null;
+  while (currentDepth > 0 && targetDepth === null) {
+    currentNode = $from.node(currentDepth);
+    if (currentNode.type === nodeType) {
+      targetDepth = currentDepth;
+    } else {
+      currentDepth -= 1;
+      currentPos -= 1;
+    }
+  }
+  if (targetDepth === null) {
+    return null;
+  }
+  return { $pos: state.doc.resolve(currentPos), depth: targetDepth };
+};
+var getNextListDepth = (typeOrName, state) => {
+  const listItemPos = findListItemPos(typeOrName, state);
+  if (!listItemPos) {
+    return false;
+  }
+  const [, depth] = (0, import_core5.getNodeAtPosition)(state, typeOrName, listItemPos.$pos.pos + 4);
+  return depth;
+};
+var hasListBefore = (editorState, name, parentListTypes) => {
+  const { $anchor } = editorState.selection;
+  const previousNodePos = Math.max(0, $anchor.pos - 2);
+  const previousNode = editorState.doc.resolve(previousNodePos).node();
+  if (!previousNode || !parentListTypes.includes(previousNode.type.name)) {
+    return false;
+  }
+  return true;
+};
+var hasListItemBefore = (typeOrName, state) => {
+  var _a;
+  const { $anchor } = state.selection;
+  const $targetPos = state.doc.resolve($anchor.pos - 2);
+  if ($targetPos.index() === 0) {
+    return false;
+  }
+  if (((_a = $targetPos.nodeBefore) == null ? void 0 : _a.type.name) !== typeOrName) {
+    return false;
+  }
+  return true;
+};
+var listItemHasSubList = (typeOrName, state, node) => {
+  if (!node) {
+    return false;
+  }
+  const nodeType = (0, import_core7.getNodeType)(typeOrName, state.schema);
+  let hasSubList = false;
+  node.descendants((child) => {
+    if (child.type === nodeType) {
+      hasSubList = true;
+    }
+  });
+  return hasSubList;
+};
+var handleBackspace = (editor, name, parentListTypes) => {
+  if (editor.commands.undoInputRule()) {
+    return true;
+  }
+  if (editor.state.selection.from !== editor.state.selection.to) {
+    return false;
+  }
+  if (!(0, import_core6.isNodeActive)(editor.state, name) && hasListBefore(editor.state, name, parentListTypes)) {
+    const { $anchor } = editor.state.selection;
+    const $listPos = editor.state.doc.resolve($anchor.before() - 1);
+    const listDescendants = [];
+    $listPos.node().descendants((node, pos) => {
+      if (node.type.name === name) {
+        listDescendants.push({ node, pos });
+      }
+    });
+    const lastItem = listDescendants.at(-1);
+    if (!lastItem) {
+      return false;
+    }
+    const $lastItemPos = editor.state.doc.resolve($listPos.start() + lastItem.pos + 1);
+    return editor.chain().cut({ from: $anchor.start() - 1, to: $anchor.end() + 1 }, $lastItemPos.end()).joinForward().run();
+  }
+  if (!(0, import_core6.isNodeActive)(editor.state, name)) {
+    return false;
+  }
+  if (!(0, import_core6.isAtStartOfNode)(editor.state)) {
+    return false;
+  }
+  const listItemPos = findListItemPos(name, editor.state);
+  if (!listItemPos) {
+    return false;
+  }
+  const $prev = editor.state.doc.resolve(listItemPos.$pos.pos - 2);
+  const prevNode = $prev.node(listItemPos.depth);
+  const previousListItemHasSubList = listItemHasSubList(name, editor.state, prevNode);
+  if (hasListItemBefore(name, editor.state) && !previousListItemHasSubList) {
+    return editor.commands.joinItemBackward();
+  }
+  return editor.chain().liftListItem(name).run();
+};
+var nextListIsDeeper = (typeOrName, state) => {
+  const listDepth = getNextListDepth(typeOrName, state);
+  const listItemPos = findListItemPos(typeOrName, state);
+  if (!listItemPos || !listDepth) {
+    return false;
+  }
+  if (listDepth > listItemPos.depth) {
+    return true;
+  }
+  return false;
+};
+var nextListIsHigher = (typeOrName, state) => {
+  const listDepth = getNextListDepth(typeOrName, state);
+  const listItemPos = findListItemPos(typeOrName, state);
+  if (!listItemPos || !listDepth) {
+    return false;
+  }
+  if (listDepth < listItemPos.depth) {
+    return true;
+  }
+  return false;
+};
+var handleDelete = (editor, name) => {
+  if (!(0, import_core8.isNodeActive)(editor.state, name)) {
+    return false;
+  }
+  if (!(0, import_core8.isAtEndOfNode)(editor.state, name)) {
+    return false;
+  }
+  const { selection } = editor.state;
+  const { $from, $to } = selection;
+  if (!selection.empty && $from.sameParent($to)) {
+    return false;
+  }
+  if (nextListIsDeeper(name, editor.state)) {
+    return editor.chain().focus(editor.state.selection.from + 4).lift(name).joinBackward().run();
+  }
+  if (nextListIsHigher(name, editor.state)) {
+    return editor.chain().joinForward().joinBackward().run();
+  }
+  return editor.commands.joinItemForward();
+};
+var hasListItemAfter = (typeOrName, state) => {
+  var _a;
+  const { $anchor } = state.selection;
+  const $targetPos = state.doc.resolve($anchor.pos - $anchor.parentOffset - 2);
+  if ($targetPos.index() === $targetPos.parent.childCount - 1) {
+    return false;
+  }
+  if (((_a = $targetPos.nodeAfter) == null ? void 0 : _a.type.name) !== typeOrName) {
+    return false;
+  }
+  return true;
+};
+var ListKeymap = import_core3.Extension.create({
+  name: "listKeymap",
+  addOptions() {
+    return {
+      listTypes: [
+        {
+          itemName: "listItem",
+          wrapperNames: ["bulletList", "orderedList"]
+        },
+        {
+          itemName: "taskItem",
+          wrapperNames: ["taskList"]
+        }
+      ]
+    };
+  },
+  addKeyboardShortcuts() {
+    return {
+      Delete: ({ editor }) => {
+        let handled = false;
+        this.options.listTypes.forEach(({ itemName }) => {
+          if (editor.state.schema.nodes[itemName] === void 0) {
+            return;
+          }
+          if (handleDelete(editor, itemName)) {
+            handled = true;
+          }
+        });
+        return handled;
+      },
+      "Mod-Delete": ({ editor }) => {
+        let handled = false;
+        this.options.listTypes.forEach(({ itemName }) => {
+          if (editor.state.schema.nodes[itemName] === void 0) {
+            return;
+          }
+          if (handleDelete(editor, itemName)) {
+            handled = true;
+          }
+        });
+        return handled;
+      },
+      Backspace: ({ editor }) => {
+        let handled = false;
+        this.options.listTypes.forEach(({ itemName, wrapperNames }) => {
+          if (editor.state.schema.nodes[itemName] === void 0) {
+            return;
+          }
+          if (handleBackspace(editor, itemName, wrapperNames)) {
+            handled = true;
+          }
+        });
+        return handled;
+      },
+      "Mod-Backspace": ({ editor }) => {
+        let handled = false;
+        this.options.listTypes.forEach(({ itemName, wrapperNames }) => {
+          if (editor.state.schema.nodes[itemName] === void 0) {
+            return;
+          }
+          if (handleBackspace(editor, itemName, wrapperNames)) {
+            handled = true;
+          }
+        });
+        return handled;
+      }
+    };
+  }
+});
+var ListItemName2 = "listItem";
+var TextStyleName2 = "textStyle";
+var orderedListInputRegex = /^(\d+)\.\s$/;
+var OrderedList = import_core10.Node.create({
+  name: "orderedList",
+  addOptions() {
+    return {
+      itemTypeName: "listItem",
+      HTMLAttributes: {},
+      keepMarks: false,
+      keepAttributes: false
+    };
+  },
+  group: "block list",
+  content() {
+    return `${this.options.itemTypeName}+`;
+  },
+  addAttributes() {
+    return {
+      start: {
+        default: 1,
+        parseHTML: (element) => {
+          return element.hasAttribute("start") ? parseInt(element.getAttribute("start") || "", 10) : 1;
+        }
+      },
+      type: {
+        default: null,
+        parseHTML: (element) => element.getAttribute("type")
+      }
+    };
+  },
+  parseHTML() {
+    return [
+      {
+        tag: "ol"
+      }
+    ];
+  },
+  renderHTML({ HTMLAttributes }) {
+    const { start, ...attributesWithoutStart } = HTMLAttributes;
+    return start === 1 ? ["ol", (0, import_core10.mergeAttributes)(this.options.HTMLAttributes, attributesWithoutStart), 0] : ["ol", (0, import_core10.mergeAttributes)(this.options.HTMLAttributes, HTMLAttributes), 0];
+  },
+  addCommands() {
+    return {
+      toggleOrderedList: () => ({ commands, chain }) => {
+        if (this.options.keepAttributes) {
+          return chain().toggleList(this.name, this.options.itemTypeName, this.options.keepMarks).updateAttributes(ListItemName2, this.editor.getAttributes(TextStyleName2)).run();
+        }
+        return commands.toggleList(this.name, this.options.itemTypeName, this.options.keepMarks);
+      }
+    };
+  },
+  addKeyboardShortcuts() {
+    return {
+      "Mod-Shift-7": () => this.editor.commands.toggleOrderedList()
+    };
+  },
+  addInputRules() {
+    let inputRule = (0, import_core10.wrappingInputRule)({
+      find: orderedListInputRegex,
+      type: this.type,
+      getAttributes: (match) => ({ start: +match[1] }),
+      joinPredicate: (match, node) => node.childCount + node.attrs.start === +match[1]
+    });
+    if (this.options.keepMarks || this.options.keepAttributes) {
+      inputRule = (0, import_core10.wrappingInputRule)({
+        find: orderedListInputRegex,
+        type: this.type,
+        keepMarks: this.options.keepMarks,
+        keepAttributes: this.options.keepAttributes,
+        getAttributes: (match) => ({ start: +match[1], ...this.editor.getAttributes(TextStyleName2) }),
+        joinPredicate: (match, node) => node.childCount + node.attrs.start === +match[1],
+        editor: this.editor
+      });
+    }
+    return [inputRule];
+  }
+});
+var inputRegex = /^\s*(\[([( |x])?\])\s$/;
+var TaskItem = import_core11.Node.create({
+  name: "taskItem",
+  addOptions() {
+    return {
+      nested: false,
+      HTMLAttributes: {},
+      taskListTypeName: "taskList",
+      a11y: void 0
+    };
+  },
+  content() {
+    return this.options.nested ? "paragraph block*" : "paragraph+";
+  },
+  defining: true,
+  addAttributes() {
+    return {
+      checked: {
+        default: false,
+        keepOnSplit: false,
+        parseHTML: (element) => {
+          const dataChecked = element.getAttribute("data-checked");
+          return dataChecked === "" || dataChecked === "true";
+        },
+        renderHTML: (attributes) => ({
+          "data-checked": attributes.checked
+        })
+      }
+    };
+  },
+  parseHTML() {
+    return [
+      {
+        tag: `li[data-type="${this.name}"]`,
+        priority: 51
+      }
+    ];
+  },
+  renderHTML({ node, HTMLAttributes }) {
+    return [
+      "li",
+      (0, import_core11.mergeAttributes)(this.options.HTMLAttributes, HTMLAttributes, {
+        "data-type": this.name
+      }),
+      [
+        "label",
+        [
+          "input",
+          {
+            type: "checkbox",
+            checked: node.attrs.checked ? "checked" : null
+          }
+        ],
+        ["span"]
+      ],
+      ["div", 0]
+    ];
+  },
+  addKeyboardShortcuts() {
+    const shortcuts = {
+      Enter: () => this.editor.commands.splitListItem(this.name),
+      "Shift-Tab": () => this.editor.commands.liftListItem(this.name)
+    };
+    if (!this.options.nested) {
+      return shortcuts;
+    }
+    return {
+      ...shortcuts,
+      Tab: () => this.editor.commands.sinkListItem(this.name)
+    };
+  },
+  addNodeView() {
+    return ({ node, HTMLAttributes, getPos, editor }) => {
+      const listItem = document.createElement("li");
+      const checkboxWrapper = document.createElement("label");
+      const checkboxStyler = document.createElement("span");
+      const checkbox = document.createElement("input");
+      const content = document.createElement("div");
+      const updateA11Y = () => {
+        var _a, _b;
+        checkbox.ariaLabel = ((_b = (_a = this.options.a11y) == null ? void 0 : _a.checkboxLabel) == null ? void 0 : _b.call(_a, node, checkbox.checked)) || `Task item checkbox for ${node.textContent || "empty task item"}`;
+      };
+      updateA11Y();
+      checkboxWrapper.contentEditable = "false";
+      checkbox.type = "checkbox";
+      checkbox.addEventListener("mousedown", (event) => event.preventDefault());
+      checkbox.addEventListener("change", (event) => {
+        if (!editor.isEditable && !this.options.onReadOnlyChecked) {
+          checkbox.checked = !checkbox.checked;
+          return;
+        }
+        const { checked } = event.target;
+        if (editor.isEditable && typeof getPos === "function") {
+          editor.chain().focus(void 0, { scrollIntoView: false }).command(({ tr }) => {
+            const position = getPos();
+            if (typeof position !== "number") {
+              return false;
+            }
+            const currentNode = tr.doc.nodeAt(position);
+            tr.setNodeMarkup(position, void 0, {
+              ...currentNode == null ? void 0 : currentNode.attrs,
+              checked
+            });
+            return true;
+          }).run();
+        }
+        if (!editor.isEditable && this.options.onReadOnlyChecked) {
+          if (!this.options.onReadOnlyChecked(node, checked)) {
+            checkbox.checked = !checkbox.checked;
+          }
+        }
+      });
+      Object.entries(this.options.HTMLAttributes).forEach(([key, value]) => {
+        listItem.setAttribute(key, value);
+      });
+      listItem.dataset.checked = node.attrs.checked;
+      checkbox.checked = node.attrs.checked;
+      checkboxWrapper.append(checkbox, checkboxStyler);
+      listItem.append(checkboxWrapper, content);
+      Object.entries(HTMLAttributes).forEach(([key, value]) => {
+        listItem.setAttribute(key, value);
+      });
+      return {
+        dom: listItem,
+        contentDOM: content,
+        update: (updatedNode) => {
+          if (updatedNode.type !== this.type) {
+            return false;
+          }
+          listItem.dataset.checked = updatedNode.attrs.checked;
+          checkbox.checked = updatedNode.attrs.checked;
+          updateA11Y();
+          return true;
+        }
+      };
+    };
+  },
+  addInputRules() {
+    return [
+      (0, import_core11.wrappingInputRule)({
+        find: inputRegex,
+        type: this.type,
+        getAttributes: (match) => ({
+          checked: match[match.length - 1] === "x"
+        })
+      })
+    ];
+  }
+});
+var TaskList = import_core12.Node.create({
+  name: "taskList",
+  addOptions() {
+    return {
+      itemTypeName: "taskItem",
+      HTMLAttributes: {}
+    };
+  },
+  group: "block list",
+  content() {
+    return `${this.options.itemTypeName}+`;
+  },
+  parseHTML() {
+    return [
+      {
+        tag: `ul[data-type="${this.name}"]`,
+        priority: 51
+      }
+    ];
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ["ul", (0, import_core12.mergeAttributes)(this.options.HTMLAttributes, HTMLAttributes, { "data-type": this.name }), 0];
+  },
+  addCommands() {
+    return {
+      toggleTaskList: () => ({ commands }) => {
+        return commands.toggleList(this.name, this.options.itemTypeName);
+      }
+    };
+  },
+  addKeyboardShortcuts() {
+    return {
+      "Mod-Shift-9": () => this.editor.commands.toggleTaskList()
+    };
+  }
+});
+var ListKit = import_core9.Extension.create({
+  name: "listKit",
+  addExtensions() {
+    const extensions = [];
+    if (this.options.bulletList !== false) {
+      extensions.push(BulletList.configure(this.options.bulletList));
+    }
+    if (this.options.listItem !== false) {
+      extensions.push(ListItem.configure(this.options.listItem));
+    }
+    if (this.options.listKeymap !== false) {
+      extensions.push(ListKeymap.configure(this.options.listKeymap));
+    }
+    if (this.options.orderedList !== false) {
+      extensions.push(OrderedList.configure(this.options.orderedList));
+    }
+    if (this.options.taskItem !== false) {
+      extensions.push(TaskItem.configure(this.options.taskItem));
+    }
+    if (this.options.taskList !== false) {
+      extensions.push(TaskList.configure(this.options.taskList));
+    }
+    return extensions;
+  }
+});
+
+// src/components/tiptap-extensions/CustomBulletList.ts
+var import_core13 = require("@tiptap/core");
+var CustomBulletList = BulletList.extend({
   addAttributes() {
     var _a;
     return {
@@ -781,14 +1373,13 @@ var CustomBulletList = import_extension_bullet_list.BulletList.extend({
     };
   },
   renderHTML({ HTMLAttributes }) {
-    return ["ul", (0, import_core.mergeAttributes)(this.options.HTMLAttributes, HTMLAttributes), 0];
+    return ["ul", (0, import_core13.mergeAttributes)(this.options.HTMLAttributes, HTMLAttributes), 0];
   }
 });
 
 // src/components/tiptap-extensions/CustomOrderedList.ts
-var import_extension_ordered_list = require("@tiptap/extension-ordered-list");
-var import_core2 = require("@tiptap/core");
-var CustomOrderedList = import_extension_ordered_list.OrderedList.extend({
+var import_core14 = require("@tiptap/core");
+var CustomOrderedList = OrderedList.extend({
   addAttributes() {
     var _a;
     return {
@@ -805,12 +1396,12 @@ var CustomOrderedList = import_extension_ordered_list.OrderedList.extend({
     };
   },
   renderHTML({ HTMLAttributes }) {
-    return ["ol", (0, import_core2.mergeAttributes)(this.options.HTMLAttributes, HTMLAttributes), 0];
+    return ["ol", (0, import_core14.mergeAttributes)(this.options.HTMLAttributes, HTMLAttributes), 0];
   }
 });
 
 // src/components/ui/CustomSelect.tsx
-var import_react31 = __toESM(require("react"));
+var import_react30 = __toESM(require("react"));
 var import_react_dom = __toESM(require("react-dom"));
 var import_CustomSelect = require("./CustomSelect-AGHTICJO.css");
 
@@ -822,12 +1413,12 @@ function cn(...inputs) {
 
 // src/components/ui/CustomSelect.tsx
 var CustomSelect = ({ value, options, onChange, className, placeholder, label }) => {
-  const [open, setOpen] = (0, import_react31.useState)(false);
-  const [highlighted, setHighlighted] = (0, import_react31.useState)(-1);
-  const triggerRef = (0, import_react31.useRef)(null);
-  const listRef = (0, import_react31.useRef)(null);
-  const [dropdownPos, setDropdownPos] = (0, import_react31.useState)({ top: 0, left: 0, width: 0 });
-  (0, import_react31.useEffect)(() => {
+  const [open, setOpen] = (0, import_react30.useState)(false);
+  const [highlighted, setHighlighted] = (0, import_react30.useState)(-1);
+  const triggerRef = (0, import_react30.useRef)(null);
+  const listRef = (0, import_react30.useRef)(null);
+  const [dropdownPos, setDropdownPos] = (0, import_react30.useState)({ top: 0, left: 0, width: 0 });
+  (0, import_react30.useEffect)(() => {
     if (open && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
       setDropdownPos({
@@ -837,16 +1428,16 @@ var CustomSelect = ({ value, options, onChange, className, placeholder, label })
       });
     }
   }, [open]);
-  (0, import_react31.useEffect)(() => {
+  (0, import_react30.useEffect)(() => {
     if (open && listRef.current && highlighted >= 0) {
       const el = listRef.current.children[highlighted];
       if (el) el.scrollIntoView({ block: "nearest" });
     }
   }, [open, highlighted]);
-  (0, import_react31.useEffect)(() => {
+  (0, import_react30.useEffect)(() => {
     if (!open) setHighlighted(-1);
   }, [open]);
-  (0, import_react31.useEffect)(() => {
+  (0, import_react30.useEffect)(() => {
     function handleClickOutside(e) {
       if (triggerRef.current && !triggerRef.current.contains(e.target) && listRef.current && !listRef.current.contains(e.target)) {
         setOpen(false);
@@ -890,7 +1481,7 @@ var CustomSelect = ({ value, options, onChange, className, placeholder, label })
     setOpen(false);
   }
   const selectedOption = options.find((o) => o.value === value);
-  return /* @__PURE__ */ import_react31.default.createElement(
+  return /* @__PURE__ */ import_react30.default.createElement(
     "div",
     {
       className: cn("selectWrapper", className),
@@ -900,8 +1491,8 @@ var CustomSelect = ({ value, options, onChange, className, placeholder, label })
       },
       style: { display: "inline-block" }
     },
-    label && /* @__PURE__ */ import_react31.default.createElement("div", { className: "label" }, label),
-    /* @__PURE__ */ import_react31.default.createElement(
+    label && /* @__PURE__ */ import_react30.default.createElement("div", { className: "label" }, label),
+    /* @__PURE__ */ import_react30.default.createElement(
       "button",
       {
         ref: triggerRef,
@@ -912,11 +1503,11 @@ var CustomSelect = ({ value, options, onChange, className, placeholder, label })
         onKeyDown: handleKeyDown,
         type: "button"
       },
-      /* @__PURE__ */ import_react31.default.createElement("span", { className: selectedOption ? void 0 : "placeholder" }, selectedOption ? selectedOption.label : placeholder || "Select..."),
-      /* @__PURE__ */ import_react31.default.createElement("span", { className: "chevron", "aria-hidden": true }, "\u25BC")
+      /* @__PURE__ */ import_react30.default.createElement("span", { className: selectedOption ? void 0 : "placeholder" }, selectedOption ? selectedOption.label : placeholder || "Select..."),
+      /* @__PURE__ */ import_react30.default.createElement("span", { className: "chevron", "aria-hidden": true }, "\u25BC")
     ),
     open && import_react_dom.default.createPortal(
-      /* @__PURE__ */ import_react31.default.createElement(
+      /* @__PURE__ */ import_react30.default.createElement(
         "ul",
         {
           className: "options",
@@ -932,7 +1523,7 @@ var CustomSelect = ({ value, options, onChange, className, placeholder, label })
             zIndex: 2e3
           }
         },
-        options.map((opt, idx) => /* @__PURE__ */ import_react31.default.createElement(
+        options.map((opt, idx) => /* @__PURE__ */ import_react30.default.createElement(
           "li",
           {
             key: opt.value,
@@ -955,13 +1546,13 @@ var CustomSelect = ({ value, options, onChange, className, placeholder, label })
 var CustomSelect_default = CustomSelect;
 
 // src/components/ui/CustomPopover.tsx
-var import_react32 = __toESM(require("react"));
+var import_react31 = __toESM(require("react"));
 var import_react_dom2 = __toESM(require("react-dom"));
 var import_CustomPopover = require("./CustomPopover-WHNAJV7I.css");
 var CustomPopover = ({ open, onOpenChange, anchorEl, children, className, closeButton, onEsc }) => {
-  const popoverRef = (0, import_react32.useRef)(null);
-  const [position, setPosition] = (0, import_react32.useState)({ top: 0, left: 0 });
-  (0, import_react32.useEffect)(() => {
+  const popoverRef = (0, import_react31.useRef)(null);
+  const [position, setPosition] = (0, import_react31.useState)({ top: 0, left: 0 });
+  (0, import_react31.useEffect)(() => {
     if (open && anchorEl) {
       const rect = anchorEl.getBoundingClientRect();
       setPosition({
@@ -970,7 +1561,7 @@ var CustomPopover = ({ open, onOpenChange, anchorEl, children, className, closeB
       });
     }
   }, [open, anchorEl]);
-  (0, import_react32.useEffect)(() => {
+  (0, import_react31.useEffect)(() => {
     function handleClickOutside(event) {
       if (popoverRef.current && !popoverRef.current.contains(event.target) && anchorEl && !anchorEl.contains(event.target)) {
         onOpenChange(false);
@@ -993,7 +1584,7 @@ var CustomPopover = ({ open, onOpenChange, anchorEl, children, className, closeB
   }, [open, onOpenChange, anchorEl, onEsc]);
   if (!open || !anchorEl) return null;
   return import_react_dom2.default.createPortal(
-    /* @__PURE__ */ import_react32.default.createElement(
+    /* @__PURE__ */ import_react31.default.createElement(
       "div",
       {
         ref: popoverRef,
@@ -1002,7 +1593,7 @@ var CustomPopover = ({ open, onOpenChange, anchorEl, children, className, closeB
         tabIndex: -1,
         role: "dialog"
       },
-      closeButton && /* @__PURE__ */ import_react32.default.createElement(
+      closeButton && /* @__PURE__ */ import_react31.default.createElement(
         "button",
         {
           className: "closeBtn",
@@ -1020,7 +1611,7 @@ var CustomPopover = ({ open, onOpenChange, anchorEl, children, className, closeB
 var CustomPopover_default = CustomPopover;
 
 // src/components/RicherEditor.tsx
-var import_RicherEditor = require("./RicherEditor-AV2BARFI.css");
+var import_RicherEditor = require("./RicherEditor-FUKY63WW.css");
 var fontSizes = [
   { name: "10px", value: "10px" },
   { name: "12px", value: "12px" },
@@ -1062,12 +1653,12 @@ var fontFamilies = [
   { name: "Century Gothic", value: "Century Gothic, sans-serif" }
 ];
 var headingOptions = [
-  { level: 1, label: /* @__PURE__ */ import_react33.default.createElement(Heading1_default, { size: 18 }) },
-  { level: 2, label: /* @__PURE__ */ import_react33.default.createElement(Heading2_default, { size: 18 }) },
-  { level: 3, label: /* @__PURE__ */ import_react33.default.createElement(Heading3_default, { size: 18 }) },
-  { level: 4, label: /* @__PURE__ */ import_react33.default.createElement(Heading4_default, { size: 18 }) },
-  { level: 5, label: /* @__PURE__ */ import_react33.default.createElement(Heading5_default, { size: 18 }) },
-  { level: 6, label: /* @__PURE__ */ import_react33.default.createElement(Heading6_default, { size: 18 }) }
+  { level: 1, label: /* @__PURE__ */ import_react32.default.createElement(Heading1_default, { size: 18 }) },
+  { level: 2, label: /* @__PURE__ */ import_react32.default.createElement(Heading2_default, { size: 18 }) },
+  { level: 3, label: /* @__PURE__ */ import_react32.default.createElement(Heading3_default, { size: 18 }) },
+  { level: 4, label: /* @__PURE__ */ import_react32.default.createElement(Heading4_default, { size: 18 }) },
+  { level: 5, label: /* @__PURE__ */ import_react32.default.createElement(Heading5_default, { size: 18 }) },
+  { level: 6, label: /* @__PURE__ */ import_react32.default.createElement(Heading6_default, { size: 18 }) }
 ];
 var unorderedListStyles = [
   { name: "Disc", value: "disc", icon: "\u25CF", aria: "Disc" },
@@ -1115,26 +1706,31 @@ var defaultI18n = {
   add: "Add",
   cancel: "Cancel"
 };
-var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }) => {
-  const [imagePopoverOpen, setImagePopoverOpen] = (0, import_react33.useState)(false);
-  const [imageTab, setImageTab] = (0, import_react33.useState)("url");
-  const [imageUrl, setImageUrl] = (0, import_react33.useState)("");
-  const [imageWidth, setImageWidth] = (0, import_react33.useState)("");
-  const [imageHeight, setImageHeight] = (0, import_react33.useState)("");
-  const [uploading, setUploading] = (0, import_react33.useState)(false);
-  const [uploadError, setUploadError] = (0, import_react33.useState)(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = (0, import_react33.useState)("");
-  const [imageFile, setImageFile] = (0, import_react33.useState)(null);
-  const [videoPopoverOpen, setVideoPopoverOpen] = (0, import_react33.useState)(false);
-  const [videoUrl, setVideoUrl] = (0, import_react33.useState)("");
-  const [videoWidth, setVideoWidth] = (0, import_react33.useState)("");
-  const [videoHeight, setVideoHeight] = (0, import_react33.useState)("");
-  const [linkPopoverOpen, setLinkPopoverOpen] = (0, import_react33.useState)(false);
-  const [linkUrl, setLinkUrl] = (0, import_react33.useState)("");
-  const linkButtonRef = import_react33.default.useRef(null);
-  const imageButtonRef = import_react33.default.useRef(null);
-  const videoButtonRef = import_react33.default.useRef(null);
-  const handleImageUrlInsert = (0, import_react33.useCallback)(() => {
+var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, fontSizeOptions, fontFamilyOptions }) => {
+  const [imagePopoverOpen, setImagePopoverOpen] = (0, import_react32.useState)(false);
+  const [imageTab, setImageTab] = (0, import_react32.useState)("url");
+  const [imageUrl, setImageUrl] = (0, import_react32.useState)("");
+  const [imageWidth, setImageWidth] = (0, import_react32.useState)("");
+  const [imageHeight, setImageHeight] = (0, import_react32.useState)("");
+  const [uploading, setUploading] = (0, import_react32.useState)(false);
+  const [uploadError, setUploadError] = (0, import_react32.useState)(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = (0, import_react32.useState)("");
+  const [imageFile, setImageFile] = (0, import_react32.useState)(null);
+  const [videoPopoverOpen, setVideoPopoverOpen] = (0, import_react32.useState)(false);
+  const [videoUrl, setVideoUrl] = (0, import_react32.useState)("");
+  const [videoWidth, setVideoWidth] = (0, import_react32.useState)("");
+  const [videoHeight, setVideoHeight] = (0, import_react32.useState)("");
+  const [linkPopoverOpen, setLinkPopoverOpen] = (0, import_react32.useState)(false);
+  const [linkUrl, setLinkUrl] = (0, import_react32.useState)("");
+  const [linkTarget, setLinkTarget] = (0, import_react32.useState)("_blank");
+  const linkButtonRef = import_react32.default.useRef(null);
+  const imageButtonRef = import_react32.default.useRef(null);
+  const videoButtonRef = import_react32.default.useRef(null);
+  const [textColorPopoverOpen, setTextColorPopoverOpen] = import_react32.default.useState(false);
+  const textColorButtonRef = import_react32.default.useRef(null);
+  const [bgColorPopoverOpen, setBgColorPopoverOpen] = import_react32.default.useState(false);
+  const bgColorButtonRef = import_react32.default.useRef(null);
+  const handleImageUrlInsert = (0, import_react32.useCallback)(() => {
     if (imageUrl) {
       const attrs = { src: imageUrl };
       if (imageWidth) attrs.width = imageWidth;
@@ -1194,7 +1790,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       setImageTab("url");
     }
   };
-  const handleVideoUrlInsert = (0, import_react33.useCallback)(() => {
+  const handleVideoUrlInsert = (0, import_react32.useCallback)(() => {
     if (videoUrl) {
       const attrs = { src: videoUrl };
       if (videoWidth) attrs.width = videoWidth;
@@ -1206,21 +1802,22 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       setVideoHeight("");
     }
   }, [editor, videoUrl, videoWidth, videoHeight]);
-  const handleLinkInsert = (0, import_react33.useCallback)(() => {
+  const handleLinkInsert = (0, import_react32.useCallback)(() => {
     if (linkUrl) {
-      editor.chain().focus().setLink({ href: linkUrl }).run();
+      editor.chain().focus().setLink({ href: linkUrl, target: linkTarget }).run();
       setLinkPopoverOpen(false);
       setLinkUrl("");
+      setLinkTarget("_blank");
     }
-  }, [editor, linkUrl]);
-  const handleLinkUnset = (0, import_react33.useCallback)(() => {
+  }, [editor, linkUrl, linkTarget]);
+  const handleLinkUnset = (0, import_react32.useCallback)(() => {
     editor.chain().focus().unsetLink().run();
     setLinkPopoverOpen(false);
     setLinkUrl("");
   }, [editor]);
   if (!editor) return null;
   const labels = { ...defaultI18n, ...i18n };
-  return /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-toolbar global-toolbar" }, /* @__PURE__ */ import_react33.default.createElement(
+  return /* @__PURE__ */ import_react32.default.createElement("div", { className: "richer-editor-toolbar" }, /* @__PURE__ */ import_react32.default.createElement(
     CustomSelect_default,
     {
       value: (() => {
@@ -1242,34 +1839,34 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       placeholder: "Heading",
       "aria-label": "Heading Level"
     }
-  ), /* @__PURE__ */ import_react33.default.createElement("div", { className: "toolbar-divider" }), /* @__PURE__ */ import_react33.default.createElement(
+  ), /* @__PURE__ */ import_react32.default.createElement("div", { className: "toolbar-divider" }), /* @__PURE__ */ import_react32.default.createElement(
     CustomSelect_default,
     {
       value: editor.getAttributes("fontSize").fontSize || "",
-      options: fontSizes.map((f) => ({ value: f.value, label: f.name })),
+      options: (fontSizeOptions || fontSizes).map((f) => ({ value: f.value, label: f.name })),
       onChange: (val) => editor.chain().focus().setFontSize(val).run(),
       className: "richer-editor-select",
       placeholder: "Font Size",
       "aria-label": "Font Size"
     }
-  ), /* @__PURE__ */ import_react33.default.createElement(
+  ), /* @__PURE__ */ import_react32.default.createElement(
     CustomSelect_default,
     {
       value: editor.getAttributes("fontFamily").fontFamily || "",
-      options: fontFamilies.map((f) => ({
+      options: (fontFamilyOptions || fontFamilies).map((f) => ({
         value: f.value,
-        label: /* @__PURE__ */ import_react33.default.createElement("span", { style: { fontFamily: f.value } }, f.name)
+        label: /* @__PURE__ */ import_react32.default.createElement("span", { style: { fontFamily: f.value } }, f.name)
       })),
       onChange: (val) => editor.chain().focus().setFontFamily(val).run(),
       className: "richer-editor-select",
       placeholder: "Font Family",
       "aria-label": "Font Family"
     }
-  ), /* @__PURE__ */ import_react33.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("bold") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().toggleBold().run(), className: `richer-editor-button ${editor.isActive("bold") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bold, title: labels.bold }, /* @__PURE__ */ import_react33.default.createElement(BoldIcon_default, { size: 16 })), !excludeToolbarButtons.includes("italic") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().toggleItalic().run(), className: `richer-editor-button ${editor.isActive("italic") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.italic, title: labels.italic }, /* @__PURE__ */ import_react33.default.createElement(ItalicIcon_default, { size: 16 })), !excludeToolbarButtons.includes("underline") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().toggleUnderline().run(), className: `richer-editor-button ${editor.isActive("underline") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.underline, title: labels.underline }, /* @__PURE__ */ import_react33.default.createElement(UnderlineIcon_default, { size: 16 })), !excludeToolbarButtons.includes("strike") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().toggleStrike().run(), className: `richer-editor-button ${editor.isActive("strike") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.strike, title: labels.strike }, /* @__PURE__ */ import_react33.default.createElement(StrikeIcon_default, { size: 16 })), !excludeToolbarButtons.includes("highlight") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().toggleHighlight().run(), className: `richer-editor-button ${editor.isActive("highlight") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.highlight, title: labels.highlight }, /* @__PURE__ */ import_react33.default.createElement(Highlighter_default, { size: 16 })), !excludeToolbarButtons.includes("code") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().toggleCodeBlock().run(), className: `richer-editor-button ${editor.isActive("codeBlock") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.code, title: labels.code }, /* @__PURE__ */ import_react33.default.createElement(CodeIcon_default, { size: 16 })), /* @__PURE__ */ import_react33.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("bulletList") && /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().toggleBulletList().run(), className: `richer-editor-button ${editor.isActive("bulletList") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bulletList, title: labels.bulletList }, /* @__PURE__ */ import_react33.default.createElement(BulletListIcon_default, { size: 16 })), /* @__PURE__ */ import_react33.default.createElement(
+  ), /* @__PURE__ */ import_react32.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("bold") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().toggleBold().run(), className: `richer-editor-button ${editor.isActive("bold") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bold, title: labels.bold }, /* @__PURE__ */ import_react32.default.createElement(BoldIcon_default, { size: 16 })), !excludeToolbarButtons.includes("italic") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().toggleItalic().run(), className: `richer-editor-button ${editor.isActive("italic") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.italic, title: labels.italic }, /* @__PURE__ */ import_react32.default.createElement(ItalicIcon_default, { size: 16 })), !excludeToolbarButtons.includes("underline") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().toggleUnderline().run(), className: `richer-editor-button ${editor.isActive("underline") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.underline, title: labels.underline }, /* @__PURE__ */ import_react32.default.createElement(UnderlineIcon_default, { size: 16 })), !excludeToolbarButtons.includes("strike") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().toggleStrike().run(), className: `richer-editor-button ${editor.isActive("strike") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.strike, title: labels.strike }, /* @__PURE__ */ import_react32.default.createElement(StrikeIcon_default, { size: 16 })), !excludeToolbarButtons.includes("highlight") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().toggleHighlight().run(), className: `richer-editor-button ${editor.isActive("highlight") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.highlight, title: labels.highlight }, /* @__PURE__ */ import_react32.default.createElement(Highlighter_default, { size: 16 })), !excludeToolbarButtons.includes("code") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().toggleCodeBlock().run(), className: `richer-editor-button ${editor.isActive("codeBlock") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.code, title: labels.code }, /* @__PURE__ */ import_react32.default.createElement(CodeIcon_default, { size: 16 })), /* @__PURE__ */ import_react32.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("bulletList") && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().toggleBulletList().run(), className: `richer-editor-button ${editor.isActive("bulletList") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bulletList, title: labels.bulletList }, /* @__PURE__ */ import_react32.default.createElement(BulletListIcon_default, { size: 16 })), /* @__PURE__ */ import_react32.default.createElement(
     CustomSelect_default,
     {
       value: editor.getAttributes("bulletList").listStyleType || "",
-      options: unorderedListStyles.map((opt) => ({ value: opt.value, label: /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, opt.icon, " ", opt.name) })),
+      options: unorderedListStyles.map((opt) => ({ value: opt.value, label: /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, opt.icon, " ", opt.name) })),
       onChange: (val) => {
         if (editor.isActive("bulletList")) {
           editor.chain().focus().updateAttributes("bulletList", { listStyleType: val }).run();
@@ -1281,11 +1878,11 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       placeholder: "UL Style",
       "aria-label": "Unordered List Style"
     }
-  )), !excludeToolbarButtons.includes("orderedList") && /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().toggleOrderedList().run(), className: `richer-editor-button ${editor.isActive("orderedList") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.orderedList, title: labels.orderedList }, /* @__PURE__ */ import_react33.default.createElement(OrderedListIcon_default, { size: 16 })), /* @__PURE__ */ import_react33.default.createElement(
+  )), !excludeToolbarButtons.includes("orderedList") && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().toggleOrderedList().run(), className: `richer-editor-button ${editor.isActive("orderedList") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.orderedList, title: labels.orderedList }, /* @__PURE__ */ import_react32.default.createElement(OrderedListIcon_default, { size: 16 })), /* @__PURE__ */ import_react32.default.createElement(
     CustomSelect_default,
     {
       value: editor.getAttributes("orderedList").listStyleType || "",
-      options: orderedListStyles.map((opt) => ({ value: opt.value, label: /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, opt.icon, " ", opt.name) })),
+      options: orderedListStyles.map((opt) => ({ value: opt.value, label: /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, opt.icon, " ", opt.name) })),
       onChange: (val) => {
         if (editor.isActive("orderedList")) {
           editor.chain().focus().updateAttributes("orderedList", { listStyleType: val }).run();
@@ -1297,21 +1894,22 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       placeholder: "OL Style",
       "aria-label": "Ordered List Style"
     }
-  )), !excludeToolbarButtons.includes("taskList") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().toggleTaskList().run(), className: `richer-editor-button ${editor.isActive("taskList") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.taskList, title: labels.taskList }, /* @__PURE__ */ import_react33.default.createElement(TaskListIcon_default, { size: 16 })), /* @__PURE__ */ import_react33.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("blockquote") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().toggleBlockquote().run(), className: `richer-editor-button ${editor.isActive("blockquote") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.blockquote, title: labels.blockquote }, /* @__PURE__ */ import_react33.default.createElement(BlockquoteIcon_default, { size: 16 })), !excludeToolbarButtons.includes("hr") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().setHorizontalRule().run(), className: "richer-editor-button", type: "button", "aria-label": labels.hr, title: labels.hr }, "HR"), /* @__PURE__ */ import_react33.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("table") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run(), className: "richer-editor-button", type: "button", "aria-label": labels.table, title: labels.table }, /* @__PURE__ */ import_react33.default.createElement(TableIcon_default, { size: 16 })), /* @__PURE__ */ import_react33.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("link") && /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement(
+  )), !excludeToolbarButtons.includes("taskList") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().toggleTaskList().run(), className: `richer-editor-button ${editor.isActive("taskList") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.taskList, title: labels.taskList }, /* @__PURE__ */ import_react32.default.createElement(TaskListIcon_default, { size: 16 })), /* @__PURE__ */ import_react32.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("blockquote") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().toggleBlockquote().run(), className: `richer-editor-button ${editor.isActive("blockquote") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.blockquote, title: labels.blockquote }, /* @__PURE__ */ import_react32.default.createElement(BlockquoteIcon_default, { size: 16 })), !excludeToolbarButtons.includes("hr") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().setHorizontalRule().run(), className: "richer-editor-button", type: "button", "aria-label": labels.hr, title: labels.hr }, "HR"), /* @__PURE__ */ import_react32.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("link") && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, /* @__PURE__ */ import_react32.default.createElement(
     "button",
     {
       ref: linkButtonRef,
       onClick: () => {
         setLinkPopoverOpen((open) => !open);
         setLinkUrl(editor.getAttributes("link").href || "");
+        setLinkTarget(editor.getAttributes("link").target || "_blank");
       },
       className: `richer-editor-button${editor.isActive("link") ? " richer-editor-buttonActive" : ""}`,
       type: "button",
       "aria-label": labels.link,
       title: labels.link
     },
-    /* @__PURE__ */ import_react33.default.createElement(LinkIcon_default, { size: 16 })
-  ), /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement(LinkIcon_default, { size: 16 })
+  ), /* @__PURE__ */ import_react32.default.createElement(
     CustomPopover_default,
     {
       open: linkPopoverOpen,
@@ -1320,8 +1918,8 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       closeButton: true,
       onEsc: () => setLinkPopoverOpen(false)
     },
-    /* @__PURE__ */ import_react33.default.createElement("div", { className: "mb-2 font-semibold text-base" }, "Insert Link"),
-    /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement("div", { className: "mb-2 font-semibold text-base" }, "Insert Link"),
+    /* @__PURE__ */ import_react32.default.createElement(
       "input",
       {
         type: "text",
@@ -1332,7 +1930,21 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         autoFocus: true
       }
     ),
-    /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-flexRow" }, /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement(
+      "select",
+      {
+        name: "target",
+        value: linkTarget,
+        onChange: (e) => setLinkTarget(e.target.value),
+        className: "richer-editor-input",
+        style: { marginBottom: 8 }
+      },
+      /* @__PURE__ */ import_react32.default.createElement("option", { value: "_blank" }, "New Tab (_blank)"),
+      /* @__PURE__ */ import_react32.default.createElement("option", { value: "_self" }, "Same Tab (_self)"),
+      /* @__PURE__ */ import_react32.default.createElement("option", { value: "_parent" }, "Parent Frame (_parent)"),
+      /* @__PURE__ */ import_react32.default.createElement("option", { value: "_top" }, "Top Frame (_top)")
+    ),
+    /* @__PURE__ */ import_react32.default.createElement("div", { className: "richer-editor-flexRow" }, /* @__PURE__ */ import_react32.default.createElement(
       "button",
       {
         className: "richer-editor-primaryBtn",
@@ -1340,7 +1952,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         disabled: !linkUrl
       },
       labels.insert
-    ), /* @__PURE__ */ import_react33.default.createElement(
+    ), /* @__PURE__ */ import_react32.default.createElement(
       "button",
       {
         className: "richer-editor-secondaryBtn",
@@ -1349,7 +1961,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       },
       labels.remove
     ))
-  )), !excludeToolbarButtons.includes("image") && /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement(
+  )), !excludeToolbarButtons.includes("image") && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, /* @__PURE__ */ import_react32.default.createElement(
     "button",
     {
       ref: imageButtonRef,
@@ -1360,8 +1972,8 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       className: "richer-editor-button",
       type: "button"
     },
-    /* @__PURE__ */ import_react33.default.createElement(ImageIcon_default, { size: 16 })
-  ), /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement(ImageIcon_default, { size: 16 })
+  ), /* @__PURE__ */ import_react32.default.createElement(
     CustomPopover_default,
     {
       open: imagePopoverOpen,
@@ -1370,8 +1982,8 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       closeButton: true,
       onEsc: () => setImagePopoverOpen(false)
     },
-    /* @__PURE__ */ import_react33.default.createElement("div", { className: "mb-2 font-semibold text-base flex gap-4 border-b pb-2" }, /* @__PURE__ */ import_react33.default.createElement("button", { className: `richer-editor-button${imageTab === "url" ? " richer-editor-buttonActive" : ""}`, onClick: () => setImageTab("url") }, "URL"), imageUploadUrl && /* @__PURE__ */ import_react33.default.createElement("button", { className: `richer-editor-button${imageTab === "upload" ? " richer-editor-buttonActive" : ""}`, onClick: () => setImageTab("upload") }, "Upload")),
-    imageTab === "url" && /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement("div", { className: "mb-2 font-semibold text-base flex gap-4 border-b pb-2" }, /* @__PURE__ */ import_react32.default.createElement("button", { className: `richer-editor-button${imageTab === "url" ? " richer-editor-buttonActive" : ""}`, onClick: () => setImageTab("url") }, "URL"), imageUploadUrl && /* @__PURE__ */ import_react32.default.createElement("button", { className: `richer-editor-button${imageTab === "upload" ? " richer-editor-buttonActive" : ""}`, onClick: () => setImageTab("upload") }, "Upload")),
+    imageTab === "url" && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, /* @__PURE__ */ import_react32.default.createElement(
       "input",
       {
         type: "text",
@@ -1381,7 +1993,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         className: "richer-editor-input",
         autoFocus: true
       }
-    ), /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react33.default.createElement(
+    ), /* @__PURE__ */ import_react32.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react32.default.createElement(
       "input",
       {
         type: "text",
@@ -1390,7 +2002,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         onChange: (e) => setImageWidth(e.target.value),
         className: "richer-editor-input"
       }
-    ), /* @__PURE__ */ import_react33.default.createElement(
+    ), /* @__PURE__ */ import_react32.default.createElement(
       "input",
       {
         type: "text",
@@ -1399,7 +2011,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         onChange: (e) => setImageHeight(e.target.value),
         className: "richer-editor-input"
       }
-    )), /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-textXs" }, "Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%)."), /* @__PURE__ */ import_react33.default.createElement(
+    )), /* @__PURE__ */ import_react32.default.createElement("div", { className: "richer-editor-textXs" }, "Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%)."), /* @__PURE__ */ import_react32.default.createElement(
       "button",
       {
         className: "richer-editor-primaryBtn",
@@ -1408,7 +2020,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       },
       labels.image
     )),
-    imageTab === "upload" && imageUploadUrl && /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, !uploadedImageUrl && /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement(
+    imageTab === "upload" && imageUploadUrl && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, !uploadedImageUrl && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, /* @__PURE__ */ import_react32.default.createElement(
       "input",
       {
         type: "file",
@@ -1417,7 +2029,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         className: "mb2",
         disabled: uploading
       }
-    ), uploading && /* @__PURE__ */ import_react33.default.createElement("div", { className: "text-sm text-blue-600 mb-2" }, "Uploading..."), uploadError && /* @__PURE__ */ import_react33.default.createElement("div", { className: "text-sm text-red-600 mb-2" }, uploadError)), uploadedImageUrl && /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement("div", { className: "mb-2 flex flex-col items-center" }, /* @__PURE__ */ import_react33.default.createElement("img", { src: uploadedImageUrl, alt: "Preview", className: "max-h-40 max-w-full rounded border mb-2" })), /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react33.default.createElement(
+    ), uploading && /* @__PURE__ */ import_react32.default.createElement("div", { className: "text-sm text-blue-600 mb-2" }, "Uploading..."), uploadError && /* @__PURE__ */ import_react32.default.createElement("div", { className: "text-sm text-red-600 mb-2" }, uploadError)), uploadedImageUrl && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, /* @__PURE__ */ import_react32.default.createElement("div", { className: "mb-2 flex flex-col items-center" }, /* @__PURE__ */ import_react32.default.createElement("img", { src: uploadedImageUrl, alt: "Preview", className: "max-h-40 max-w-full rounded border mb-2" })), /* @__PURE__ */ import_react32.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react32.default.createElement(
       "input",
       {
         type: "text",
@@ -1426,7 +2038,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         onChange: (e) => setImageWidth(e.target.value),
         className: "richer-editor-input"
       }
-    ), /* @__PURE__ */ import_react33.default.createElement(
+    ), /* @__PURE__ */ import_react32.default.createElement(
       "input",
       {
         type: "text",
@@ -1435,14 +2047,14 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         onChange: (e) => setImageHeight(e.target.value),
         className: "richer-editor-input"
       }
-    )), /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-flexRow" }, /* @__PURE__ */ import_react33.default.createElement(
+    )), /* @__PURE__ */ import_react32.default.createElement("div", { className: "richer-editor-flexRow" }, /* @__PURE__ */ import_react32.default.createElement(
       "button",
       {
         className: "richer-editor-primaryBtn",
         onClick: handleUploadedImageInsert
       },
       labels.add
-    ), /* @__PURE__ */ import_react33.default.createElement(
+    ), /* @__PURE__ */ import_react32.default.createElement(
       "button",
       {
         className: "richer-editor-secondaryBtn",
@@ -1456,7 +2068,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       },
       labels.cancel
     ))))
-  )), !excludeToolbarButtons.includes("video") && /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement(
+  )), !excludeToolbarButtons.includes("video") && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, /* @__PURE__ */ import_react32.default.createElement(
     "button",
     {
       ref: videoButtonRef,
@@ -1464,8 +2076,8 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       className: "richer-editor-button",
       type: "button"
     },
-    /* @__PURE__ */ import_react33.default.createElement(VideoIcon_default, { size: 16 })
-  ), /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement(VideoIcon_default, { size: 16 })
+  ), /* @__PURE__ */ import_react32.default.createElement(
     CustomPopover_default,
     {
       open: videoPopoverOpen,
@@ -1474,8 +2086,8 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       closeButton: true,
       onEsc: () => setVideoPopoverOpen(false)
     },
-    /* @__PURE__ */ import_react33.default.createElement("div", { className: "mb-2 font-semibold text-base" }, "Insert YouTube Video"),
-    /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement("div", { className: "mb-2 font-semibold text-base" }, "Insert YouTube Video"),
+    /* @__PURE__ */ import_react32.default.createElement(
       "input",
       {
         type: "text",
@@ -1486,7 +2098,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         autoFocus: true
       }
     ),
-    /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react32.default.createElement(
       "input",
       {
         type: "text",
@@ -1495,7 +2107,7 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         onChange: (e) => setVideoWidth(e.target.value),
         className: "richer-editor-input"
       }
-    ), /* @__PURE__ */ import_react33.default.createElement(
+    ), /* @__PURE__ */ import_react32.default.createElement(
       "input",
       {
         type: "text",
@@ -1505,8 +2117,8 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
         className: "richer-editor-input"
       }
     )),
-    /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-textXs" }, "Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%)."),
-    /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement("div", { className: "richer-editor-textXs" }, "Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%)."),
+    /* @__PURE__ */ import_react32.default.createElement(
       "button",
       {
         className: "richer-editor-primaryBtn",
@@ -1515,31 +2127,168 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       },
       labels.video
     )
-  )), !excludeToolbarButtons.includes("alignLeft") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().setTextAlign("left").run(), className: `richer-editor-button ${editor.isActive({ textAlign: "left" }) ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.alignLeft, title: labels.alignLeft }, /* @__PURE__ */ import_react33.default.createElement(AlignLeft_default, { size: 16 })), !excludeToolbarButtons.includes("alignCenter") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().setTextAlign("center").run(), className: `richer-editor-button ${editor.isActive({ textAlign: "center" }) ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.alignCenter, title: labels.alignCenter }, /* @__PURE__ */ import_react33.default.createElement(AlignCenter_default, { size: 16 })), !excludeToolbarButtons.includes("alignRight") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().setTextAlign("right").run(), className: `richer-editor-button ${editor.isActive({ textAlign: "right" }) ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.alignRight, title: labels.alignRight }, /* @__PURE__ */ import_react33.default.createElement(AlignRight_default, { size: 16 })), !excludeToolbarButtons.includes("alignJustify") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().setTextAlign("justify").run(), className: `richer-editor-button ${editor.isActive({ textAlign: "justify" }) ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.alignJustify, title: labels.alignJustify }, /* @__PURE__ */ import_react33.default.createElement(AlignJustify_default, { size: 16 })), !excludeToolbarButtons.includes("textColor") && /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-colorpicker", style: { height: 28 }, title: labels.textColor, "aria-label": labels.textColor }, /* @__PURE__ */ import_react33.default.createElement(TextColorIcon_default, { size: 16 }), /* @__PURE__ */ import_react33.default.createElement(
-    "input",
+  )), !excludeToolbarButtons.includes("alignLeft") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().setTextAlign("left").run(), className: `richer-editor-button ${editor.isActive({ textAlign: "left" }) ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.alignLeft, title: labels.alignLeft }, /* @__PURE__ */ import_react32.default.createElement(AlignLeft_default, { size: 16 })), !excludeToolbarButtons.includes("alignCenter") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().setTextAlign("center").run(), className: `richer-editor-button ${editor.isActive({ textAlign: "center" }) ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.alignCenter, title: labels.alignCenter }, /* @__PURE__ */ import_react32.default.createElement(AlignCenter_default, { size: 16 })), !excludeToolbarButtons.includes("alignRight") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().setTextAlign("right").run(), className: `richer-editor-button ${editor.isActive({ textAlign: "right" }) ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.alignRight, title: labels.alignRight }, /* @__PURE__ */ import_react32.default.createElement(AlignRight_default, { size: 16 })), !excludeToolbarButtons.includes("alignJustify") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().setTextAlign("justify").run(), className: `richer-editor-button ${editor.isActive({ textAlign: "justify" }) ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.alignJustify, title: labels.alignJustify }, /* @__PURE__ */ import_react32.default.createElement(AlignJustify_default, { size: 16 })), !excludeToolbarButtons.includes("textColor") && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, /* @__PURE__ */ import_react32.default.createElement(
+    "button",
     {
-      type: "color",
-      value: editor.getAttributes("textStyle").color || "#000000",
-      onChange: (e) => {
-        editor.commands.focus();
-        editor.commands.setColor(e.target.value);
-      },
-      style: { width: 20, height: 20, border: "none", background: "none", cursor: "pointer", padding: 0 },
-      className: "richer-editor-colorInput"
-    }
-  )), !excludeToolbarButtons.includes("bgColor") && /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-colorpicker", style: { height: 28 }, title: labels.bgColor, "aria-label": labels.bgColor }, /* @__PURE__ */ import_react33.default.createElement(PaintBucket_default, { size: 16 }), /* @__PURE__ */ import_react33.default.createElement(
-    "input",
+      ref: textColorButtonRef,
+      onClick: () => setTextColorPopoverOpen((open) => !open),
+      className: `richer-editor-button${editor.getAttributes("textStyle").color ? " richer-editor-buttonActive" : ""}`,
+      type: "button",
+      "aria-label": labels.textColor,
+      title: labels.textColor,
+      style: { position: "relative", display: "flex", alignItems: "center", gap: 4 }
+    },
+    /* @__PURE__ */ import_react32.default.createElement(TextColorIcon_default, { size: 16 }),
+    /* @__PURE__ */ import_react32.default.createElement("span", { style: {
+      display: "inline-block",
+      width: 14,
+      height: 14,
+      borderRadius: "50%",
+      background: editor.getAttributes("textStyle").color || "#000",
+      border: "1px solid #ccc",
+      marginLeft: 2
+    } })
+  ), /* @__PURE__ */ import_react32.default.createElement(
+    CustomPopover_default,
     {
-      type: "color",
-      value: editor.getAttributes("highlight").color || "#ffff00",
-      onChange: (e) => {
-        editor.commands.focus();
-        editor.commands.setHighlight({ color: e.target.value });
+      open: textColorPopoverOpen,
+      onOpenChange: setTextColorPopoverOpen,
+      anchorEl: textColorButtonRef.current,
+      closeButton: true,
+      onEsc: () => setTextColorPopoverOpen(false)
+    },
+    /* @__PURE__ */ import_react32.default.createElement("div", { style: { minWidth: 200, padding: 16 } }, editor.getAttributes("textStyle").color && /* @__PURE__ */ import_react32.default.createElement(
+      "button",
+      {
+        className: "richer-editor-secondaryBtn mb-2 w-full",
+        onClick: () => {
+          editor.commands.focus();
+          editor.commands.unsetColor();
+          setTextColorPopoverOpen(false);
+        },
+        style: { marginBottom: 8, width: "100%" }
       },
-      style: { width: 20, height: 20, border: "none", background: "none", cursor: "pointer", padding: 0 },
-      className: "richer-editor-colorInput"
-    }
-  )), !excludeToolbarButtons.includes("subscript") && /* @__PURE__ */ import_react33.default.createElement(
+      "Remove Color"
+    ), /* @__PURE__ */ import_react32.default.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: 8, marginBottom: 12 } }, colorPalette.map((color) => /* @__PURE__ */ import_react32.default.createElement(
+      "button",
+      {
+        key: color,
+        type: "button",
+        "aria-label": `Select text color ${color}`,
+        onClick: () => {
+          editor.commands.focus();
+          editor.commands.setColor(color);
+          setTextColorPopoverOpen(false);
+        },
+        style: {
+          background: color,
+          width: 22,
+          height: 22,
+          borderRadius: "50%",
+          border: editor.getAttributes("textStyle").color === color ? "2px solid #333" : "1px solid #ccc",
+          outline: "none",
+          cursor: "pointer",
+          boxSizing: "border-box"
+        },
+        tabIndex: 0
+      }
+    ))), /* @__PURE__ */ import_react32.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: 8 } }, /* @__PURE__ */ import_react32.default.createElement(TextColorIcon_default, { size: 16 }), /* @__PURE__ */ import_react32.default.createElement(
+      "input",
+      {
+        type: "color",
+        value: editor.getAttributes("textStyle").color || "#000000",
+        onChange: (e) => {
+          editor.commands.focus();
+          editor.commands.setColor(e.target.value);
+          setTextColorPopoverOpen(false);
+        },
+        style: { width: 28, height: 28, border: "none", background: "none", cursor: "pointer", padding: 0 },
+        className: "richer-editor-colorInput",
+        "aria-label": "Custom text color picker"
+      }
+    )))
+  )), !excludeToolbarButtons.includes("bgColor") && /* @__PURE__ */ import_react32.default.createElement(import_react32.default.Fragment, null, /* @__PURE__ */ import_react32.default.createElement(
+    "button",
+    {
+      ref: bgColorButtonRef,
+      onClick: () => setBgColorPopoverOpen((open) => !open),
+      className: `richer-editor-button${editor.getAttributes("highlight").color ? " richer-editor-buttonActive" : ""}`,
+      type: "button",
+      "aria-label": labels.bgColor,
+      title: labels.bgColor,
+      style: { position: "relative", display: "flex", alignItems: "center", gap: 4 }
+    },
+    /* @__PURE__ */ import_react32.default.createElement(PaintBucket_default, { size: 16 }),
+    /* @__PURE__ */ import_react32.default.createElement("span", { style: {
+      display: "inline-block",
+      width: 14,
+      height: 14,
+      borderRadius: "50%",
+      background: editor.getAttributes("highlight").color || "#ffff00",
+      border: "1px solid #ccc",
+      marginLeft: 2
+    } })
+  ), /* @__PURE__ */ import_react32.default.createElement(
+    CustomPopover_default,
+    {
+      open: bgColorPopoverOpen,
+      onOpenChange: setBgColorPopoverOpen,
+      anchorEl: bgColorButtonRef.current,
+      closeButton: true,
+      onEsc: () => setBgColorPopoverOpen(false)
+    },
+    /* @__PURE__ */ import_react32.default.createElement("div", { style: { minWidth: 200, padding: 16 } }, editor.getAttributes("highlight").color && /* @__PURE__ */ import_react32.default.createElement(
+      "button",
+      {
+        className: "richer-editor-secondaryBtn mb-2 w-full",
+        onClick: () => {
+          editor.commands.focus();
+          editor.commands.setHighlight({ color: null });
+          editor.commands.unsetHighlight();
+          setBgColorPopoverOpen(false);
+        },
+        style: { marginBottom: 8, width: "100%" }
+      },
+      "Remove Color"
+    ), /* @__PURE__ */ import_react32.default.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: 8, marginBottom: 12 } }, colorPalette.map((color) => /* @__PURE__ */ import_react32.default.createElement(
+      "button",
+      {
+        key: color,
+        type: "button",
+        "aria-label": `Select background color ${color}`,
+        onClick: () => {
+          editor.commands.focus();
+          editor.commands.setHighlight({ color });
+          setBgColorPopoverOpen(false);
+        },
+        style: {
+          background: color,
+          width: 22,
+          height: 22,
+          borderRadius: "50%",
+          border: editor.getAttributes("highlight").color === color ? "2px solid #333" : "1px solid #ccc",
+          outline: "none",
+          cursor: "pointer",
+          boxSizing: "border-box"
+        },
+        tabIndex: 0
+      }
+    ))), /* @__PURE__ */ import_react32.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: 8 } }, /* @__PURE__ */ import_react32.default.createElement(PaintBucket_default, { size: 16 }), /* @__PURE__ */ import_react32.default.createElement(
+      "input",
+      {
+        type: "color",
+        value: editor.getAttributes("highlight").color || "#ffff00",
+        onChange: (e) => {
+          editor.commands.focus();
+          editor.commands.setHighlight({ color: e.target.value });
+          setBgColorPopoverOpen(false);
+        },
+        style: { width: 28, height: 28, border: "none", background: "none", cursor: "pointer", padding: 0 },
+        className: "richer-editor-colorInput",
+        "aria-label": "Custom background color picker"
+      }
+    )))
+  )), !excludeToolbarButtons.includes("subscript") && /* @__PURE__ */ import_react32.default.createElement(
     "button",
     {
       onClick: () => editor.chain().focus().toggleSubscript().run(),
@@ -1548,8 +2297,8 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       title: "Subscript",
       "aria-label": labels.subscript
     },
-    /* @__PURE__ */ import_react33.default.createElement(SubscriptIcon_default, { size: 16 })
-  ), !excludeToolbarButtons.includes("superscript") && /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement(SubscriptIcon_default, { size: 16 })
+  ), !excludeToolbarButtons.includes("superscript") && /* @__PURE__ */ import_react32.default.createElement(
     "button",
     {
       onClick: () => editor.chain().focus().toggleSuperscript().run(),
@@ -1558,8 +2307,8 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }
       title: "Superscript",
       "aria-label": labels.superscript
     },
-    /* @__PURE__ */ import_react33.default.createElement(SuperscriptIcon_default, { size: 16 })
-  ), /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-ml2" }), !excludeToolbarButtons.includes("undo") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().undo().run(), className: "richer-editor-button", type: "button", "aria-label": labels.undo, title: labels.undo }, /* @__PURE__ */ import_react33.default.createElement(UndoIcon_default, { size: 16 })), !excludeToolbarButtons.includes("redo") && /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => editor.chain().focus().redo().run(), className: "richer-editor-button", type: "button", "aria-label": labels.redo, title: labels.redo }, /* @__PURE__ */ import_react33.default.createElement(RedoIcon_default, { size: 16 })));
+    /* @__PURE__ */ import_react32.default.createElement(SuperscriptIcon_default, { size: 16 })
+  ), /* @__PURE__ */ import_react32.default.createElement("div", { className: "richer-editor-ml2" }), !excludeToolbarButtons.includes("undo") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().undo().run(), className: "richer-editor-button", type: "button", "aria-label": labels.undo, title: labels.undo }, /* @__PURE__ */ import_react32.default.createElement(UndoIcon_default, { size: 16 })), !excludeToolbarButtons.includes("redo") && /* @__PURE__ */ import_react32.default.createElement("button", { onClick: () => editor.chain().focus().redo().run(), className: "richer-editor-button", type: "button", "aria-label": labels.redo, title: labels.redo }, /* @__PURE__ */ import_react32.default.createElement(RedoIcon_default, { size: 16 })));
 };
 var getSafeContent = (content, outputFormat) => {
   if (outputFormat === "json") {
@@ -1586,6 +2335,48 @@ var getSafeContent = (content, outputFormat) => {
     return "";
   }
 };
+var colorPalette = [
+  "#000000",
+  "#434343",
+  "#666666",
+  "#999999",
+  "#b7b7b7",
+  "#cccccc",
+  "#e6e6e6",
+  "#ffffff",
+  "#ff0000",
+  "#ff9900",
+  "#ffff00",
+  "#00ff00",
+  "#00b050",
+  "#00b0f0",
+  "#0070c0",
+  "#002060",
+  "#7030a0",
+  "#ff00ff",
+  "#ffb6c1",
+  "#f4cccc",
+  "#fce5cd",
+  "#fff2cc",
+  "#d9ead3",
+  "#d0e0e3",
+  "#cfe2f3",
+  "#c9daf8",
+  "#b4a7d6",
+  "#d9d2e9",
+  "#ead1dc",
+  "#f9cb9c",
+  "#ffe599",
+  "#b6d7a8",
+  "#a2c4c9",
+  "#a4c2f4",
+  "#6fa8dc",
+  "#8e7cc3",
+  "#b4a7d6",
+  "#d5a6bd",
+  "#e06666",
+  "#f6b26b"
+];
 var RicherEditor = ({
   content = "",
   onChange,
@@ -1599,38 +2390,24 @@ var RicherEditor = ({
   className = "",
   excludeToolbarButtons = [],
   style = {},
-  i18n = {}
+  i18n = {},
+  fontSizeOptions,
+  fontFamilyOptions
 }) => {
   var _a;
-  const safeContent = import_react33.default.useMemo(() => getSafeContent(content, outputFormat), [content, outputFormat]);
-  const editor = (0, import_react34.useEditor)({
+  const safeContent = import_react32.default.useMemo(() => getSafeContent(content, outputFormat), [content, outputFormat]);
+  const editor = (0, import_react33.useEditor)({
     extensions: [
       import_starter_kit.default,
       import_extension_link.default.configure({ openOnClick: true }),
-      import_extension_image.default,
-      import_extension_heading.default.configure({ levels: [1, 2, 3, 4, 5, 6] }),
       CustomBulletList,
       CustomOrderedList,
-      import_extension_list_item.default,
-      import_extension_bold.default,
-      import_extension_italic.default,
-      import_extension_underline.default,
-      import_extension_strike.default,
-      import_extension_blockquote.default,
-      import_extension_code_block.default,
-      import_extension_horizontal_rule.default,
       import_extension_text_align.default.configure({ types: ["heading", "paragraph"] }),
-      import_extension_table.Table.configure({ resizable: true }),
-      import_extension_table_row.default,
-      import_extension_table_cell.default,
-      import_extension_table_header.default,
-      import_extension_dropcursor.default,
-      import_extension_gapcursor.default,
+      import_extension_image.default,
       import_extension_task_list.default,
       import_extension_task_item.default,
       import_extension_superscript.default,
       import_extension_subscript.default,
-      import_extension_typography.default,
       import_extension_youtube.default.configure({
         controls: true,
         allowFullscreen: true,
@@ -1656,7 +2433,7 @@ var RicherEditor = ({
     editorProps: {
       ...editorProps,
       attributes: {
-        class: `richer-editor-textarea prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg sm:prose-base prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full ${className || ""}`,
+        class: `richer-editor-textarea ${className || ""}`,
         style: `${minHeight ? `min-height:${minHeight};` : ""}${((_a = editorProps == null ? void 0 : editorProps.attributes) == null ? void 0 : _a.style) || ""}`,
         spellCheck: "true",
         readOnly: readOnly ? "true" : void 0,
@@ -1676,7 +2453,7 @@ var RicherEditor = ({
     editable: !readOnly,
     immediatelyRender: false
   });
-  import_react33.default.useEffect(() => {
+  import_react32.default.useEffect(() => {
     if (editor && content !== void 0) {
       const current = outputFormat === "json" ? editor.getJSON() : editor.getHTML();
       if (outputFormat === "json") {
@@ -1698,29 +2475,23 @@ var RicherEditor = ({
       }
     }
   }, [content]);
-  return /* @__PURE__ */ import_react33.default.createElement("div", { className: `richer-editor-roundedMdBorder ${className || ""}`, style }, /* @__PURE__ */ import_react33.default.createElement(MenuBar, { editor, imageUploadUrl, excludeToolbarButtons, i18n }), /* @__PURE__ */ import_react33.default.createElement("div", { className: "richer-editor-overflowAuto", style: { maxHeight } }, /* @__PURE__ */ import_react33.default.createElement(import_react34.EditorContent, { editor })));
+  return /* @__PURE__ */ import_react32.default.createElement("div", { className: `richer-editor-roundedMdBorder` }, /* @__PURE__ */ import_react32.default.createElement(MenuBar, { editor, imageUploadUrl, excludeToolbarButtons, i18n, fontSizeOptions, fontFamilyOptions }), /* @__PURE__ */ import_react32.default.createElement("div", { className: "richer-editor-overflowAuto", style: { maxHeight } }, /* @__PURE__ */ import_react32.default.createElement(import_react33.EditorContent, { editor })));
 };
 var RicherEditor_default = RicherEditor;
 
 // src/components/SmallRicherEditor.tsx
-var import_react35 = __toESM(require("react"));
-var import_react36 = require("@tiptap/react");
+var import_react34 = __toESM(require("react"));
+var import_react35 = require("@tiptap/react");
 var import_starter_kit2 = __toESM(require("@tiptap/starter-kit"));
 var import_extension_link2 = __toESM(require("@tiptap/extension-link"));
-var import_extension_image2 = __toESM(require("@tiptap/extension-image"));
-var import_extension_bold2 = __toESM(require("@tiptap/extension-bold"));
-var import_extension_underline2 = __toESM(require("@tiptap/extension-underline"));
 var import_extension_highlight2 = __toESM(require("@tiptap/extension-highlight"));
-var import_extension_code_block2 = __toESM(require("@tiptap/extension-code-block"));
 var import_extension_youtube2 = __toESM(require("@tiptap/extension-youtube"));
 var import_extension_text_align2 = __toESM(require("@tiptap/extension-text-align"));
-var import_extension_list_item2 = require("@tiptap/extension-list-item");
-var import_extension_bullet_list2 = require("@tiptap/extension-bullet-list");
-var import_extension_ordered_list2 = require("@tiptap/extension-ordered-list");
 var import_extension_text_style2 = require("@tiptap/extension-text-style");
 var import_extension_font_size2 = __toESM(require("@tiptap/extension-font-size"));
 var import_extension_placeholder2 = __toESM(require("@tiptap/extension-placeholder"));
-var import_RicherEditor2 = require("./RicherEditor-AV2BARFI.css");
+var import_extension_image2 = __toESM(require("@tiptap/extension-image"));
+var import_RicherEditor2 = require("./RicherEditor-FUKY63WW.css");
 var fontSizes2 = [
   { name: "10px", value: "10px" },
   { name: "12px", value: "12px" },
@@ -1735,11 +2506,19 @@ var fontSizes2 = [
   { name: "30px", value: "30px" },
   { name: "32px", value: "32px" }
 ];
+var fontFamilies2 = [
+  { name: "Sans-serif", value: "sans-serif" },
+  { name: "Serif", value: "serif" },
+  { name: "Monospace", value: "monospace" },
+  { name: "Arial", value: "Arial, sans-serif" },
+  { name: "Georgia", value: "Georgia, serif" },
+  { name: "Inter", value: "Inter, sans-serif" }
+];
 var alignmentOptions = [
-  { value: "left", label: /* @__PURE__ */ import_react35.default.createElement(AlignLeft_default, { size: 18 }), name: "Left" },
-  { value: "center", label: /* @__PURE__ */ import_react35.default.createElement(AlignCenter_default, { size: 18 }), name: "Center" },
-  { value: "right", label: /* @__PURE__ */ import_react35.default.createElement(AlignRight_default, { size: 18 }), name: "Right" },
-  { value: "justify", label: /* @__PURE__ */ import_react35.default.createElement(AlignJustify_default, { size: 18 }), name: "Justify" }
+  { value: "left", label: /* @__PURE__ */ import_react34.default.createElement(AlignLeft_default, { size: 18 }), name: "Left" },
+  { value: "center", label: /* @__PURE__ */ import_react34.default.createElement(AlignCenter_default, { size: 18 }), name: "Center" },
+  { value: "right", label: /* @__PURE__ */ import_react34.default.createElement(AlignRight_default, { size: 18 }), name: "Right" },
+  { value: "justify", label: /* @__PURE__ */ import_react34.default.createElement(AlignJustify_default, { size: 18 }), name: "Justify" }
 ];
 var defaultI18n2 = {
   bold: "Bold",
@@ -1758,27 +2537,28 @@ var defaultI18n2 = {
   cancel: "Cancel",
   fontSize: "Font Size"
 };
-var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} }) => {
-  const [imagePopoverOpen, setImagePopoverOpen] = (0, import_react35.useState)(false);
-  const [imageTab, setImageTab] = (0, import_react35.useState)("url");
-  const [imageUrl, setImageUrl] = (0, import_react35.useState)("");
-  const [imageWidth, setImageWidth] = (0, import_react35.useState)("");
-  const [imageHeight, setImageHeight] = (0, import_react35.useState)("");
-  const [uploading, setUploading] = (0, import_react35.useState)(false);
-  const [uploadError, setUploadError] = (0, import_react35.useState)(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = (0, import_react35.useState)("");
-  const [imageFile, setImageFile] = (0, import_react35.useState)(null);
-  const [videoPopoverOpen, setVideoPopoverOpen] = (0, import_react35.useState)(false);
-  const [videoUrl, setVideoUrl] = (0, import_react35.useState)("");
-  const [videoWidth, setVideoWidth] = (0, import_react35.useState)("");
-  const [videoHeight, setVideoHeight] = (0, import_react35.useState)("");
-  const [linkPopoverOpen, setLinkPopoverOpen] = (0, import_react35.useState)(false);
-  const [linkUrl, setLinkUrl] = (0, import_react35.useState)("");
-  const linkButtonRef = import_react35.default.useRef(null);
-  const imageButtonRef = import_react35.default.useRef(null);
-  const videoButtonRef = import_react35.default.useRef(null);
+var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, fontSizeOptions, fontFamilyOptions }) => {
+  const [imagePopoverOpen, setImagePopoverOpen] = (0, import_react34.useState)(false);
+  const [imageTab, setImageTab] = (0, import_react34.useState)("url");
+  const [imageUrl, setImageUrl] = (0, import_react34.useState)("");
+  const [imageWidth, setImageWidth] = (0, import_react34.useState)("");
+  const [imageHeight, setImageHeight] = (0, import_react34.useState)("");
+  const [uploading, setUploading] = (0, import_react34.useState)(false);
+  const [uploadError, setUploadError] = (0, import_react34.useState)(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = (0, import_react34.useState)("");
+  const [imageFile, setImageFile] = (0, import_react34.useState)(null);
+  const [videoPopoverOpen, setVideoPopoverOpen] = (0, import_react34.useState)(false);
+  const [videoUrl, setVideoUrl] = (0, import_react34.useState)("");
+  const [videoWidth, setVideoWidth] = (0, import_react34.useState)("");
+  const [videoHeight, setVideoHeight] = (0, import_react34.useState)("");
+  const [linkPopoverOpen, setLinkPopoverOpen] = (0, import_react34.useState)(false);
+  const [linkUrl, setLinkUrl] = (0, import_react34.useState)("");
+  const [linkTarget, setLinkTarget] = (0, import_react34.useState)("_blank");
+  const linkButtonRef = import_react34.default.useRef(null);
+  const imageButtonRef = import_react34.default.useRef(null);
+  const videoButtonRef = import_react34.default.useRef(null);
   const labels = { ...defaultI18n2, ...i18n };
-  const handleImageUrlInsert = (0, import_react35.useCallback)(() => {
+  const handleImageUrlInsert = (0, import_react34.useCallback)(() => {
     if (imageUrl) {
       const attrs = { src: imageUrl };
       if (imageWidth) attrs.width = imageWidth;
@@ -1836,7 +2616,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       setImageTab("url");
     }
   };
-  const handleVideoUrlInsert = (0, import_react35.useCallback)(() => {
+  const handleVideoUrlInsert = (0, import_react34.useCallback)(() => {
     if (videoUrl) {
       const attrs = { src: videoUrl };
       if (videoWidth) attrs.width = videoWidth;
@@ -1848,44 +2628,56 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       setVideoHeight("");
     }
   }, [editor, videoUrl, videoWidth, videoHeight]);
-  const handleLinkInsert = (0, import_react35.useCallback)(() => {
+  const handleLinkInsert = (0, import_react34.useCallback)(() => {
     if (linkUrl) {
-      editor.chain().focus().setLink({ href: linkUrl }).run();
+      editor.chain().focus().setLink({ href: linkUrl, target: linkTarget }).run();
       setLinkPopoverOpen(false);
       setLinkUrl("");
+      setLinkTarget("_blank");
     }
-  }, [editor, linkUrl]);
-  const handleLinkUnset = (0, import_react35.useCallback)(() => {
+  }, [editor, linkUrl, linkTarget]);
+  const handleLinkUnset = (0, import_react34.useCallback)(() => {
     editor.chain().focus().unsetLink().run();
     setLinkPopoverOpen(false);
     setLinkUrl("");
   }, [editor]);
   if (!editor) return null;
-  return /* @__PURE__ */ import_react35.default.createElement(import_react35.default.Fragment, null, /* @__PURE__ */ import_react35.default.createElement("div", { className: "richer-editor-toolbar global-toolbar" }, !excludeToolbarButtons.includes("fontSize") && /* @__PURE__ */ import_react35.default.createElement(
+  return /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null, /* @__PURE__ */ import_react34.default.createElement("div", { className: "richer-editor-toolbar" }, !excludeToolbarButtons.includes("fontSize") && /* @__PURE__ */ import_react34.default.createElement(
     CustomSelect_default,
     {
       value: editor.getAttributes("fontSize").fontSize || "",
-      options: fontSizes2.map((f) => ({ value: f.value, label: f.name })),
+      options: (fontSizeOptions || fontSizes2).map((f) => ({ value: f.value, label: f.name })),
       onChange: (val) => editor.chain().focus().setFontSize(val).run(),
       className: "richer-editor-select",
       placeholder: labels.fontSize || "Font Size",
       "aria-label": labels.fontSize || "Font Size"
     }
-  ), /* @__PURE__ */ import_react35.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("bold") && /* @__PURE__ */ import_react35.default.createElement("button", { onClick: () => editor.chain().focus().toggleBold().run(), className: `richer-editor-button${editor.isActive("bold") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bold, title: labels.bold }, /* @__PURE__ */ import_react35.default.createElement(BoldIcon_default, { size: 16 })), !excludeToolbarButtons.includes("underline") && /* @__PURE__ */ import_react35.default.createElement("button", { onClick: () => editor.chain().focus().toggleUnderline().run(), className: `richer-editor-button${editor.isActive("underline") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.underline, title: labels.underline }, /* @__PURE__ */ import_react35.default.createElement(UnderlineIcon_default, { size: 16 })), !excludeToolbarButtons.includes("highlight") && /* @__PURE__ */ import_react35.default.createElement("button", { onClick: () => editor.chain().focus().toggleHighlight({ color: "#fff59d" }).run(), className: `richer-editor-button${editor.isActive("highlight") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.highlight, title: labels.highlight }, /* @__PURE__ */ import_react35.default.createElement(Highlighter_default, { size: 16 })), !excludeToolbarButtons.includes("code") && /* @__PURE__ */ import_react35.default.createElement("button", { onClick: () => editor.chain().focus().toggleCodeBlock().run(), className: `richer-editor-button${editor.isActive("codeBlock") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.code, title: labels.code }, /* @__PURE__ */ import_react35.default.createElement(CodeIcon_default, { size: 16 })), /* @__PURE__ */ import_react35.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("bulletList") && /* @__PURE__ */ import_react35.default.createElement("button", { onClick: () => editor.chain().focus().toggleBulletList().run(), className: `richer-editor-button${editor.isActive("bulletList") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bulletList, title: labels.bulletList }, /* @__PURE__ */ import_react35.default.createElement(BulletListIcon_default, { size: 16 })), !excludeToolbarButtons.includes("orderedList") && /* @__PURE__ */ import_react35.default.createElement("button", { onClick: () => editor.chain().focus().toggleOrderedList().run(), className: `richer-editor-button${editor.isActive("orderedList") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.orderedList, title: labels.orderedList }, /* @__PURE__ */ import_react35.default.createElement(OrderedListIcon_default, { size: 16 })), /* @__PURE__ */ import_react35.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("link") && /* @__PURE__ */ import_react35.default.createElement(import_react35.default.Fragment, null, /* @__PURE__ */ import_react35.default.createElement(
+  ), !excludeToolbarButtons.includes("fontFamily") && /* @__PURE__ */ import_react34.default.createElement(
+    CustomSelect_default,
+    {
+      value: editor.getAttributes("fontFamily").fontFamily || "",
+      options: (fontFamilyOptions || fontFamilies2).map((f) => ({ value: f.value, label: /* @__PURE__ */ import_react34.default.createElement("span", { style: { fontFamily: f.value } }, f.name) })),
+      onChange: (val) => editor.chain().focus().setFontFamily(val).run(),
+      className: "richer-editor-select",
+      placeholder: "Font Family",
+      "aria-label": "Font Family"
+    }
+  ), /* @__PURE__ */ import_react34.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("bold") && /* @__PURE__ */ import_react34.default.createElement("button", { onClick: () => editor.chain().focus().toggleBold().run(), className: `richer-editor-button${editor.isActive("bold") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bold, title: labels.bold }, /* @__PURE__ */ import_react34.default.createElement(BoldIcon_default, { size: 16 })), !excludeToolbarButtons.includes("underline") && /* @__PURE__ */ import_react34.default.createElement("button", { onClick: () => editor.chain().focus().toggleUnderline().run(), className: `richer-editor-button${editor.isActive("underline") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.underline, title: labels.underline }, /* @__PURE__ */ import_react34.default.createElement(UnderlineIcon_default, { size: 16 })), !excludeToolbarButtons.includes("highlight") && /* @__PURE__ */ import_react34.default.createElement("button", { onClick: () => editor.chain().focus().toggleHighlight({ color: "#fff59d" }).run(), className: `richer-editor-button${editor.isActive("highlight") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.highlight, title: labels.highlight }, /* @__PURE__ */ import_react34.default.createElement(Highlighter_default, { size: 16 })), !excludeToolbarButtons.includes("code") && /* @__PURE__ */ import_react34.default.createElement("button", { onClick: () => editor.chain().focus().toggleCodeBlock().run(), className: `richer-editor-button${editor.isActive("codeBlock") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.code, title: labels.code }, /* @__PURE__ */ import_react34.default.createElement(CodeIcon_default, { size: 16 })), /* @__PURE__ */ import_react34.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("bulletList") && /* @__PURE__ */ import_react34.default.createElement("button", { onClick: () => editor.chain().focus().toggleBulletList().run(), className: `richer-editor-button${editor.isActive("bulletList") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bulletList, title: labels.bulletList }, /* @__PURE__ */ import_react34.default.createElement(BulletListIcon_default, { size: 16 })), !excludeToolbarButtons.includes("orderedList") && /* @__PURE__ */ import_react34.default.createElement("button", { onClick: () => editor.chain().focus().toggleOrderedList().run(), className: `richer-editor-button${editor.isActive("orderedList") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.orderedList, title: labels.orderedList }, /* @__PURE__ */ import_react34.default.createElement(OrderedListIcon_default, { size: 16 })), /* @__PURE__ */ import_react34.default.createElement("div", { className: "toolbar-divider" }), !excludeToolbarButtons.includes("link") && /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null, /* @__PURE__ */ import_react34.default.createElement(
     "button",
     {
       ref: linkButtonRef,
       onClick: () => {
         setLinkPopoverOpen((open) => !open);
         setLinkUrl(editor.getAttributes("link").href || "");
+        setLinkTarget(editor.getAttributes("link").target || "_blank");
       },
       className: `richer-editor-button${editor.isActive("link") ? " richer-editor-buttonActive" : ""}`,
       type: "button",
       "aria-label": labels.link,
       title: labels.link
     },
-    /* @__PURE__ */ import_react35.default.createElement(LinkIcon_default, { size: 16 })
-  ), /* @__PURE__ */ import_react35.default.createElement(
+    /* @__PURE__ */ import_react34.default.createElement(LinkIcon_default, { size: 16 })
+  ), /* @__PURE__ */ import_react34.default.createElement(
     CustomPopover_default,
     {
       open: linkPopoverOpen,
@@ -1894,8 +2686,8 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       closeButton: true,
       onEsc: () => setLinkPopoverOpen(false)
     },
-    /* @__PURE__ */ import_react35.default.createElement("div", { className: "mb-2 font-semibold text-base" }, labels.link),
-    /* @__PURE__ */ import_react35.default.createElement(
+    /* @__PURE__ */ import_react34.default.createElement("div", { className: "mb-2 font-semibold text-base" }, labels.link),
+    /* @__PURE__ */ import_react34.default.createElement(
       "input",
       {
         type: "text",
@@ -1906,7 +2698,21 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         autoFocus: true
       }
     ),
-    /* @__PURE__ */ import_react35.default.createElement("div", { className: "richer-editor-flexRow" }, /* @__PURE__ */ import_react35.default.createElement(
+    /* @__PURE__ */ import_react34.default.createElement(
+      "select",
+      {
+        name: "target",
+        value: linkTarget,
+        onChange: (e) => setLinkTarget(e.target.value),
+        className: "richer-editor-input",
+        style: { marginBottom: 8 }
+      },
+      /* @__PURE__ */ import_react34.default.createElement("option", { value: "_blank" }, "New Tab (_blank)"),
+      /* @__PURE__ */ import_react34.default.createElement("option", { value: "_self" }, "Same Tab (_self)"),
+      /* @__PURE__ */ import_react34.default.createElement("option", { value: "_parent" }, "Parent Frame (_parent)"),
+      /* @__PURE__ */ import_react34.default.createElement("option", { value: "_top" }, "Top Frame (_top)")
+    ),
+    /* @__PURE__ */ import_react34.default.createElement("div", { className: "richer-editor-flexRow" }, /* @__PURE__ */ import_react34.default.createElement(
       "button",
       {
         className: "richer-editor-primaryBtn",
@@ -1914,7 +2720,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         disabled: !linkUrl
       },
       labels.insert
-    ), /* @__PURE__ */ import_react35.default.createElement(
+    ), /* @__PURE__ */ import_react34.default.createElement(
       "button",
       {
         className: "richer-editor-secondaryBtn",
@@ -1923,7 +2729,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       },
       labels.remove
     ))
-  )), !excludeToolbarButtons.includes("image") && /* @__PURE__ */ import_react35.default.createElement(import_react35.default.Fragment, null, /* @__PURE__ */ import_react35.default.createElement(
+  )), !excludeToolbarButtons.includes("image") && /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null, /* @__PURE__ */ import_react34.default.createElement(
     "button",
     {
       ref: imageButtonRef,
@@ -1936,8 +2742,8 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       "aria-label": labels.image,
       title: labels.image
     },
-    /* @__PURE__ */ import_react35.default.createElement(ImageIcon_default, { size: 16 })
-  ), /* @__PURE__ */ import_react35.default.createElement(
+    /* @__PURE__ */ import_react34.default.createElement(ImageIcon_default, { size: 16 })
+  ), /* @__PURE__ */ import_react34.default.createElement(
     CustomPopover_default,
     {
       open: imagePopoverOpen,
@@ -1946,8 +2752,8 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       closeButton: true,
       onEsc: () => setImagePopoverOpen(false)
     },
-    /* @__PURE__ */ import_react35.default.createElement("div", { className: "mb-2 font-semibold text-base flex gap-4 border-b pb-2" }, /* @__PURE__ */ import_react35.default.createElement("button", { className: `richer-editor-button${imageTab === "url" ? " richer-editor-buttonActive" : ""}`, onClick: () => setImageTab("url") }, "URL"), imageUploadUrl && /* @__PURE__ */ import_react35.default.createElement("button", { className: `richer-editor-button${imageTab === "upload" ? " richer-editor-buttonActive" : ""}`, onClick: () => setImageTab("upload") }, "Upload")),
-    imageTab === "url" && /* @__PURE__ */ import_react35.default.createElement(import_react35.default.Fragment, null, /* @__PURE__ */ import_react35.default.createElement(
+    /* @__PURE__ */ import_react34.default.createElement("div", { className: "mb-2 font-semibold text-base flex gap-4 border-b pb-2" }, /* @__PURE__ */ import_react34.default.createElement("button", { className: `richer-editor-button${imageTab === "url" ? " richer-editor-buttonActive" : ""}`, onClick: () => setImageTab("url") }, "URL"), imageUploadUrl && /* @__PURE__ */ import_react34.default.createElement("button", { className: `richer-editor-button${imageTab === "upload" ? " richer-editor-buttonActive" : ""}`, onClick: () => setImageTab("upload") }, "Upload")),
+    imageTab === "url" && /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null, /* @__PURE__ */ import_react34.default.createElement(
       "input",
       {
         type: "text",
@@ -1957,7 +2763,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         className: "richer-editor-input",
         autoFocus: true
       }
-    ), /* @__PURE__ */ import_react35.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react35.default.createElement(
+    ), /* @__PURE__ */ import_react34.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react34.default.createElement(
       "input",
       {
         type: "text",
@@ -1966,7 +2772,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         onChange: (e) => setImageWidth(e.target.value),
         className: "richer-editor-input"
       }
-    ), /* @__PURE__ */ import_react35.default.createElement(
+    ), /* @__PURE__ */ import_react34.default.createElement(
       "input",
       {
         type: "text",
@@ -1975,7 +2781,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         onChange: (e) => setImageHeight(e.target.value),
         className: "richer-editor-input"
       }
-    )), /* @__PURE__ */ import_react35.default.createElement("div", { className: "richer-editor-textXs" }, "Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%)."), /* @__PURE__ */ import_react35.default.createElement(
+    )), /* @__PURE__ */ import_react34.default.createElement("div", { className: "richer-editor-textXs" }, "Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%)."), /* @__PURE__ */ import_react34.default.createElement(
       "button",
       {
         className: "richer-editor-primaryBtn",
@@ -1984,7 +2790,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       },
       labels.image
     )),
-    imageTab === "upload" && imageUploadUrl && /* @__PURE__ */ import_react35.default.createElement(import_react35.default.Fragment, null, !uploadedImageUrl && /* @__PURE__ */ import_react35.default.createElement(import_react35.default.Fragment, null, /* @__PURE__ */ import_react35.default.createElement(
+    imageTab === "upload" && imageUploadUrl && /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null, !uploadedImageUrl && /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null, /* @__PURE__ */ import_react34.default.createElement(
       "input",
       {
         type: "file",
@@ -1993,7 +2799,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         className: "mb2",
         disabled: uploading
       }
-    ), uploading && /* @__PURE__ */ import_react35.default.createElement("div", { className: "text-sm text-blue-600 mb-2" }, "Uploading..."), uploadError && /* @__PURE__ */ import_react35.default.createElement("div", { className: "text-sm text-red-600 mb-2" }, uploadError)), uploadedImageUrl && /* @__PURE__ */ import_react35.default.createElement(import_react35.default.Fragment, null, /* @__PURE__ */ import_react35.default.createElement("div", { className: "mb-2 flex flex-col items-center" }, /* @__PURE__ */ import_react35.default.createElement("img", { src: uploadedImageUrl, alt: "Preview", className: "max-h-40 max-w-full rounded border mb-2" })), /* @__PURE__ */ import_react35.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react35.default.createElement(
+    ), uploading && /* @__PURE__ */ import_react34.default.createElement("div", { className: "text-sm text-blue-600 mb-2" }, "Uploading..."), uploadError && /* @__PURE__ */ import_react34.default.createElement("div", { className: "text-sm text-red-600 mb-2" }, uploadError)), uploadedImageUrl && /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null, /* @__PURE__ */ import_react34.default.createElement("div", { className: "mb-2 flex flex-col items-center" }, /* @__PURE__ */ import_react34.default.createElement("img", { src: uploadedImageUrl, alt: "Preview", className: "max-h-40 max-w-full rounded border mb-2" })), /* @__PURE__ */ import_react34.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react34.default.createElement(
       "input",
       {
         type: "text",
@@ -2002,7 +2808,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         onChange: (e) => setImageWidth(e.target.value),
         className: "richer-editor-input"
       }
-    ), /* @__PURE__ */ import_react35.default.createElement(
+    ), /* @__PURE__ */ import_react34.default.createElement(
       "input",
       {
         type: "text",
@@ -2011,14 +2817,14 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         onChange: (e) => setImageHeight(e.target.value),
         className: "richer-editor-input"
       }
-    )), /* @__PURE__ */ import_react35.default.createElement("div", { className: "richer-editor-flexRow" }, /* @__PURE__ */ import_react35.default.createElement(
+    )), /* @__PURE__ */ import_react34.default.createElement("div", { className: "richer-editor-flexRow" }, /* @__PURE__ */ import_react34.default.createElement(
       "button",
       {
         className: "richer-editor-primaryBtn",
         onClick: handleUploadedImageInsert
       },
       labels.add
-    ), /* @__PURE__ */ import_react35.default.createElement(
+    ), /* @__PURE__ */ import_react34.default.createElement(
       "button",
       {
         className: "richer-editor-secondaryBtn",
@@ -2032,7 +2838,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       },
       labels.cancel
     ))))
-  )), !excludeToolbarButtons.includes("video") && /* @__PURE__ */ import_react35.default.createElement(import_react35.default.Fragment, null, /* @__PURE__ */ import_react35.default.createElement(
+  )), !excludeToolbarButtons.includes("video") && /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null, /* @__PURE__ */ import_react34.default.createElement(
     "button",
     {
       ref: videoButtonRef,
@@ -2042,8 +2848,8 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       "aria-label": labels.video,
       title: labels.video
     },
-    /* @__PURE__ */ import_react35.default.createElement(VideoIcon_default, { size: 16 })
-  ), /* @__PURE__ */ import_react35.default.createElement(
+    /* @__PURE__ */ import_react34.default.createElement(VideoIcon_default, { size: 16 })
+  ), /* @__PURE__ */ import_react34.default.createElement(
     CustomPopover_default,
     {
       open: videoPopoverOpen,
@@ -2052,8 +2858,8 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       closeButton: true,
       onEsc: () => setVideoPopoverOpen(false)
     },
-    /* @__PURE__ */ import_react35.default.createElement("div", { className: "mb-2 font-semibold text-base" }, labels.video),
-    /* @__PURE__ */ import_react35.default.createElement(
+    /* @__PURE__ */ import_react34.default.createElement("div", { className: "mb-2 font-semibold text-base" }, labels.video),
+    /* @__PURE__ */ import_react34.default.createElement(
       "input",
       {
         type: "text",
@@ -2064,7 +2870,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         autoFocus: true
       }
     ),
-    /* @__PURE__ */ import_react35.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react35.default.createElement(
+    /* @__PURE__ */ import_react34.default.createElement("div", { className: "richer-editor-flexRowMb2" }, /* @__PURE__ */ import_react34.default.createElement(
       "input",
       {
         type: "text",
@@ -2073,7 +2879,7 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         onChange: (e) => setVideoWidth(e.target.value),
         className: "richer-editor-input"
       }
-    ), /* @__PURE__ */ import_react35.default.createElement(
+    ), /* @__PURE__ */ import_react34.default.createElement(
       "input",
       {
         type: "text",
@@ -2083,8 +2889,8 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
         className: "richer-editor-input"
       }
     )),
-    /* @__PURE__ */ import_react35.default.createElement("div", { className: "richer-editor-textXs" }, "Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%)."),
-    /* @__PURE__ */ import_react35.default.createElement(
+    /* @__PURE__ */ import_react34.default.createElement("div", { className: "richer-editor-textXs" }, "Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%)."),
+    /* @__PURE__ */ import_react34.default.createElement(
       "button",
       {
         className: "richer-editor-primaryBtn",
@@ -2093,11 +2899,11 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {} 
       },
       labels.video
     )
-  )), !excludeToolbarButtons.includes("align") && /* @__PURE__ */ import_react35.default.createElement(
+  )), !excludeToolbarButtons.includes("align") && /* @__PURE__ */ import_react34.default.createElement(
     CustomSelect_default,
     {
       value: editor.getAttributes("textAlign") || "left",
-      options: alignmentOptions.map((opt) => ({ value: opt.value, label: /* @__PURE__ */ import_react35.default.createElement(import_react35.default.Fragment, null, opt.label, " ", opt.name) })),
+      options: alignmentOptions.map((opt) => ({ value: opt.value, label: /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null, opt.label, " ", opt.name) })),
       onChange: (val) => editor.chain().focus().setTextAlign(val).run(),
       className: "richer-editor-select",
       placeholder: labels.align
@@ -2142,23 +2948,19 @@ var SmallRicherEditor = ({
   className = "",
   style = {},
   excludeToolbarButtons = [],
-  i18n = {}
+  i18n = {},
+  fontSizeOptions,
+  fontFamilyOptions
 }) => {
   var _a;
-  const safeContent = import_react35.default.useMemo(() => getSafeContent2(content, outputFormat), [content, outputFormat]);
-  const editor = (0, import_react36.useEditor)({
+  const safeContent = import_react34.default.useMemo(() => getSafeContent2(content, outputFormat), [content, outputFormat]);
+  const editor = (0, import_react35.useEditor)({
     extensions: [
       import_starter_kit2.default,
       import_extension_link2.default.configure({ openOnClick: true }),
-      import_extension_image2.default,
-      import_extension_bold2.default,
-      import_extension_underline2.default,
       import_extension_highlight2.default.configure({ multicolor: false, HTMLAttributes: { style: "background-color: #fff59d" } }),
-      import_extension_code_block2.default,
-      import_extension_bullet_list2.BulletList,
-      import_extension_ordered_list2.OrderedList,
-      import_extension_list_item2.ListItem,
       import_extension_text_align2.default.configure({ types: ["paragraph"] }),
+      import_extension_image2.default,
       import_extension_youtube2.default.configure({
         controls: true,
         allowFullscreen: true,
@@ -2178,7 +2980,7 @@ var SmallRicherEditor = ({
     editorProps: {
       ...editorProps,
       attributes: {
-        class: `richer-editor-textarea prose dark:prose-invert prose-sm prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full ${className || ""}`,
+        class: `richer-editor-textarea ${className || ""}`,
         style: `${minHeight ? `min-height:${minHeight};` : ""}${((_a = editorProps == null ? void 0 : editorProps.attributes) == null ? void 0 : _a.style) || ""}`,
         spellCheck: "true",
         readOnly: readOnly ? "true" : void 0,
@@ -2197,7 +2999,7 @@ var SmallRicherEditor = ({
     editable: !readOnly,
     immediatelyRender: false
   });
-  import_react35.default.useEffect(() => {
+  import_react34.default.useEffect(() => {
     if (editor && content !== void 0) {
       const current = outputFormat === "json" ? editor.getJSON() : editor.getHTML();
       if (outputFormat === "json") {
@@ -2219,37 +3021,19 @@ var SmallRicherEditor = ({
       }
     }
   }, [content]);
-  return /* @__PURE__ */ import_react35.default.createElement("div", { className: `richer-editor-roundedMdBorder ${className || ""}`, style }, /* @__PURE__ */ import_react35.default.createElement(MenuBar2, { editor, imageUploadUrl, excludeToolbarButtons, i18n }), /* @__PURE__ */ import_react35.default.createElement("div", { className: "richer-editor-overflowAuto", style: { maxHeight } }, /* @__PURE__ */ import_react35.default.createElement(import_react36.EditorContent, { editor })));
+  return /* @__PURE__ */ import_react34.default.createElement("div", { className: `richer-editor-roundedMdBorder` }, /* @__PURE__ */ import_react34.default.createElement(MenuBar2, { editor, imageUploadUrl, excludeToolbarButtons, i18n, fontSizeOptions, fontFamilyOptions }), /* @__PURE__ */ import_react34.default.createElement("div", { className: "richer-editor-overflowAuto", style: { maxHeight } }, /* @__PURE__ */ import_react34.default.createElement(import_react35.EditorContent, { editor })));
 };
 var SmallRicherEditor_default = SmallRicherEditor;
 
 // src/components/RicherContent.tsx
-var import_react37 = __toESM(require("react"));
+var import_react36 = __toESM(require("react"));
 var RicherContent = ({ content, className = "" }) => {
-  return /* @__PURE__ */ import_react37.default.createElement("div", { className: cn(`prose dark:prose-invert
-        prose-sm
-        lg:prose-lg
-        sm:prose-base //to make font medium
-        prose-p:mt-0
-        prose-p:mb-1
-        leading-6
-
-        prose-blockquote:bg-muted/50
-        prose-blockquote:p-2
-        prose-blockquote:px-6
-        prose-blockquote:border-border
-        prose-blockquote:not-italic
-        prose-blockquote:rounded-r-lg
-        [&_blockquote>p]:after:content-none
-        [&_blockquote>p]:before:content-none
-
-        prose-li:marker:text-muted-foreground
-        w-full
-        max-w-full`, className) }, /* @__PURE__ */ import_react37.default.createElement(
+  const [highlightedContent, setHighlightedContent] = import_react36.default.useState("");
+  return /* @__PURE__ */ import_react36.default.createElement("div", { className }, /* @__PURE__ */ import_react36.default.createElement(
     "div",
     {
       className: "max-w-none",
-      dangerouslySetInnerHTML: { __html: content || "" }
+      dangerouslySetInnerHTML: { __html: content }
     }
   ));
 };

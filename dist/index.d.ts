@@ -16,8 +16,16 @@ interface RicherEditorProps {
     excludeToolbarButtons?: string[];
     style?: React.CSSProperties;
     i18n?: Record<string, string>;
+    fontSizeOptions?: {
+        name: string;
+        value: string;
+    }[];
+    fontFamilyOptions?: {
+        name: string;
+        value: string;
+    }[];
 }
-declare const RicherEditor: ({ content, onChange, imageUploadUrl, minHeight, maxHeight, editorProps, outputFormat, readOnly, placeholder, className, excludeToolbarButtons, style, i18n, }: RicherEditorProps) => React.JSX.Element;
+declare const RicherEditor: ({ content, onChange, imageUploadUrl, minHeight, maxHeight, editorProps, outputFormat, readOnly, placeholder, className, excludeToolbarButtons, style, i18n, fontSizeOptions, fontFamilyOptions, }: RicherEditorProps) => React.JSX.Element;
 
 interface SmallRicherEditorProps {
     content?: string | object;
@@ -33,13 +41,22 @@ interface SmallRicherEditorProps {
     style?: React.CSSProperties;
     excludeToolbarButtons?: string[];
     i18n?: Record<string, string>;
+    fontSizeOptions?: {
+        name: string;
+        value: string;
+    }[];
+    fontFamilyOptions?: {
+        name: string;
+        value: string;
+    }[];
 }
-declare const SmallRicherEditor: ({ content, onChange, imageUploadUrl, placeholder, minHeight, maxHeight, editorProps, outputFormat, readOnly, className, style, excludeToolbarButtons, i18n, }: SmallRicherEditorProps) => React.JSX.Element;
+declare const SmallRicherEditor: ({ content, onChange, imageUploadUrl, placeholder, minHeight, maxHeight, editorProps, outputFormat, readOnly, className, style, excludeToolbarButtons, i18n, fontSizeOptions, fontFamilyOptions, }: SmallRicherEditorProps) => React.JSX.Element;
 
-declare const RicherContent: ({ content, className }: {
+type Props = {
     content: string;
     className?: string;
-}) => React.JSX.Element;
+};
+declare const RicherContent: ({ content, className }: Props) => React.JSX.Element;
 
 declare const CustomBulletList: _tiptap_core.Node<_tiptap_extension_list.BulletListOptions, any>;
 
