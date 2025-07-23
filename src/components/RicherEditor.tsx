@@ -242,6 +242,12 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   const imageButtonRef = React.useRef<HTMLButtonElement>(null);
   const videoButtonRef = React.useRef<HTMLButtonElement>(null);
 
+  // State and refs for color pickers
+  const [textColorPopoverOpen, setTextColorPopoverOpen] = React.useState(false);
+  const textColorButtonRef = React.useRef<HTMLButtonElement>(null);
+  const [bgColorPopoverOpen, setBgColorPopoverOpen] = React.useState(false);
+  const bgColorButtonRef = React.useRef<HTMLButtonElement>(null);
+
   // Helper for image by URL
   const handleImageUrlInsert = useCallback(() => {
     if (imageUrl) {
@@ -719,37 +725,184 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       {!excludeToolbarButtons.includes('alignJustify') && (
         <button onClick={() => editor.chain().focus().setTextAlign("justify").run()} className={`richer-editor-button ${editor.isActive({ textAlign: "justify" }) ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.alignJustify} title={labels.alignJustify}><AlignJustify size={16} /></button>
       )}
-      {/* Text Color Picker */}
+      {/* Text Color Picker (Dropdown) */}
       {!excludeToolbarButtons.includes('textColor') && (
-        <div className="richer-editor-colorpicker" style={{height: 28}} title={labels.textColor} aria-label={labels.textColor}>
-          <TextColorIcon size={16} />
-          <input
-            type="color"
-            value={editor.getAttributes('textStyle').color || '#000000'}
-            onChange={e => {
-              editor.commands.focus();
-              editor.commands.setColor(e.target.value);
-            }}
-            style={{ width: 20, height: 20, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
-            className="richer-editor-colorInput"
-          />
-        </div>
+        <>
+          <button
+            ref={textColorButtonRef}
+            onClick={() => setTextColorPopoverOpen(open => !open)}
+            className={`richer-editor-button${editor.getAttributes('textStyle').color ? ' richer-editor-buttonActive' : ''}`}
+            type="button"
+            aria-label={labels.textColor}
+            title={labels.textColor}
+            style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}
+          >
+            <TextColorIcon size={16} />
+            {/* Color swatch indicator */}
+            <span style={{
+              display: 'inline-block',
+              width: 14,
+              height: 14,
+              borderRadius: '50%',
+              background: editor.getAttributes('textStyle').color || '#000',
+              border: '1px solid #ccc',
+              marginLeft: 2,
+            }} />
+          </button>
+          <CustomPopover
+            open={textColorPopoverOpen}
+            onOpenChange={setTextColorPopoverOpen}
+            anchorEl={textColorButtonRef.current}
+            closeButton
+            onEsc={() => setTextColorPopoverOpen(false)}
+          >
+            <div style={{ minWidth: 200, padding: 16 }}>
+              {editor.getAttributes('textStyle').color && (
+                <button
+                  className="richer-editor-secondaryBtn mb-2 w-full"
+                  onClick={() => {
+                    editor.commands.focus();
+                    editor.commands.unsetColor();
+                    setTextColorPopoverOpen(false);
+                  }}
+                  style={{ marginBottom: 8, width: '100%' }}
+                >
+                  Remove Color
+                </button>
+              )}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8, marginBottom: 12 }}>
+                {colorPalette.map((color: string) => (
+                  <button
+                    key={color}
+                    type="button"
+                    aria-label={`Select text color ${color}`}
+                    onClick={() => {
+                      editor.commands.focus();
+                      editor.commands.setColor(color);
+                      setTextColorPopoverOpen(false);
+                    }}
+                    style={{
+                      background: color,
+                      width: 22,
+                      height: 22,
+                      borderRadius: '50%',
+                      border: (editor.getAttributes('textStyle').color === color) ? '2px solid #333' : '1px solid #ccc',
+                      outline: 'none',
+                      cursor: 'pointer',
+                      boxSizing: 'border-box',
+                    }}
+                    tabIndex={0}
+                  />
+                ))}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <TextColorIcon size={16} />
+                <input
+                  type="color"
+                  value={editor.getAttributes('textStyle').color || '#000000'}
+                  onChange={e => {
+                    editor.commands.focus();
+                    editor.commands.setColor(e.target.value);
+                    setTextColorPopoverOpen(false);
+                  }}
+                  style={{ width: 28, height: 28, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+                  className="richer-editor-colorInput"
+                  aria-label="Custom text color picker"
+                />
+              </div>
+            </div>
+          </CustomPopover>
+        </>
       )}
-      {/* Background Color Picker */}
+      {/* Background Color Picker (Dropdown) */}
       {!excludeToolbarButtons.includes('bgColor') && (
-        <div className="richer-editor-colorpicker" style={{height: 28}} title={labels.bgColor} aria-label={labels.bgColor}>
-          <PaintBucket size={16} />
-          <input
-            type="color"
-            value={editor.getAttributes('highlight').color || '#ffff00'}
-            onChange={e => {
-              editor.commands.focus();
-              editor.commands.setHighlight({ color: e.target.value });
-            }}
-            style={{ width: 20, height: 20, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
-            className="richer-editor-colorInput"
-          />
-        </div>
+        <>
+          <button
+            ref={bgColorButtonRef}
+            onClick={() => setBgColorPopoverOpen(open => !open)}
+            className={`richer-editor-button${editor.getAttributes('highlight').color ? ' richer-editor-buttonActive' : ''}`}
+            type="button"
+            aria-label={labels.bgColor}
+            title={labels.bgColor}
+            style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}
+          >
+            <PaintBucket size={16} />
+            {/* Color swatch indicator */}
+            <span style={{
+              display: 'inline-block',
+              width: 14,
+              height: 14,
+              borderRadius: '50%',
+              background: editor.getAttributes('highlight').color || '#ffff00',
+              border: '1px solid #ccc',
+              marginLeft: 2,
+            }} />
+          </button>
+          <CustomPopover
+            open={bgColorPopoverOpen}
+            onOpenChange={setBgColorPopoverOpen}
+            anchorEl={bgColorButtonRef.current}
+            closeButton
+            onEsc={() => setBgColorPopoverOpen(false)}
+          >
+            <div style={{ minWidth: 200, padding: 16 }}>
+              {editor.getAttributes('highlight').color && (
+                <button
+                  className="richer-editor-secondaryBtn mb-2 w-full"
+                  onClick={() => {
+                    editor.commands.focus();
+                    editor.commands.setHighlight({ color: null });
+                    editor.commands.unsetHighlight();
+                    setBgColorPopoverOpen(false);
+                  }}
+                  style={{ marginBottom: 8, width: '100%' }}
+                >
+                  Remove Color
+                </button>
+              )}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8, marginBottom: 12 }}>
+                {colorPalette.map((color: string) => (
+                  <button
+                    key={color}
+                    type="button"
+                    aria-label={`Select background color ${color}`}
+                    onClick={() => {
+                      editor.commands.focus();
+                      editor.commands.setHighlight({ color });
+                      setBgColorPopoverOpen(false);
+                    }}
+                    style={{
+                      background: color,
+                      width: 22,
+                      height: 22,
+                      borderRadius: '50%',
+                      border: (editor.getAttributes('highlight').color === color) ? '2px solid #333' : '1px solid #ccc',
+                      outline: 'none',
+                      cursor: 'pointer',
+                      boxSizing: 'border-box',
+                    }}
+                    tabIndex={0}
+                  />
+                ))}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <PaintBucket size={16} />
+                <input
+                  type="color"
+                  value={editor.getAttributes('highlight').color || '#ffff00'}
+                  onChange={e => {
+                    editor.commands.focus();
+                    editor.commands.setHighlight({ color: e.target.value });
+                    setBgColorPopoverOpen(false);
+                  }}
+                  style={{ width: 28, height: 28, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+                  className="richer-editor-colorInput"
+                  aria-label="Custom background color picker"
+                />
+              </div>
+            </div>
+          </CustomPopover>
+        </>
       )}
       {/* Subscript/Superscript Buttons */}
       {!excludeToolbarButtons.includes('subscript') && (
@@ -816,6 +969,15 @@ const getSafeContent = (content: any, outputFormat: 'html' | 'json') => {
     return '';
   }
 };
+
+// Blog-friendly color palette (expanded)
+const colorPalette: string[] = [
+  '#000000', '#434343', '#666666', '#999999', '#b7b7b7', '#cccccc', '#e6e6e6', '#ffffff',
+  '#ff0000', '#ff9900', '#ffff00', '#00ff00', '#00b050', '#00b0f0', '#0070c0', '#002060',
+  '#7030a0', '#ff00ff', '#ffb6c1', '#f4cccc', '#fce5cd', '#fff2cc', '#d9ead3', '#d0e0e3',
+  '#cfe2f3', '#c9daf8', '#b4a7d6', '#d9d2e9', '#ead1dc', '#f9cb9c', '#ffe599', '#b6d7a8',
+  '#a2c4c9', '#a4c2f4', '#6fa8dc', '#8e7cc3', '#b4a7d6', '#d5a6bd', '#e06666', '#f6b26b',
+];
 
 const RicherEditor = ({
   content = '',
