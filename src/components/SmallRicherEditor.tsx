@@ -3,19 +3,15 @@ import React, { useCallback, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
-import Image from "@tiptap/extension-image";
-import Bold from "@tiptap/extension-bold";
-import Underline from "@tiptap/extension-underline";
 import Highlight from '@tiptap/extension-highlight';
-import CodeBlock from "@tiptap/extension-code-block";
 import Youtube from '@tiptap/extension-youtube';
 import TextAlign from "@tiptap/extension-text-align";
-import { ListItem } from "@tiptap/extension-list-item";
-import { BulletList } from "@tiptap/extension-bullet-list";
-import { OrderedList } from "@tiptap/extension-ordered-list";
 import { TextStyle } from '@tiptap/extension-text-style';
 import FontSize from '@tiptap/extension-font-size';
 import Placeholder from '@tiptap/extension-placeholder';
+import Image from "@tiptap/extension-image";
+
+
 import CustomSelect from './ui/CustomSelect';
 import CustomPopover from './ui/CustomPopover';
 import BoldIcon from '../icons/BoldIcon';
@@ -594,15 +590,9 @@ const SmallRicherEditor  = ({
     extensions: [
       StarterKit,
       Link.configure({ openOnClick: true }),
-      Image,
-      Bold,
-      Underline,
       Highlight.configure({ multicolor: false, HTMLAttributes: { style: 'background-color: #fff59d' } }),
-      CodeBlock,
-      BulletList,
-      OrderedList,
-      ListItem,
       TextAlign.configure({ types: ["paragraph"] }),
+      Image,
       Youtube.configure({
         controls: true,
         allowFullscreen: true,

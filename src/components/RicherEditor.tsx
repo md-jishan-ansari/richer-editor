@@ -3,29 +3,13 @@ import React, { useCallback, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
-import Image from "@tiptap/extension-image";
-import Heading from "@tiptap/extension-heading";
-import ListItem from "@tiptap/extension-list-item";
-import Bold from "@tiptap/extension-bold";
-import Italic from "@tiptap/extension-italic";
-import Underline from "@tiptap/extension-underline";
-import Strike from "@tiptap/extension-strike";
-import Blockquote from "@tiptap/extension-blockquote";
-import CodeBlock from "@tiptap/extension-code-block";
-import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import TextAlign from "@tiptap/extension-text-align";
-import { Table } from "@tiptap/extension-table";
-import TableRow from "@tiptap/extension-table-row";
-import TableCell from "@tiptap/extension-table-cell";
-import TableHeader from "@tiptap/extension-table-header";
-import Dropcursor from "@tiptap/extension-dropcursor";
-import Gapcursor from "@tiptap/extension-gapcursor";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import Superscript from "@tiptap/extension-superscript";
 import Subscript from "@tiptap/extension-subscript";
-import Typography from "@tiptap/extension-typography";
-// Video extension (custom or from @tiptap/extension-video if available)
+import Image from "@tiptap/extension-image";
+
 import Youtube from '@tiptap/extension-youtube';
 import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -41,7 +25,6 @@ import TaskListIcon from '../icons/TaskListIcon';
 import BlockquoteIcon from '../icons/BlockquoteIcon';
 import LinkIcon from '../icons/LinkIcon';
 import ImageIcon from '../icons/ImageIcon';
-import TableIcon from '../icons/TableIcon';
 import UndoIcon from '../icons/UndoIcon';
 import RedoIcon from '../icons/RedoIcon';
 import AlignLeft from '../icons/AlignLeft';
@@ -477,11 +460,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       {!excludeToolbarButtons.includes('hr') && (
         <button onClick={() => editor.chain().focus().setHorizontalRule().run()} className="richer-editor-button" type="button" aria-label={labels.hr} title={labels.hr}>HR</button>
       )}
-      <div className="toolbar-divider" />
-      {/* Table */}
-      {!excludeToolbarButtons.includes('table') && (
-        <button onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()} className="richer-editor-button" type="button" aria-label={labels.table} title={labels.table}><TableIcon size={16} /></button>
-      )}
+
       <div className="toolbar-divider" />
       {/* Link Popover */}
       {!excludeToolbarButtons.includes('link') && (
@@ -861,30 +840,14 @@ const RicherEditor = ({
     extensions: [
       StarterKit,
       Link.configure({ openOnClick: true }),
-      Image,
-      Heading.configure({ levels: [1, 2, 3, 4, 5, 6] }),
       CustomBulletList,
       CustomOrderedList,
-      ListItem,
-      Bold,
-      Italic,
-      Underline,
-      Strike,
-      Blockquote,
-      CodeBlock,
-      HorizontalRule,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
-      Table.configure({ resizable: true }),
-      TableRow,
-      TableCell,
-      TableHeader,
-      Dropcursor,
-      Gapcursor,
+      Image,
       TaskList,
       TaskItem,
       Superscript,
       Subscript,
-      Typography,
       Youtube.configure({
         controls: true,
         allowFullscreen: true,
