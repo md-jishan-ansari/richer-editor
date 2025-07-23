@@ -86,7 +86,7 @@ export default function Home() {
         i18n={i18nSmall}
         imageUploadUrl="/api/temp-image-upload"
       />
-      <RicherContent content={smallContent} />
+      <RicherContent content={smallContent}  className={classes} />
     </div>
   );
 }
