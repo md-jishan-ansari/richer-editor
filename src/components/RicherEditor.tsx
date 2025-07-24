@@ -1,5 +1,5 @@
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -12,6 +12,11 @@ import Image from "@tiptap/extension-image";
 
 import Youtube from '@tiptap/extension-youtube';
 import Highlight from '@tiptap/extension-highlight';
+
+import { TextStyle } from '@tiptap/extension-text-style';
+import FontFamily from '@tiptap/extension-font-family';
+import FontSize from '@tiptap/extension-font-size';
+import Color from '@tiptap/extension-color';
 
 import BoldIcon from '../icons/BoldIcon';
 import ItalicIcon from '../icons/ItalicIcon';
@@ -43,10 +48,7 @@ import SuperscriptIcon from '../icons/SuperscriptIcon';
 import PaintBucket from '../icons/PaintBucket';
 import TextColorIcon from '../icons/TextColorIcon';
 
-import { TextStyle } from '@tiptap/extension-text-style';
-import FontFamily from '@tiptap/extension-font-family';
-import FontSize from '@tiptap/extension-font-size';
-import Color from '@tiptap/extension-color';
+
 import { CustomBulletList } from './tiptap-extensions/CustomBulletList';
 import { CustomOrderedList } from './tiptap-extensions/CustomOrderedList';
 import CustomSelect from './ui/CustomSelect';
@@ -56,6 +58,17 @@ import CustomPopover from './ui/CustomPopover';
 import './RicherEditor.css';
 import { getSafeContent } from "@/lib/utils";
 
+function isSafeUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url, window.location.origin);
+    return (
+      ["http:", "https:"].includes(parsed.protocol) ||
+      (parsed.protocol === "data:" && url.startsWith("data:image/"))
+    );
+  } catch {
+    return false;
+  }
+}
 
 const fontSizes = [
   { name: '10px', value: '10px' },
@@ -136,7 +149,6 @@ interface RicherEditorProps {
   minHeight?: string;
   maxHeight?: string;
   editorProps?: any;
-  readOnly?: boolean;
   className?: string;
   excludeToolbarButtons?: string[];
   i18n?: Record<string, string>;
@@ -250,7 +262,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
 
   // Helper for image by URL
   const handleImageUrlInsert = useCallback(() => {
-    if (imageUrl) {
+    if (imageUrl && isSafeUrl(imageUrl)) {
       const attrs: any = { src: imageUrl };
       if (imageWidth) attrs.width = imageWidth;
       if (imageHeight) attrs.height = imageHeight;
@@ -259,6 +271,8 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       setImageUrl('');
       setImageWidth('');
       setImageHeight('');
+    } else if (imageUrl) {
+      window.alert('Invalid or unsafe image URL.');
     }
   }, [editor, imageUrl, imageWidth, imageHeight]);
 
@@ -315,7 +329,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
 
   // Helper for video embedding (popover)
   const handleVideoUrlInsert = useCallback(() => {
-    if (videoUrl) {
+    if (videoUrl && isSafeUrl(videoUrl)) {
       const attrs: any = { src: videoUrl };
       if (videoWidth) attrs.width = videoWidth;
       if (videoHeight) attrs.height = videoHeight;
@@ -324,16 +338,20 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       setVideoUrl('');
       setVideoWidth('');
       setVideoHeight('');
+    } else if (videoUrl) {
+      window.alert('Invalid or unsafe video URL.');
     }
   }, [editor, videoUrl, videoWidth, videoHeight]);
 
   // Helper for link insertion (popover)
   const handleLinkInsert = useCallback(() => {
-    if (linkUrl) {
+    if (linkUrl && isSafeUrl(linkUrl)) {
       editor.chain().focus().setLink({ href: linkUrl, target: linkTarget }).run();
       setLinkPopoverOpen(false);
       setLinkUrl('');
       setLinkTarget('_blank');
+    } else if (linkUrl) {
+      window.alert('Invalid or unsafe link URL.');
     }
   }, [editor, linkUrl, linkTarget]);
   const handleLinkUnset = useCallback(() => {
@@ -350,49 +368,59 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
     <>
       <div className="richer-editor-toolbar">
         {/* Headings Dropdown */}
-        <CustomSelect
-          value={(() => {
-            const activeHeading = headingOptions.find(opt => editor.isActive('heading', { level: opt.level }));
-            return activeHeading ? activeHeading.level.toString() : '';
-          })()}
-          options={[
-            { value: 'paragraph', label: 'Paragraph' },
-            ...headingOptions.map(opt => ({ value: opt.level.toString(), label: `H${opt.level}` }))
-          ]}
-          onChange={(val: string) => {
-            if (val === 'paragraph') {
-              editor.chain().focus().setParagraph().run();
-            } else {
-              editor.chain().focus().toggleHeading({ level: Number(val) }).run();
-            }
-          }}
-          className="richer-editor-select"
-          placeholder="Heading"
-          aria-label="Heading Level"
-        />
-        <div className="toolbar-divider" />
+        {!excludeToolbarButtons.includes('heading') && (
+          <>
+            <CustomSelect
+              value={(() => {
+                const activeHeading = headingOptions.find(opt => editor.isActive('heading', { level: opt.level }));
+                return activeHeading ? activeHeading.level.toString() : '';
+              })()}
+              options={[
+                { value: 'paragraph', label: 'Paragraph' },
+                ...headingOptions.map(opt => ({ value: opt.level.toString(), label: `H${opt.level}` }))
+              ]}
+              onChange={(val: string) => {
+                if (val === 'paragraph') {
+                  editor.chain().focus().setParagraph().run();
+                } else {
+                  editor.chain().focus().toggleHeading({ level: Number(val) }).run();
+                }
+              }}
+              className="richer-editor-select"
+              placeholder="Heading"
+              aria-label="Heading Level"
+            />
+            <div className="toolbar-divider" />
+          </>
+        )}
         {/* Font Size Dropdown */}
-        <CustomSelect
-          value={editor.getAttributes('fontSize').fontSize || ''}
-          options={(fontSizeOptions || fontSizes).map(f => ({ value: f.value, label: f.name }))}
-          onChange={(val: string) => editor.chain().focus().setFontSize(val).run()}
-          className="richer-editor-select"
-          placeholder="Font Size"
-          aria-label="Font Size"
-        />
+        {!excludeToolbarButtons.includes('fontSize') && (
+          <CustomSelect
+            value={editor.getAttributes('fontSize').fontSize || ''}
+            options={(fontSizeOptions || fontSizes).map(f => ({ value: f.value, label: f.name }))}
+            onChange={(val: string) => editor.chain().focus().setFontSize(val).run()}
+            className="richer-editor-select"
+            placeholder="Font Size"
+            aria-label="Font Size"
+          />
+        )}
         {/* Font Family Dropdown */}
-        <CustomSelect
-          value={editor.getAttributes('fontFamily').fontFamily || ''}
-          options={(fontFamilyOptions || fontFamilies).map(f => ({
-            value: f.value,
-            label: <span style={{ fontFamily: f.value }}>{f.name}</span>
-          }))}
-          onChange={(val: string) => editor.chain().focus().setFontFamily(val).run()}
-          className="richer-editor-select"
-          placeholder="Font Family"
-          aria-label="Font Family"
-        />
-        <div className="toolbar-divider" />
+        {!excludeToolbarButtons.includes('fontFamily') && (
+          <>
+            <CustomSelect
+              value={editor.getAttributes('fontFamily').fontFamily || ''}
+              options={(fontFamilyOptions || fontFamilies).map(f => ({
+                value: f.value,
+                label: <span style={{ fontFamily: f.value }}>{f.name}</span>
+              }))}
+              onChange={(val: string) => editor.chain().focus().setFontFamily(val).run()}
+              className="richer-editor-select"
+              placeholder="Font Family"
+              aria-label="Font Family"
+            />
+            <div className="toolbar-divider" />
+          </>
+        )}
         {/* Font styles */}
         {!excludeToolbarButtons.includes('bold') && (
           <button onClick={() => editor.chain().focus().toggleBold().run()} className={`richer-editor-button ${editor.isActive("bold") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.bold} title={labels.bold}><BoldIcon size={16} /></button>
@@ -410,9 +438,11 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
           <button onClick={() => editor.chain().focus().toggleHighlight().run()} className={`richer-editor-button ${editor.isActive("highlight") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.highlight} title={labels.highlight}><Highlighter size={16} /></button>
         )}
         {!excludeToolbarButtons.includes('code') && (
-          <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button ${editor.isActive("codeBlock") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
+          <>
+            <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button ${editor.isActive("codeBlock") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
+            <div className="toolbar-divider" />
+          </>
         )}
-        <div className="toolbar-divider" />
         {/* Lists */}
         {!excludeToolbarButtons.includes('bulletList') && (
           <>
@@ -465,10 +495,12 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
           <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`richer-editor-button ${editor.isActive("blockquote") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.blockquote} title={labels.blockquote}><BlockquoteIcon size={16} /></button>
         )}
         {!excludeToolbarButtons.includes('hr') && (
-          <button onClick={() => editor.chain().focus().setHorizontalRule().run()} className="richer-editor-button" type="button" aria-label={labels.hr} title={labels.hr}>HR</button>
+          <>
+            <button onClick={() => editor.chain().focus().setHorizontalRule().run()} className="richer-editor-button" type="button" aria-label={labels.hr} title={labels.hr}>HR</button>
+            <div className="toolbar-divider" />
+          </>
         )}
 
-        <div className="toolbar-divider" />
         {/* Link Popover */}
         {!excludeToolbarButtons.includes('link') && (
           <>
@@ -932,13 +964,15 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         {customToolbarButtons && (typeof customToolbarButtons === 'function' ? customToolbarButtons(editor) : customToolbarButtons)}
 
          {/* Undo/Redo */}
-         <div className="richer-editor-ml2"></div>
-        {!excludeToolbarButtons.includes('undo') && (
-          <button onClick={() => editor.chain().focus().undo().run()} className="richer-editor-button" type="button" aria-label={labels.undo} title={labels.undo}><UndoIcon size={16} /></button>
-        )}
-        {!excludeToolbarButtons.includes('redo') && (
-          <button onClick={() => editor.chain().focus().redo().run()} className="richer-editor-button" type="button" aria-label={labels.redo} title={labels.redo}><RedoIcon size={16} /></button>
-        )}
+          {!excludeToolbarButtons.includes('undo') && (
+            <>
+              <div className="toolbar-divider" />
+              <button onClick={() => editor.chain().focus().undo().run()} className="richer-editor-button" type="button" aria-label={labels.undo} title={labels.undo}><UndoIcon size={16} /></button>
+            </>
+          )}
+          {!excludeToolbarButtons.includes('redo') && (
+            <button onClick={() => editor.chain().focus().redo().run()} className="richer-editor-button" type="button" aria-label={labels.redo} title={labels.redo}><RedoIcon size={16} /></button>
+          )}
       </div>
 
     </>
@@ -962,7 +996,6 @@ const RicherEditor = ({
   minHeight,
   maxHeight,
   editorProps = {},
-  readOnly = false,
   className = '',
   excludeToolbarButtons = [],
   i18n = {},
@@ -1001,6 +1034,7 @@ const RicherEditor = ({
       multicolor: true,
     }),
   ];
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const editor = useEditor({
     extensions: [
       ...defaultExtensions,
@@ -1013,19 +1047,20 @@ const RicherEditor = ({
         class: `richer-editor-textarea ${className || ''}`,
         style: `${minHeight ? `min-height:${minHeight};` : ''}${editorProps?.attributes?.style || ''}`,
         spellCheck: 'true',
-        readOnly: readOnly ? 'true' : undefined,
         ...editorProps?.attributes,
       },
     },
     onUpdate({ editor }) {
       if (onChange) {
-        onChange({
-          html: editor.getHTML(),
-          json: JSON.stringify(editor.getJSON()),
-        });
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+          onChange({
+            html: editor.getHTML(),
+            json: JSON.stringify(editor.getJSON()),
+          });
+        }, 300);
       }
     },
-    editable: !readOnly,
     immediatelyRender: false,
   });
 

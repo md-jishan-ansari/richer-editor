@@ -60,6 +60,7 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({ open, onOpenChange, ancho
       style={{ top: position.top, left: position.left, position: 'absolute', zIndex: 1000 }}
       tabIndex={-1}
       role="dialog"
+      aria-modal="true"
     >
       {closeButton && (
         <button

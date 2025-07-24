@@ -52,14 +52,12 @@ export default function Home() {
       <ThemeToggle />
       <h2>Large Editor (RicherEditor)</h2>
       <TiptapEditor
-        minHeight="300px"
+        minHeight="200px"
         maxHeight="300px"
         content={largeContent}
         onChange={handleLargeChange}
-        // excludeToolbarButtons={["image", "code", "video"]}
         className={classes}
         i18n={i18nLarge}
-        imageUploadUrl="/api/temp-image-upload"
         fontSizeOptions={[
           { name: '66px', value: '66px' },
           { name: '68px', value: '68px' },
@@ -69,46 +67,9 @@ export default function Home() {
           { name: 'Georgia', value: 'Georgia, serif' },
           { name: 'Inter', value: 'Inter, sans-serif' },
         ]}
-        extensions={[Italic]} // Pass custom extension
-        customToolbarButtons={editor => (
-          <button
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={editor.isActive('italic') ? 'richer-editor-button richer-editor-buttonActive' : 'richer-editor-button'}
-            type="button"
-            aria-label="Italic"
-            title="Italic"
-            style={{ fontStyle: 'italic', fontWeight: 600, fontSize: 16, marginLeft: 8 }}
-          >
-            I
-          </button>
-        )}
-      />
-
-      <RicherContent content={largeContent.html || ""} className={classes}  />
-
-      <h2>Small Editor (SmallRicherEditor)</h2>
-      <SmallTiptapEditor
-        minHeight="150px"
-        maxHeight="300px"
-        content={smallContent}
-        onChange={handleSmallChange}
-        excludeToolbarButtons={["fontFamily"]}
-        className={classes}
-        i18n={i18nSmall}
-        imageUploadUrl="/api/temp-image-upload"
-        extensions={[Italic, Superscript, Subscript,]} // Pass custom extension
+        extensions={[Superscript, Subscript]}
         customToolbarButtons={editor => (
           <>
-            <button
-              onClick={() => editor.chain().focus().toggleItalic().run()}
-              className={editor.isActive('italic') ? 'richer-editor-button richer-editor-buttonActive' : 'richer-editor-button'}
-              type="button"
-              aria-label="Italic"
-              title="Italic"
-              style={{ fontStyle: 'italic', fontWeight: 600, fontSize: 16, marginLeft: 8 }}
-            >
-              I
-            </button>
             <button
               onClick={() => editor.chain().focus().toggleSubscript().run()}
               className={`richer-editor-button ${editor.isActive('subscript') ? 'richer-editor-buttonActive' : ''}`}
@@ -129,6 +90,18 @@ export default function Home() {
             </button>
           </>
         )}
+      />
+
+      <RicherContent content={largeContent.html || ""} className={classes}  />
+
+      <h2>Small Editor (SmallRicherEditor)</h2>
+
+      <SmallTiptapEditor
+        minHeight="150px"
+        maxHeight="300px"
+        content={smallContent}
+        onChange={handleSmallChange}
+        className={classes}
       />
 
       <RicherContent content={smallContent.html || ""} className={classes}  />

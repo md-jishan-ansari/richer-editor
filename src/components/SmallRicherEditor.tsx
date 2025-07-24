@@ -1,5 +1,5 @@
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -31,6 +31,27 @@ import FontSizeIcon from '../icons/FontSizeIcon';
 // Import CSS inside the component so it is bundled
 import './RicherEditor.css';
 import { getSafeContent } from "@/lib/utils";
+import Heading1 from "@/icons/Heading1";
+import Heading2 from "@/icons/Heading2";
+import Heading3 from "@/icons/Heading3";
+import Heading4 from "@/icons/Heading4";
+import Heading5 from "@/icons/Heading5";
+import Heading6 from "@/icons/Heading6";
+import ItalicIcon from "@/icons/ItalicIcon";
+import StrikeIcon from "@/icons/StrikeIcon";
+import BlockquoteIcon from "@/icons/BlockquoteIcon";
+
+function isSafeUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url, window.location.origin);
+    return (
+      ["http:", "https:"].includes(parsed.protocol) ||
+      (parsed.protocol === "data:" && url.startsWith("data:image/"))
+    );
+  } catch {
+    return false;
+  }
+}
 
 const fontSizes = [
   { name: '10px', value: '10px' },
@@ -63,14 +84,27 @@ const alignmentOptions = [
   { value: 'justify', label: <AlignJustify size={18} />, name: 'Justify' },
 ];
 
+const headingOptions = [
+  { level: 1, label: <Heading1 size={18} /> },
+  { level: 2, label: <Heading2 size={18} /> },
+  { level: 3, label: <Heading3 size={18} /> },
+  { level: 4, label: <Heading4 size={18} /> },
+  { level: 5, label: <Heading5 size={18} /> },
+  { level: 6, label: <Heading6 size={18} /> },
+];
+
 // Add defaultI18n for button labels
 const defaultI18n = {
   bold: 'Bold',
+  italic: 'Italic',
   underline: 'Underline',
+  strike: 'Strikethrough',
   highlight: 'Highlight',
   code: 'Code Block',
   bulletList: 'Bullet List',
   orderedList: 'Ordered List',
+  blockquote: 'Blockquote',
+  hr: 'Horizontal Rule',
   link: 'Insert/Edit Link',
   image: 'Insert Image',
   video: 'Insert YouTube Video',
@@ -108,7 +142,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
 
   // Helper for image by URL
   const handleImageUrlInsert = useCallback(() => {
-    if (imageUrl) {
+    if (imageUrl && isSafeUrl(imageUrl)) {
       const attrs: any = { src: imageUrl };
       if (imageWidth) attrs.width = imageWidth;
       if (imageHeight) attrs.height = imageHeight;
@@ -117,6 +151,8 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       setImageUrl('');
       setImageWidth('');
       setImageHeight('');
+    } else if (imageUrl) {
+      window.alert('Invalid or unsafe image URL.');
     }
   }, [editor, imageUrl, imageWidth, imageHeight]);
 
@@ -173,7 +209,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
 
   // Helper for video embedding (popover)
   const handleVideoUrlInsert = useCallback(() => {
-    if (videoUrl) {
+    if (videoUrl && isSafeUrl(videoUrl)) {
       const attrs: any = { src: videoUrl };
       if (videoWidth) attrs.width = videoWidth;
       if (videoHeight) attrs.height = videoHeight;
@@ -182,16 +218,20 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
       setVideoUrl('');
       setVideoWidth('');
       setVideoHeight('');
+    } else if (videoUrl) {
+      window.alert('Invalid or unsafe video URL.');
     }
   }, [editor, videoUrl, videoWidth, videoHeight]);
 
   // Helper for link insertion (popover)
   const handleLinkInsert = useCallback(() => {
-    if (linkUrl) {
+    if (linkUrl && isSafeUrl(linkUrl)) {
       editor.chain().focus().setLink({ href: linkUrl, target: linkTarget }).run();
       setLinkPopoverOpen(false);
       setLinkUrl('');
       setLinkTarget('_blank');
+    } else if (linkUrl) {
+      window.alert('Invalid or unsafe link URL.');
     }
   }, [editor, linkUrl, linkTarget]);
   const handleLinkUnset = useCallback(() => {
@@ -205,6 +245,35 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   return (
     <>
       <div className="richer-editor-toolbar">
+
+        {/* Headings Dropdown */}
+        {!excludeToolbarButtons.includes('heading') && (
+          <>
+            <CustomSelect
+              value={(() => {
+                const activeHeading = headingOptions.find(opt => editor.isActive('heading', { level: opt.level }));
+                return activeHeading ? activeHeading.level.toString() : '';
+              })()}
+              options={[
+                { value: 'paragraph', label: 'Paragraph' },
+                ...headingOptions.map(opt => ({ value: opt.level.toString(), label: `H${opt.level}` }))
+              ]}
+              onChange={(val: string) => {
+                if (val === 'paragraph') {
+                  editor.chain().focus().setParagraph().run();
+                } else {
+                  editor.chain().focus().toggleHeading({ level: Number(val) }).run();
+                }
+              }}
+              className="richer-editor-select"
+              placeholder="Heading"
+              aria-label="Heading Level"
+            />
+            <div className="toolbar-divider" />
+          </>
+        )}
+
+
         {/* Font Size Dropdown */}
         {!excludeToolbarButtons.includes('fontSize') && (
           <CustomSelect
@@ -232,9 +301,15 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         {!excludeToolbarButtons.includes('bold') && (
           <button onClick={() => editor.chain().focus().toggleBold().run()} className={`richer-editor-button${editor.isActive("bold") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label={labels.bold} title={labels.bold}><BoldIcon size={16} /></button>
         )}
+        {!excludeToolbarButtons.includes('italic') && (
+          <button onClick={() => editor.chain().focus().toggleItalic().run()} className={`richer-editor-button ${editor.isActive("italic") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.italic} title={labels.italic}><ItalicIcon size={16} /></button>
+        )}
         {/* Underline */}
         {!excludeToolbarButtons.includes('underline') && (
           <button onClick={() => editor.chain().focus().toggleUnderline().run()} className={`richer-editor-button${editor.isActive("underline") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label={labels.underline} title={labels.underline}><UnderlineIcon size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('strike') && (
+          <button onClick={() => editor.chain().focus().toggleStrike().run()} className={`richer-editor-button ${editor.isActive("strike") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.strike} title={labels.strike}><StrikeIcon size={16} /></button>
         )}
         {/* Highlighter (single color) */}
         {!excludeToolbarButtons.includes('highlight') && (
@@ -252,6 +327,17 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         {/* Ordered List */}
         {!excludeToolbarButtons.includes('orderedList') && (
           <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`richer-editor-button${editor.isActive("orderedList") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label={labels.orderedList} title={labels.orderedList}><OrderedListIcon size={16} /></button>
+        )}
+        <div className="toolbar-divider" />
+        {/* Blockquote, hr */}
+        {!excludeToolbarButtons.includes('blockquote') && (
+          <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`richer-editor-button ${editor.isActive("blockquote") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.blockquote} title={labels.blockquote}><BlockquoteIcon size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('hr') && (
+          <>
+            <button onClick={() => editor.chain().focus().setHorizontalRule().run()} className="richer-editor-button" type="button" aria-label={labels.hr} title={labels.hr}>HR</button>
+            <div className="toolbar-divider" />
+          </>
         )}
         <div className="toolbar-divider" />
         {/* Link Popover */}
@@ -527,7 +613,6 @@ interface SmallRicherEditorProps {
   minHeight?: string;
   maxHeight?: string;
   editorProps?: any;
-  readOnly?: boolean;
   className?: string;
   excludeToolbarButtons?: string[];
   i18n?: Record<string, string>;
@@ -544,7 +629,6 @@ const SmallRicherEditor  = ({
   minHeight,
   maxHeight,
   editorProps = {},
-  readOnly = false,
   className = '',
   excludeToolbarButtons = [],
   i18n = {},
@@ -553,6 +637,7 @@ const SmallRicherEditor  = ({
   extensions = [], // default to empty array
   customToolbarButtons,
 }: SmallRicherEditorProps) => {
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
   // Use safe content conversion
   const safeContent = React.useMemo(() => getSafeContent(content), [content]);
   const defaultExtensions = [
@@ -585,19 +670,20 @@ const SmallRicherEditor  = ({
         class: `richer-editor-textarea ${className || ''}`,
         style: `${minHeight ? `min-height:${minHeight};` : ''}${editorProps?.attributes?.style || ''}`,
         spellCheck: 'true',
-        readOnly: readOnly ? 'true' : undefined,
         ...editorProps?.attributes,
       },
     },
     onUpdate({ editor }) {
       if (onChange) {
-        onChange({
-          html: editor.getHTML(),
-          json: JSON.stringify(editor.getJSON()),
-        });
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+          onChange({
+            html: editor.getHTML(),
+            json: JSON.stringify(editor.getJSON()),
+          });
+        }, 300);
       }
     },
-    editable: !readOnly,
     immediatelyRender: false,
   });
 
