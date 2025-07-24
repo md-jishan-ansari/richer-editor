@@ -82,8 +82,8 @@ const defaultI18n = {
   fontSize: 'Font Size',
 };
 
-// Update MenuBar to accept excludeToolbarButtons and i18n
-const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, fontSizeOptions, fontFamilyOptions }: { editor: any, imageUploadUrl?: string, excludeToolbarButtons?: string[], i18n?: Record<string, string>, fontSizeOptions?: { name: string; value: string }[], fontFamilyOptions?: { name: string; value: string }[] }) => {
+// Update MenuBar to accept customToolbarButtons
+const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, fontSizeOptions, fontFamilyOptions, customToolbarButtons }: { editor: any, imageUploadUrl?: string, excludeToolbarButtons?: string[], i18n?: Record<string, string>, fontSizeOptions?: { name: string; value: string }[], fontFamilyOptions?: { name: string; value: string }[], customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode) }) => {
   const [imagePopoverOpen, setImagePopoverOpen] = useState(false);
   const [imageTab, setImageTab] = useState<'url' | 'upload'>('url');
   const [imageUrl, setImageUrl] = useState('');
@@ -512,6 +512,8 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             placeholder={labels.align}
           />
         )}
+        {/* Custom Toolbar Buttons (rendered at the end) */}
+        {customToolbarButtons && (typeof customToolbarButtons === 'function' ? customToolbarButtons(editor) : customToolbarButtons)}
       </div>
     </>
   );
@@ -531,6 +533,8 @@ interface SmallRicherEditorProps {
   i18n?: Record<string, string>;
   fontSizeOptions?: { name: string; value: string }[];
   fontFamilyOptions?: { name: string; value: string }[];
+  extensions?: any[]; // Allow user to pass additional TipTap extensions
+  customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode);
 }
 
 const SmallRicherEditor  = ({
@@ -546,27 +550,33 @@ const SmallRicherEditor  = ({
   i18n = {},
   fontSizeOptions,
   fontFamilyOptions,
+  extensions = [], // default to empty array
+  customToolbarButtons,
 }: SmallRicherEditorProps) => {
   // Use safe content conversion
   const safeContent = React.useMemo(() => getSafeContent(content), [content]);
+  const defaultExtensions = [
+    StarterKit,
+    Link.configure({ openOnClick: true }),
+    Highlight.configure({ multicolor: false, HTMLAttributes: { style: 'background-color: #fff59d' } }),
+    TextAlign.configure({ types: ["paragraph"] }),
+    Image,
+    Youtube.configure({
+      controls: true,
+      allowFullscreen: true,
+      width: 640,
+      height: 360,
+      HTMLAttributes: {
+        class: 'mx-auto my-4 rounded-lg shadow',
+      },
+    }),
+    TextStyle,
+    FontSize
+  ];
   const editor = useEditor({
     extensions: [
-      StarterKit,
-      Link.configure({ openOnClick: true }),
-      Highlight.configure({ multicolor: false, HTMLAttributes: { style: 'background-color: #fff59d' } }),
-      TextAlign.configure({ types: ["paragraph"] }),
-      Image,
-      Youtube.configure({
-        controls: true,
-        allowFullscreen: true,
-        width: 640,
-        height: 360,
-        HTMLAttributes: {
-          class: 'mx-auto my-4 rounded-lg shadow',
-        },
-      }),
-      TextStyle,
-      FontSize
+      ...defaultExtensions,
+      ...extensions // Merge user-provided extensions
     ],
     content: safeContent,
     editorProps: {
@@ -605,7 +615,7 @@ const SmallRicherEditor  = ({
 
   return (
       <div className={`richer-editor-roundedMdBorder`}>
-        <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} fontSizeOptions={fontSizeOptions} fontFamilyOptions={fontFamilyOptions} />
+        <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} fontSizeOptions={fontSizeOptions} fontFamilyOptions={fontFamilyOptions} customToolbarButtons={customToolbarButtons} />
         <div className="richer-editor-overflowAuto" style={{maxHeight: maxHeight}}>
           <EditorContent editor={editor} />
         </div>

@@ -4,6 +4,11 @@ import React, { useState } from "react";
 import SmallTiptapEditor from "@/components/SmallRicherEditor";
 import TiptapEditor from "@/components/RicherEditor";
 import RicherContent from "@/components/RicherContent";
+import Italic from '@tiptap/extension-italic';
+import SubscriptIcon from "@/icons/SubscriptIcon";
+import SuperscriptIcon from "@/icons/SuperscriptIcon";
+import Superscript from "@tiptap/extension-superscript";
+import Subscript from "@tiptap/extension-subscript";
 
 const ThemeToggle = () => {
   const [dark, setDark] = React.useState(false);
@@ -64,6 +69,19 @@ export default function Home() {
           { name: 'Georgia', value: 'Georgia, serif' },
           { name: 'Inter', value: 'Inter, sans-serif' },
         ]}
+        extensions={[Italic]} // Pass custom extension
+        customToolbarButtons={editor => (
+          <button
+            onClick={() => editor.chain().focus().toggleItalic().run()}
+            className={editor.isActive('italic') ? 'richer-editor-button richer-editor-buttonActive' : 'richer-editor-button'}
+            type="button"
+            aria-label="Italic"
+            title="Italic"
+            style={{ fontStyle: 'italic', fontWeight: 600, fontSize: 16, marginLeft: 8 }}
+          >
+            I
+          </button>
+        )}
       />
 
       <RicherContent content={largeContent.html || ""} className={classes}  />
@@ -78,6 +96,39 @@ export default function Home() {
         className={classes}
         i18n={i18nSmall}
         imageUploadUrl="/api/temp-image-upload"
+        extensions={[Italic, Superscript, Subscript,]} // Pass custom extension
+        customToolbarButtons={editor => (
+          <>
+            <button
+              onClick={() => editor.chain().focus().toggleItalic().run()}
+              className={editor.isActive('italic') ? 'richer-editor-button richer-editor-buttonActive' : 'richer-editor-button'}
+              type="button"
+              aria-label="Italic"
+              title="Italic"
+              style={{ fontStyle: 'italic', fontWeight: 600, fontSize: 16, marginLeft: 8 }}
+            >
+              I
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleSubscript().run()}
+              className={`richer-editor-button ${editor.isActive('subscript') ? 'richer-editor-buttonActive' : ''}`}
+              type="button"
+              title="Subscript"
+              aria-label='Subscript'
+            >
+              <SubscriptIcon size={16} />
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleSuperscript().run()}
+              className={`richer-editor-button ${editor.isActive('superscript') ? 'richer-editor-buttonActive' : ''}`}
+              type="button"
+              title="Superscript"
+              aria-label="Superscript"
+            >
+              <SuperscriptIcon size={16} />
+            </button>
+          </>
+        )}
       />
 
       <RicherContent content={smallContent.html || ""} className={classes}  />

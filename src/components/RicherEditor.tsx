@@ -135,13 +135,15 @@ interface RicherEditorProps {
   imageUploadUrl?: string;
   minHeight?: string;
   maxHeight?: string;
-  editorProps?: Record<string, any>;
+  editorProps?: any;
   readOnly?: boolean;
   className?: string;
   excludeToolbarButtons?: string[];
   i18n?: Record<string, string>;
   fontSizeOptions?: { name: string; value: string }[];
   fontFamilyOptions?: { name: string; value: string }[];
+  extensions?: any[]; // Allow user to pass additional TipTap extensions
+  customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode);
 }
 
 type ToolbarButtonKey =
@@ -209,13 +211,14 @@ const defaultI18n = {
   cancel: 'Cancel',
 };
 
-const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, fontSizeOptions, fontFamilyOptions }: {
+const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, fontSizeOptions, fontFamilyOptions, customToolbarButtons }: {
   editor: any,
   imageUploadUrl?: string,
   excludeToolbarButtons?: string[],
   i18n?: Record<string, string>,
   fontSizeOptions?: { name: string; value: string }[],
   fontFamilyOptions?: { name: string; value: string }[],
+  customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode)
 }) => {
   // Popover state for link, image, video
   const [imagePopoverOpen, setImagePopoverOpen] = useState(false);
@@ -344,595 +347,601 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   const labels = { ...defaultI18n, ...i18n };
 
   return (
-    <div className="richer-editor-toolbar">
-      {/* Headings Dropdown */}
-      <CustomSelect
-        value={(() => {
-          const activeHeading = headingOptions.find(opt => editor.isActive('heading', { level: opt.level }));
-          return activeHeading ? activeHeading.level.toString() : '';
-        })()}
-        options={[
-          { value: 'paragraph', label: 'Paragraph' },
-          ...headingOptions.map(opt => ({ value: opt.level.toString(), label: `H${opt.level}` }))
-        ]}
-        onChange={(val: string) => {
-          if (val === 'paragraph') {
-            editor.chain().focus().setParagraph().run();
-          } else {
-            editor.chain().focus().toggleHeading({ level: Number(val) }).run();
-          }
-        }}
-        className="richer-editor-select"
-        placeholder="Heading"
-        aria-label="Heading Level"
-      />
-      <div className="toolbar-divider" />
-      {/* Font Size Dropdown */}
-      <CustomSelect
-        value={editor.getAttributes('fontSize').fontSize || ''}
-        options={(fontSizeOptions || fontSizes).map(f => ({ value: f.value, label: f.name }))}
-        onChange={(val: string) => editor.chain().focus().setFontSize(val).run()}
-        className="richer-editor-select"
-        placeholder="Font Size"
-        aria-label="Font Size"
-      />
-      {/* Font Family Dropdown */}
-      <CustomSelect
-        value={editor.getAttributes('fontFamily').fontFamily || ''}
-        options={(fontFamilyOptions || fontFamilies).map(f => ({
-          value: f.value,
-          label: <span style={{ fontFamily: f.value }}>{f.name}</span>
-        }))}
-        onChange={(val: string) => editor.chain().focus().setFontFamily(val).run()}
-        className="richer-editor-select"
-        placeholder="Font Family"
-        aria-label="Font Family"
-      />
-      <div className="toolbar-divider" />
-      {/* Font styles */}
-      {!excludeToolbarButtons.includes('bold') && (
-        <button onClick={() => editor.chain().focus().toggleBold().run()} className={`richer-editor-button ${editor.isActive("bold") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.bold} title={labels.bold}><BoldIcon size={16} /></button>
-      )}
-      {!excludeToolbarButtons.includes('italic') && (
-        <button onClick={() => editor.chain().focus().toggleItalic().run()} className={`richer-editor-button ${editor.isActive("italic") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.italic} title={labels.italic}><ItalicIcon size={16} /></button>
-      )}
-      {!excludeToolbarButtons.includes('underline') && (
-        <button onClick={() => editor.chain().focus().toggleUnderline().run()} className={`richer-editor-button ${editor.isActive("underline") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.underline} title={labels.underline}><UnderlineIcon size={16} /></button>
-      )}
-      {!excludeToolbarButtons.includes('strike') && (
-        <button onClick={() => editor.chain().focus().toggleStrike().run()} className={`richer-editor-button ${editor.isActive("strike") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.strike} title={labels.strike}><StrikeIcon size={16} /></button>
-      )}
-      {!excludeToolbarButtons.includes('highlight') && (
-        <button onClick={() => editor.chain().focus().toggleHighlight().run()} className={`richer-editor-button ${editor.isActive("highlight") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.highlight} title={labels.highlight}><Highlighter size={16} /></button>
-      )}
-      {!excludeToolbarButtons.includes('code') && (
-        <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button ${editor.isActive("codeBlock") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
-      )}
-      <div className="toolbar-divider" />
-      {/* Lists */}
-      {!excludeToolbarButtons.includes('bulletList') && (
-        <>
-          <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={`richer-editor-button ${editor.isActive("bulletList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.bulletList} title={labels.bulletList}><BulletListIcon size={16} /></button>
-          {/* Unordered List Style Dropdown */}
-          <CustomSelect
-            value={editor.getAttributes('bulletList').listStyleType || ''}
-            options={unorderedListStyles.map(opt => ({ value: opt.value, label: <>{opt.icon} {opt.name}</> }))}
-            onChange={(val: string) => {
-              if (editor.isActive('bulletList')) {
-                editor.chain().focus().updateAttributes('bulletList', { listStyleType: val }).run();
-              } else {
-                window.alert('Please place the cursor inside an unordered list to change its style.');
-              }
-            }}
-            className="richer-editor-select"
-            placeholder="UL Style"
-            aria-label="Unordered List Style"
-          />
-        </>
-      )}
-
-      {!excludeToolbarButtons.includes('orderedList') && (
-        <>
-          <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`richer-editor-button ${editor.isActive("orderedList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.orderedList} title={labels.orderedList}><OrderedListIcon size={16} /></button>
-          {/* Ordered List Style Dropdown */}
-          <CustomSelect
-            value={editor.getAttributes('orderedList').listStyleType || ''}
-            options={orderedListStyles.map(opt => ({ value: opt.value, label: <>{opt.icon} {opt.name}</> }))}
-            onChange={(val: string) => {
-              if (editor.isActive('orderedList')) {
-                editor.chain().focus().updateAttributes('orderedList', { listStyleType: val }).run();
-              } else {
-                window.alert('Please place the cursor inside an ordered list to change its style.');
-              }
-            }}
-            className="richer-editor-select"
-            placeholder="OL Style"
-            aria-label="Ordered List Style"
-          />
-        </>
-      )}
-
-      {!excludeToolbarButtons.includes('taskList') && (
-        <button onClick={() => editor.chain().focus().toggleTaskList().run()} className={`richer-editor-button ${editor.isActive("taskList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.taskList} title={labels.taskList}><TaskListIcon size={16} /></button>
-      )}
-      <div className="toolbar-divider" />
-      {/* Blockquote, hr */}
-      {!excludeToolbarButtons.includes('blockquote') && (
-        <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`richer-editor-button ${editor.isActive("blockquote") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.blockquote} title={labels.blockquote}><BlockquoteIcon size={16} /></button>
-      )}
-      {!excludeToolbarButtons.includes('hr') && (
-        <button onClick={() => editor.chain().focus().setHorizontalRule().run()} className="richer-editor-button" type="button" aria-label={labels.hr} title={labels.hr}>HR</button>
-      )}
-
-      <div className="toolbar-divider" />
-      {/* Link Popover */}
-      {!excludeToolbarButtons.includes('link') && (
-        <>
-          <button
-            ref={linkButtonRef}
-            onClick={() => {
-              setLinkPopoverOpen((open) => !open);
-              setLinkUrl(editor.getAttributes('link').href || '');
-              setLinkTarget(editor.getAttributes('link').target || '_blank');
-            }}
-            className={`richer-editor-button${editor.isActive("link") ? ' richer-editor-buttonActive' : ''}`}
-            type="button"
-            aria-label={labels.link}
-            title={labels.link}
-          >
-            <LinkIcon size={16} />
-          </button>
-          <CustomPopover
-            open={linkPopoverOpen}
-            onOpenChange={setLinkPopoverOpen}
-            anchorEl={linkButtonRef.current}
-            closeButton
-            onEsc={() => setLinkPopoverOpen(false)}
-          >
-            <div className="mb-2 font-semibold text-base">Insert Link</div>
-            <input
-              type="text"
-              placeholder="Paste link URL here..."
-              value={linkUrl}
-              onChange={e => setLinkUrl(e.target.value)}
-              className="richer-editor-input"
-              autoFocus
+    <>
+      <div className="richer-editor-toolbar">
+        {/* Headings Dropdown */}
+        <CustomSelect
+          value={(() => {
+            const activeHeading = headingOptions.find(opt => editor.isActive('heading', { level: opt.level }));
+            return activeHeading ? activeHeading.level.toString() : '';
+          })()}
+          options={[
+            { value: 'paragraph', label: 'Paragraph' },
+            ...headingOptions.map(opt => ({ value: opt.level.toString(), label: `H${opt.level}` }))
+          ]}
+          onChange={(val: string) => {
+            if (val === 'paragraph') {
+              editor.chain().focus().setParagraph().run();
+            } else {
+              editor.chain().focus().toggleHeading({ level: Number(val) }).run();
+            }
+          }}
+          className="richer-editor-select"
+          placeholder="Heading"
+          aria-label="Heading Level"
+        />
+        <div className="toolbar-divider" />
+        {/* Font Size Dropdown */}
+        <CustomSelect
+          value={editor.getAttributes('fontSize').fontSize || ''}
+          options={(fontSizeOptions || fontSizes).map(f => ({ value: f.value, label: f.name }))}
+          onChange={(val: string) => editor.chain().focus().setFontSize(val).run()}
+          className="richer-editor-select"
+          placeholder="Font Size"
+          aria-label="Font Size"
+        />
+        {/* Font Family Dropdown */}
+        <CustomSelect
+          value={editor.getAttributes('fontFamily').fontFamily || ''}
+          options={(fontFamilyOptions || fontFamilies).map(f => ({
+            value: f.value,
+            label: <span style={{ fontFamily: f.value }}>{f.name}</span>
+          }))}
+          onChange={(val: string) => editor.chain().focus().setFontFamily(val).run()}
+          className="richer-editor-select"
+          placeholder="Font Family"
+          aria-label="Font Family"
+        />
+        <div className="toolbar-divider" />
+        {/* Font styles */}
+        {!excludeToolbarButtons.includes('bold') && (
+          <button onClick={() => editor.chain().focus().toggleBold().run()} className={`richer-editor-button ${editor.isActive("bold") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.bold} title={labels.bold}><BoldIcon size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('italic') && (
+          <button onClick={() => editor.chain().focus().toggleItalic().run()} className={`richer-editor-button ${editor.isActive("italic") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.italic} title={labels.italic}><ItalicIcon size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('underline') && (
+          <button onClick={() => editor.chain().focus().toggleUnderline().run()} className={`richer-editor-button ${editor.isActive("underline") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.underline} title={labels.underline}><UnderlineIcon size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('strike') && (
+          <button onClick={() => editor.chain().focus().toggleStrike().run()} className={`richer-editor-button ${editor.isActive("strike") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.strike} title={labels.strike}><StrikeIcon size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('highlight') && (
+          <button onClick={() => editor.chain().focus().toggleHighlight().run()} className={`richer-editor-button ${editor.isActive("highlight") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.highlight} title={labels.highlight}><Highlighter size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('code') && (
+          <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button ${editor.isActive("codeBlock") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
+        )}
+        <div className="toolbar-divider" />
+        {/* Lists */}
+        {!excludeToolbarButtons.includes('bulletList') && (
+          <>
+            <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={`richer-editor-button ${editor.isActive("bulletList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.bulletList} title={labels.bulletList}><BulletListIcon size={16} /></button>
+            {/* Unordered List Style Dropdown */}
+            <CustomSelect
+              value={editor.getAttributes('bulletList').listStyleType || ''}
+              options={unorderedListStyles.map(opt => ({ value: opt.value, label: <>{opt.icon} {opt.name}</> }))}
+              onChange={(val: string) => {
+                if (editor.isActive('bulletList')) {
+                  editor.chain().focus().updateAttributes('bulletList', { listStyleType: val }).run();
+                } else {
+                  window.alert('Please place the cursor inside an unordered list to change its style.');
+                }
+              }}
+              className="richer-editor-select"
+              placeholder="UL Style"
+              aria-label="Unordered List Style"
             />
-            <select
-              name="target"
-              value={linkTarget}
-              onChange={e => setLinkTarget(e.target.value)}
-              className="richer-editor-input"
-              style={{ marginBottom: 8 }}
+          </>
+        )}
+
+        {!excludeToolbarButtons.includes('orderedList') && (
+          <>
+            <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`richer-editor-button ${editor.isActive("orderedList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.orderedList} title={labels.orderedList}><OrderedListIcon size={16} /></button>
+            {/* Ordered List Style Dropdown */}
+            <CustomSelect
+              value={editor.getAttributes('orderedList').listStyleType || ''}
+              options={orderedListStyles.map(opt => ({ value: opt.value, label: <>{opt.icon} {opt.name}</> }))}
+              onChange={(val: string) => {
+                if (editor.isActive('orderedList')) {
+                  editor.chain().focus().updateAttributes('orderedList', { listStyleType: val }).run();
+                } else {
+                  window.alert('Please place the cursor inside an ordered list to change its style.');
+                }
+              }}
+              className="richer-editor-select"
+              placeholder="OL Style"
+              aria-label="Ordered List Style"
+            />
+          </>
+        )}
+
+        {!excludeToolbarButtons.includes('taskList') && (
+          <button onClick={() => editor.chain().focus().toggleTaskList().run()} className={`richer-editor-button ${editor.isActive("taskList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.taskList} title={labels.taskList}><TaskListIcon size={16} /></button>
+        )}
+        <div className="toolbar-divider" />
+        {/* Blockquote, hr */}
+        {!excludeToolbarButtons.includes('blockquote') && (
+          <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`richer-editor-button ${editor.isActive("blockquote") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.blockquote} title={labels.blockquote}><BlockquoteIcon size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('hr') && (
+          <button onClick={() => editor.chain().focus().setHorizontalRule().run()} className="richer-editor-button" type="button" aria-label={labels.hr} title={labels.hr}>HR</button>
+        )}
+
+        <div className="toolbar-divider" />
+        {/* Link Popover */}
+        {!excludeToolbarButtons.includes('link') && (
+          <>
+            <button
+              ref={linkButtonRef}
+              onClick={() => {
+                setLinkPopoverOpen((open) => !open);
+                setLinkUrl(editor.getAttributes('link').href || '');
+                setLinkTarget(editor.getAttributes('link').target || '_blank');
+              }}
+              className={`richer-editor-button${editor.isActive("link") ? ' richer-editor-buttonActive' : ''}`}
+              type="button"
+              aria-label={labels.link}
+              title={labels.link}
             >
-              <option value="_blank">New Tab (_blank)</option>
-              <option value="_self">Same Tab (_self)</option>
-              <option value="_parent">Parent Frame (_parent)</option>
-              <option value="_top">Top Frame (_top)</option>
-            </select>
-            <div className="richer-editor-flexRow">
-              <button
-                className="richer-editor-primaryBtn"
-                onClick={handleLinkInsert}
-                disabled={!linkUrl}
+              <LinkIcon size={16} />
+            </button>
+            <CustomPopover
+              open={linkPopoverOpen}
+              onOpenChange={setLinkPopoverOpen}
+              anchorEl={linkButtonRef.current}
+              closeButton
+              onEsc={() => setLinkPopoverOpen(false)}
+            >
+              <div className="mb-2 font-semibold text-base">Insert Link</div>
+              <input
+                type="text"
+                placeholder="Paste link URL here..."
+                value={linkUrl}
+                onChange={e => setLinkUrl(e.target.value)}
+                className="richer-editor-input"
+                autoFocus
+              />
+              <select
+                name="target"
+                value={linkTarget}
+                onChange={e => setLinkTarget(e.target.value)}
+                className="richer-editor-input"
+                style={{ marginBottom: 8 }}
               >
-                {labels.insert}
-              </button>
-              <button
-                className="richer-editor-secondaryBtn"
-                onClick={handleLinkUnset}
-                disabled={!editor.isActive('link')}
-              >
-                {labels.remove}
-              </button>
-            </div>
-          </CustomPopover>
-        </>
-      )}
-      {/* Image Popover */}
-      {!excludeToolbarButtons.includes('image') && (
-        <>
-          <button
-            ref={imageButtonRef}
-            onClick={() => {
-              setImagePopoverOpen((open) => !open);
-              if (!imageUploadUrl) setImageTab('url');
-            }}
-            className="richer-editor-button"
-            type="button"
-          >
-            <ImageIcon size={16} />
-          </button>
-          <CustomPopover
-            open={imagePopoverOpen}
-            onOpenChange={setImagePopoverOpen}
-            anchorEl={imageButtonRef.current}
-            closeButton
-            onEsc={() => setImagePopoverOpen(false)}
-          >
-            <div className="mb-2 font-semibold text-base flex gap-4 border-b pb-2">
-              <button className={`richer-editor-button${imageTab === 'url' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('url')}>URL</button>
-              {imageUploadUrl && (
-                <button className={`richer-editor-button${imageTab === 'upload' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('upload')}>Upload</button>
-              )}
-            </div>
-            {imageTab === 'url' && (
-              <>
-                <input
-                  type="text"
-                  placeholder="Paste image URL here..."
-                  value={imageUrl}
-                  onChange={e => setImageUrl(e.target.value)}
-                  className="richer-editor-input"
-                  autoFocus
-                />
-                <div className="richer-editor-flexRowMb2">
-                  <input
-                    type="text"
-                    placeholder="Width (e.g. 400 or 50%)"
-                    value={imageWidth}
-                    onChange={e => setImageWidth(e.target.value)}
-                    className="richer-editor-input"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Height (e.g. 300 or 50%)"
-                    value={imageHeight}
-                    onChange={e => setImageHeight(e.target.value)}
-                    className="richer-editor-input"
-                  />
-                </div>
-                <div className="richer-editor-textXs">Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%).</div>
+                <option value="_blank">New Tab (_blank)</option>
+                <option value="_self">Same Tab (_self)</option>
+                <option value="_parent">Parent Frame (_parent)</option>
+                <option value="_top">Top Frame (_top)</option>
+              </select>
+              <div className="richer-editor-flexRow">
                 <button
                   className="richer-editor-primaryBtn"
-                  onClick={handleImageUrlInsert}
-                  disabled={!imageUrl}
+                  onClick={handleLinkInsert}
+                  disabled={!linkUrl}
                 >
-                  {labels.image}
+                  {labels.insert}
                 </button>
-              </>
-            )}
-            {imageTab === 'upload' && imageUploadUrl && (
-              <>
-                {!uploadedImageUrl && (
-                  <>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleUploadInputChange}
-                      className="mb2"
-                      disabled={uploading}
-                    />
-                    {uploading && <div className="text-sm text-blue-600 mb-2">Uploading...</div>}
-                    {uploadError && <div className="text-sm text-red-600 mb-2">{uploadError}</div>}
-                  </>
-                )}
-                {uploadedImageUrl && (
-                  <>
-                    <div className="mb-2 flex flex-col items-center">
-                      <img src={uploadedImageUrl} alt="Preview" className="max-h-40 max-w-full rounded border mb-2" />
-                    </div>
-                    <div className="richer-editor-flexRowMb2">
-                      <input
-                        type="text"
-                        placeholder="Width (e.g. 400 or 50%)"
-                        value={imageWidth}
-                        onChange={e => setImageWidth(e.target.value)}
-                        className="richer-editor-input"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Height (e.g. 300 or 50%)"
-                        value={imageHeight}
-                        onChange={e => setImageHeight(e.target.value)}
-                        className="richer-editor-input"
-                      />
-                    </div>
-                    <div className="richer-editor-flexRow">
-                      <button
-                        className="richer-editor-primaryBtn"
-                        onClick={handleUploadedImageInsert}
-                      >
-                        {labels.add}
-                      </button>
-                      <button
-                        className="richer-editor-secondaryBtn"
-                        onClick={() => {
-                          setUploadedImageUrl('');
-                          setImageFile(null);
-                          setImageWidth('');
-                          setImageHeight('');
-                          setUploadError(null);
-                        }}
-                      >
-                        {labels.cancel}
-                      </button>
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-          </CustomPopover>
-        </>
-      )}
-      {/* Video Popover */}
-      {!excludeToolbarButtons.includes('video') && (
-        <>
-          <button
-            ref={videoButtonRef}
-            onClick={() => setVideoPopoverOpen((open) => !open)}
-            className="richer-editor-button"
-            type="button"
-          >
-            <VideoIcon size={16} />
-          </button>
-          <CustomPopover
-            open={videoPopoverOpen}
-            onOpenChange={setVideoPopoverOpen}
-            anchorEl={videoButtonRef.current}
-            closeButton
-            onEsc={() => setVideoPopoverOpen(false)}
-          >
-            <div className="mb-2 font-semibold text-base">Insert YouTube Video</div>
-            <input
-              type="text"
-              placeholder="Paste YouTube video URL here..."
-              value={videoUrl}
-              onChange={e => setVideoUrl(e.target.value)}
-              className="richer-editor-input"
-              autoFocus
-            />
-            <div className="richer-editor-flexRowMb2">
-              <input
-                type="text"
-                placeholder="Width (e.g. 400 or 50%)"
-                value={videoWidth}
-                onChange={e => setVideoWidth(e.target.value)}
-                className="richer-editor-input"
-              />
-              <input
-                type="text"
-                placeholder="Height (e.g. 300 or 50%)"
-                value={videoHeight}
-                onChange={e => setVideoHeight(e.target.value)}
-                className="richer-editor-input"
-              />
-            </div>
-            <div className="richer-editor-textXs">Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%).</div>
-            <button
-              className="richer-editor-primaryBtn"
-              onClick={handleVideoUrlInsert}
-              disabled={!videoUrl}
-            >
-              {labels.video}
-            </button>
-          </CustomPopover>
-        </>
-      )}
-      {/* Alignment */}
-      {!excludeToolbarButtons.includes('alignLeft') && (
-        <button onClick={() => editor.chain().focus().setTextAlign("left").run()} className={`richer-editor-button ${editor.isActive({ textAlign: "left" }) ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.alignLeft} title={labels.alignLeft}><AlignLeft size={16} /></button>
-      )}
-      {!excludeToolbarButtons.includes('alignCenter') && (
-        <button onClick={() => editor.chain().focus().setTextAlign("center").run()} className={`richer-editor-button ${editor.isActive({ textAlign: "center" }) ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.alignCenter} title={labels.alignCenter}><AlignCenter size={16} /></button>
-      )}
-      {!excludeToolbarButtons.includes('alignRight') && (
-        <button onClick={() => editor.chain().focus().setTextAlign("right").run()} className={`richer-editor-button ${editor.isActive({ textAlign: "right" }) ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.alignRight} title={labels.alignRight}><AlignRight size={16} /></button>
-      )}
-      {!excludeToolbarButtons.includes('alignJustify') && (
-        <button onClick={() => editor.chain().focus().setTextAlign("justify").run()} className={`richer-editor-button ${editor.isActive({ textAlign: "justify" }) ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.alignJustify} title={labels.alignJustify}><AlignJustify size={16} /></button>
-      )}
-      {/* Text Color Picker (Dropdown) */}
-      {!excludeToolbarButtons.includes('textColor') && (
-        <>
-          <button
-            ref={textColorButtonRef}
-            onClick={() => setTextColorPopoverOpen(open => !open)}
-            className={`richer-editor-button${editor.getAttributes('textStyle').color ? ' richer-editor-buttonActive' : ''}`}
-            type="button"
-            aria-label={labels.textColor}
-            title={labels.textColor}
-            style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}
-          >
-            <TextColorIcon size={16} />
-            {/* Color swatch indicator */}
-            <span style={{
-              display: 'inline-block',
-              width: 14,
-              height: 14,
-              borderRadius: '50%',
-              background: editor.getAttributes('textStyle').color || '#000',
-              border: '1px solid #ccc',
-              marginLeft: 2,
-            }} />
-          </button>
-          <CustomPopover
-            open={textColorPopoverOpen}
-            onOpenChange={setTextColorPopoverOpen}
-            anchorEl={textColorButtonRef.current}
-            closeButton
-            onEsc={() => setTextColorPopoverOpen(false)}
-          >
-            <div style={{ minWidth: 200, padding: 16 }}>
-              {editor.getAttributes('textStyle').color && (
                 <button
-                  className="richer-editor-secondaryBtn mb-2 w-full"
-                  onClick={() => {
-                    editor.commands.focus();
-                    editor.commands.unsetColor();
-                    setTextColorPopoverOpen(false);
-                  }}
-                  style={{ marginBottom: 8, width: '100%' }}
+                  className="richer-editor-secondaryBtn"
+                  onClick={handleLinkUnset}
+                  disabled={!editor.isActive('link')}
                 >
-                  Remove Color
+                  {labels.remove}
                 </button>
-              )}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8, marginBottom: 12 }}>
-                {colorPalette.map((color: string) => (
+              </div>
+            </CustomPopover>
+          </>
+        )}
+        {/* Image Popover */}
+        {!excludeToolbarButtons.includes('image') && (
+          <>
+            <button
+              ref={imageButtonRef}
+              onClick={() => {
+                setImagePopoverOpen((open) => !open);
+                if (!imageUploadUrl) setImageTab('url');
+              }}
+              className="richer-editor-button"
+              type="button"
+            >
+              <ImageIcon size={16} />
+            </button>
+            <CustomPopover
+              open={imagePopoverOpen}
+              onOpenChange={setImagePopoverOpen}
+              anchorEl={imageButtonRef.current}
+              closeButton
+              onEsc={() => setImagePopoverOpen(false)}
+            >
+              <div className="mb-2 font-semibold text-base flex gap-4 border-b pb-2">
+                <button className={`richer-editor-button${imageTab === 'url' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('url')}>URL</button>
+                {imageUploadUrl && (
+                  <button className={`richer-editor-button${imageTab === 'upload' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('upload')}>Upload</button>
+                )}
+              </div>
+              {imageTab === 'url' && (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Paste image URL here..."
+                    value={imageUrl}
+                    onChange={e => setImageUrl(e.target.value)}
+                    className="richer-editor-input"
+                    autoFocus
+                  />
+                  <div className="richer-editor-flexRowMb2">
+                    <input
+                      type="text"
+                      placeholder="Width (e.g. 400 or 50%)"
+                      value={imageWidth}
+                      onChange={e => setImageWidth(e.target.value)}
+                      className="richer-editor-input"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Height (e.g. 300 or 50%)"
+                      value={imageHeight}
+                      onChange={e => setImageHeight(e.target.value)}
+                      className="richer-editor-input"
+                    />
+                  </div>
+                  <div className="richer-editor-textXs">Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%).</div>
                   <button
-                    key={color}
-                    type="button"
-                    aria-label={`Select text color ${color}`}
+                    className="richer-editor-primaryBtn"
+                    onClick={handleImageUrlInsert}
+                    disabled={!imageUrl}
+                  >
+                    {labels.image}
+                  </button>
+                </>
+              )}
+              {imageTab === 'upload' && imageUploadUrl && (
+                <>
+                  {!uploadedImageUrl && (
+                    <>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleUploadInputChange}
+                        className="mb2"
+                        disabled={uploading}
+                      />
+                      {uploading && <div className="text-sm text-blue-600 mb-2">Uploading...</div>}
+                      {uploadError && <div className="text-sm text-red-600 mb-2">{uploadError}</div>}
+                    </>
+                  )}
+                  {uploadedImageUrl && (
+                    <>
+                      <div className="mb-2 flex flex-col items-center">
+                        <img src={uploadedImageUrl} alt="Preview" className="max-h-40 max-w-full rounded border mb-2" />
+                      </div>
+                      <div className="richer-editor-flexRowMb2">
+                        <input
+                          type="text"
+                          placeholder="Width (e.g. 400 or 50%)"
+                          value={imageWidth}
+                          onChange={e => setImageWidth(e.target.value)}
+                          className="richer-editor-input"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Height (e.g. 300 or 50%)"
+                          value={imageHeight}
+                          onChange={e => setImageHeight(e.target.value)}
+                          className="richer-editor-input"
+                        />
+                      </div>
+                      <div className="richer-editor-flexRow">
+                        <button
+                          className="richer-editor-primaryBtn"
+                          onClick={handleUploadedImageInsert}
+                        >
+                          {labels.add}
+                        </button>
+                        <button
+                          className="richer-editor-secondaryBtn"
+                          onClick={() => {
+                            setUploadedImageUrl('');
+                            setImageFile(null);
+                            setImageWidth('');
+                            setImageHeight('');
+                            setUploadError(null);
+                          }}
+                        >
+                          {labels.cancel}
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+            </CustomPopover>
+          </>
+        )}
+        {/* Video Popover */}
+        {!excludeToolbarButtons.includes('video') && (
+          <>
+            <button
+              ref={videoButtonRef}
+              onClick={() => setVideoPopoverOpen((open) => !open)}
+              className="richer-editor-button"
+              type="button"
+            >
+              <VideoIcon size={16} />
+            </button>
+            <CustomPopover
+              open={videoPopoverOpen}
+              onOpenChange={setVideoPopoverOpen}
+              anchorEl={videoButtonRef.current}
+              closeButton
+              onEsc={() => setVideoPopoverOpen(false)}
+            >
+              <div className="mb-2 font-semibold text-base">Insert YouTube Video</div>
+              <input
+                type="text"
+                placeholder="Paste YouTube video URL here..."
+                value={videoUrl}
+                onChange={e => setVideoUrl(e.target.value)}
+                className="richer-editor-input"
+                autoFocus
+              />
+              <div className="richer-editor-flexRowMb2">
+                <input
+                  type="text"
+                  placeholder="Width (e.g. 400 or 50%)"
+                  value={videoWidth}
+                  onChange={e => setVideoWidth(e.target.value)}
+                  className="richer-editor-input"
+                />
+                <input
+                  type="text"
+                  placeholder="Height (e.g. 300 or 50%)"
+                  value={videoHeight}
+                  onChange={e => setVideoHeight(e.target.value)}
+                  className="richer-editor-input"
+                />
+              </div>
+              <div className="richer-editor-textXs">Leave blank for default size. Use px (e.g. 400) or % (e.g. 50%).</div>
+              <button
+                className="richer-editor-primaryBtn"
+                onClick={handleVideoUrlInsert}
+                disabled={!videoUrl}
+              >
+                {labels.video}
+              </button>
+            </CustomPopover>
+          </>
+        )}
+        {/* Alignment */}
+        {!excludeToolbarButtons.includes('alignLeft') && (
+          <button onClick={() => editor.chain().focus().setTextAlign("left").run()} className={`richer-editor-button ${editor.isActive({ textAlign: "left" }) ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.alignLeft} title={labels.alignLeft}><AlignLeft size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('alignCenter') && (
+          <button onClick={() => editor.chain().focus().setTextAlign("center").run()} className={`richer-editor-button ${editor.isActive({ textAlign: "center" }) ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.alignCenter} title={labels.alignCenter}><AlignCenter size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('alignRight') && (
+          <button onClick={() => editor.chain().focus().setTextAlign("right").run()} className={`richer-editor-button ${editor.isActive({ textAlign: "right" }) ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.alignRight} title={labels.alignRight}><AlignRight size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('alignJustify') && (
+          <button onClick={() => editor.chain().focus().setTextAlign("justify").run()} className={`richer-editor-button ${editor.isActive({ textAlign: "justify" }) ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.alignJustify} title={labels.alignJustify}><AlignJustify size={16} /></button>
+        )}
+        {/* Text Color Picker (Dropdown) */}
+        {!excludeToolbarButtons.includes('textColor') && (
+          <>
+            <button
+              ref={textColorButtonRef}
+              onClick={() => setTextColorPopoverOpen(open => !open)}
+              className={`richer-editor-button${editor.getAttributes('textStyle').color ? ' richer-editor-buttonActive' : ''}`}
+              type="button"
+              aria-label={labels.textColor}
+              title={labels.textColor}
+              style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}
+            >
+              <TextColorIcon size={16} />
+              {/* Color swatch indicator */}
+              <span style={{
+                display: 'inline-block',
+                width: 14,
+                height: 14,
+                borderRadius: '50%',
+                background: editor.getAttributes('textStyle').color || '#000',
+                border: '1px solid #ccc',
+                marginLeft: 2,
+              }} />
+            </button>
+            <CustomPopover
+              open={textColorPopoverOpen}
+              onOpenChange={setTextColorPopoverOpen}
+              anchorEl={textColorButtonRef.current}
+              closeButton
+              onEsc={() => setTextColorPopoverOpen(false)}
+            >
+              <div style={{ minWidth: 200, padding: 16 }}>
+                {editor.getAttributes('textStyle').color && (
+                  <button
+                    className="richer-editor-secondaryBtn mb-2 w-full"
                     onClick={() => {
                       editor.commands.focus();
-                      editor.commands.setColor(color);
+                      editor.commands.unsetColor();
                       setTextColorPopoverOpen(false);
                     }}
-                    style={{
-                      background: color,
-                      width: 22,
-                      height: 22,
-                      borderRadius: '50%',
-                      border: (editor.getAttributes('textStyle').color === color) ? '2px solid #333' : '1px solid #ccc',
-                      outline: 'none',
-                      cursor: 'pointer',
-                      boxSizing: 'border-box',
+                    style={{ marginBottom: 8, width: '100%' }}
+                  >
+                    Remove Color
+                  </button>
+                )}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8, marginBottom: 12 }}>
+                  {colorPalette.map((color: string) => (
+                    <button
+                      key={color}
+                      type="button"
+                      aria-label={`Select text color ${color}`}
+                      onClick={() => {
+                        editor.commands.focus();
+                        editor.commands.setColor(color);
+                        setTextColorPopoverOpen(false);
+                      }}
+                      style={{
+                        background: color,
+                        width: 22,
+                        height: 22,
+                        borderRadius: '50%',
+                        border: (editor.getAttributes('textStyle').color === color) ? '2px solid #333' : '1px solid #ccc',
+                        outline: 'none',
+                        cursor: 'pointer',
+                        boxSizing: 'border-box',
+                      }}
+                      tabIndex={0}
+                    />
+                  ))}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <TextColorIcon size={16} />
+                  <input
+                    type="color"
+                    value={editor.getAttributes('textStyle').color || '#000000'}
+                    onChange={e => {
+                      editor.commands.focus();
+                      editor.commands.setColor(e.target.value);
+                      setTextColorPopoverOpen(false);
                     }}
-                    tabIndex={0}
+                    style={{ width: 28, height: 28, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+                    className="richer-editor-colorInput"
+                    aria-label="Custom text color picker"
                   />
-                ))}
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <TextColorIcon size={16} />
-                <input
-                  type="color"
-                  value={editor.getAttributes('textStyle').color || '#000000'}
-                  onChange={e => {
-                    editor.commands.focus();
-                    editor.commands.setColor(e.target.value);
-                    setTextColorPopoverOpen(false);
-                  }}
-                  style={{ width: 28, height: 28, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
-                  className="richer-editor-colorInput"
-                  aria-label="Custom text color picker"
-                />
-              </div>
-            </div>
-          </CustomPopover>
-        </>
-      )}
-      {/* Background Color Picker (Dropdown) */}
-      {!excludeToolbarButtons.includes('bgColor') && (
-        <>
-          <button
-            ref={bgColorButtonRef}
-            onClick={() => setBgColorPopoverOpen(open => !open)}
-            className={`richer-editor-button${editor.getAttributes('highlight').color ? ' richer-editor-buttonActive' : ''}`}
-            type="button"
-            aria-label={labels.bgColor}
-            title={labels.bgColor}
-            style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}
-          >
-            <PaintBucket size={16} />
-            {/* Color swatch indicator */}
-            <span style={{
-              display: 'inline-block',
-              width: 14,
-              height: 14,
-              borderRadius: '50%',
-              background: editor.getAttributes('highlight').color || '#ffff00',
-              border: '1px solid #ccc',
-              marginLeft: 2,
-            }} />
-          </button>
-          <CustomPopover
-            open={bgColorPopoverOpen}
-            onOpenChange={setBgColorPopoverOpen}
-            anchorEl={bgColorButtonRef.current}
-            closeButton
-            onEsc={() => setBgColorPopoverOpen(false)}
-          >
-            <div style={{ minWidth: 200, padding: 16 }}>
-              {editor.getAttributes('highlight').color && (
-                <button
-                  className="richer-editor-secondaryBtn mb-2 w-full"
-                  onClick={() => {
-                    editor.commands.focus();
-                    editor.commands.setHighlight({ color: null });
-                    editor.commands.unsetHighlight();
-                    setBgColorPopoverOpen(false);
-                  }}
-                  style={{ marginBottom: 8, width: '100%' }}
-                >
-                  Remove Color
-                </button>
-              )}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8, marginBottom: 12 }}>
-                {colorPalette.map((color: string) => (
+            </CustomPopover>
+          </>
+        )}
+        {/* Background Color Picker (Dropdown) */}
+        {!excludeToolbarButtons.includes('bgColor') && (
+          <>
+            <button
+              ref={bgColorButtonRef}
+              onClick={() => setBgColorPopoverOpen(open => !open)}
+              className={`richer-editor-button${editor.getAttributes('highlight').color ? ' richer-editor-buttonActive' : ''}`}
+              type="button"
+              aria-label={labels.bgColor}
+              title={labels.bgColor}
+              style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}
+            >
+              <PaintBucket size={16} />
+              {/* Color swatch indicator */}
+              <span style={{
+                display: 'inline-block',
+                width: 14,
+                height: 14,
+                borderRadius: '50%',
+                background: editor.getAttributes('highlight').color || '#ffff00',
+                border: '1px solid #ccc',
+                marginLeft: 2,
+              }} />
+            </button>
+            <CustomPopover
+              open={bgColorPopoverOpen}
+              onOpenChange={setBgColorPopoverOpen}
+              anchorEl={bgColorButtonRef.current}
+              closeButton
+              onEsc={() => setBgColorPopoverOpen(false)}
+            >
+              <div style={{ minWidth: 200, padding: 16 }}>
+                {editor.getAttributes('highlight').color && (
                   <button
-                    key={color}
-                    type="button"
-                    aria-label={`Select background color ${color}`}
+                    className="richer-editor-secondaryBtn mb-2 w-full"
                     onClick={() => {
                       editor.commands.focus();
-                      editor.commands.setHighlight({ color });
+                      editor.commands.setHighlight({ color: null });
+                      editor.commands.unsetHighlight();
                       setBgColorPopoverOpen(false);
                     }}
-                    style={{
-                      background: color,
-                      width: 22,
-                      height: 22,
-                      borderRadius: '50%',
-                      border: (editor.getAttributes('highlight').color === color) ? '2px solid #333' : '1px solid #ccc',
-                      outline: 'none',
-                      cursor: 'pointer',
-                      boxSizing: 'border-box',
+                    style={{ marginBottom: 8, width: '100%' }}
+                  >
+                    Remove Color
+                  </button>
+                )}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8, marginBottom: 12 }}>
+                  {colorPalette.map((color: string) => (
+                    <button
+                      key={color}
+                      type="button"
+                      aria-label={`Select background color ${color}`}
+                      onClick={() => {
+                        editor.commands.focus();
+                        editor.commands.setHighlight({ color });
+                        setBgColorPopoverOpen(false);
+                      }}
+                      style={{
+                        background: color,
+                        width: 22,
+                        height: 22,
+                        borderRadius: '50%',
+                        border: (editor.getAttributes('highlight').color === color) ? '2px solid #333' : '1px solid #ccc',
+                        outline: 'none',
+                        cursor: 'pointer',
+                        boxSizing: 'border-box',
+                      }}
+                      tabIndex={0}
+                    />
+                  ))}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <PaintBucket size={16} />
+                  <input
+                    type="color"
+                    value={editor.getAttributes('highlight').color || '#ffff00'}
+                    onChange={e => {
+                      editor.commands.focus();
+                      editor.commands.setHighlight({ color: e.target.value });
+                      setBgColorPopoverOpen(false);
                     }}
-                    tabIndex={0}
+                    style={{ width: 28, height: 28, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+                    className="richer-editor-colorInput"
+                    aria-label="Custom background color picker"
                   />
-                ))}
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <PaintBucket size={16} />
-                <input
-                  type="color"
-                  value={editor.getAttributes('highlight').color || '#ffff00'}
-                  onChange={e => {
-                    editor.commands.focus();
-                    editor.commands.setHighlight({ color: e.target.value });
-                    setBgColorPopoverOpen(false);
-                  }}
-                  style={{ width: 28, height: 28, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
-                  className="richer-editor-colorInput"
-                  aria-label="Custom background color picker"
-                />
-              </div>
-            </div>
-          </CustomPopover>
-        </>
-      )}
-      {/* Subscript/Superscript Buttons */}
-      {!excludeToolbarButtons.includes('subscript') && (
-        <button
-          onClick={() => editor.chain().focus().toggleSubscript().run()}
-          className={`richer-editor-button ${editor.isActive('subscript') ? 'richer-editor-buttonActive' : ''}`}
-          type="button"
-          title="Subscript"
-          aria-label={labels.subscript}
-        >
-          <SubscriptIcon size={16} />
-        </button>
-      )}
-      {!excludeToolbarButtons.includes('superscript') && (
-        <button
-          onClick={() => editor.chain().focus().toggleSuperscript().run()}
-          className={`richer-editor-button ${editor.isActive('superscript') ? 'richer-editor-buttonActive' : ''}`}
-          type="button"
-          title="Superscript"
-          aria-label={labels.superscript}
-        >
-          <SuperscriptIcon size={16} />
-        </button>
-      )}
-       {/* Undo/Redo */}
-       <div className="richer-editor-ml2"></div>
-      {!excludeToolbarButtons.includes('undo') && (
-        <button onClick={() => editor.chain().focus().undo().run()} className="richer-editor-button" type="button" aria-label={labels.undo} title={labels.undo}><UndoIcon size={16} /></button>
-      )}
-      {!excludeToolbarButtons.includes('redo') && (
-        <button onClick={() => editor.chain().focus().redo().run()} className="richer-editor-button" type="button" aria-label={labels.redo} title={labels.redo}><RedoIcon size={16} /></button>
-      )}
-    </div>
+            </CustomPopover>
+          </>
+        )}
+        {/* Subscript/Superscript Buttons */}
+        {!excludeToolbarButtons.includes('subscript') && (
+          <button
+            onClick={() => editor.chain().focus().toggleSubscript().run()}
+            className={`richer-editor-button ${editor.isActive('subscript') ? 'richer-editor-buttonActive' : ''}`}
+            type="button"
+            title="Subscript"
+            aria-label={labels.subscript}
+          >
+            <SubscriptIcon size={16} />
+          </button>
+        )}
+        {!excludeToolbarButtons.includes('superscript') && (
+          <button
+            onClick={() => editor.chain().focus().toggleSuperscript().run()}
+            className={`richer-editor-button ${editor.isActive('superscript') ? 'richer-editor-buttonActive' : ''}`}
+            type="button"
+            title="Superscript"
+            aria-label={labels.superscript}
+          >
+            <SuperscriptIcon size={16} />
+          </button>
+        )}
+        {/* Custom Toolbar Buttons (rendered at the end) */}
+        {customToolbarButtons && (typeof customToolbarButtons === 'function' ? customToolbarButtons(editor) : customToolbarButtons)}
+
+         {/* Undo/Redo */}
+         <div className="richer-editor-ml2"></div>
+        {!excludeToolbarButtons.includes('undo') && (
+          <button onClick={() => editor.chain().focus().undo().run()} className="richer-editor-button" type="button" aria-label={labels.undo} title={labels.undo}><UndoIcon size={16} /></button>
+        )}
+        {!excludeToolbarButtons.includes('redo') && (
+          <button onClick={() => editor.chain().focus().redo().run()} className="richer-editor-button" type="button" aria-label={labels.redo} title={labels.redo}><RedoIcon size={16} /></button>
+        )}
+      </div>
+
+    </>
   );
 };
 
@@ -959,37 +968,43 @@ const RicherEditor = ({
   i18n = {},
   fontSizeOptions,
   fontFamilyOptions,
+  extensions = [], // default to empty array
+  customToolbarButtons,
 }: RicherEditorProps) => {
   // Use safe content conversion
   const safeContent = React.useMemo(() => getSafeContent(content), [content]);
+  const defaultExtensions = [
+    StarterKit,
+    Link.configure({ openOnClick: true }),
+    CustomBulletList,
+    CustomOrderedList,
+    TextAlign.configure({ types: ["heading", "paragraph"] }),
+    Image,
+    TaskList,
+    TaskItem,
+    Superscript,
+    Subscript,
+    Youtube.configure({
+      controls: true,
+      allowFullscreen: true,
+      width: 640,
+      height: 360,
+      HTMLAttributes: {
+        class: 'mx-auto my-4 rounded-lg shadow',
+      },
+    }),
+    Color, // <-- Color must come before TextStyle
+    TextStyle,
+    FontFamily,
+    FontSize,
+    Highlight.configure({
+      multicolor: true,
+    }),
+  ];
   const editor = useEditor({
     extensions: [
-      StarterKit,
-      Link.configure({ openOnClick: true }),
-      CustomBulletList,
-      CustomOrderedList,
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
-      Image,
-      TaskList,
-      TaskItem,
-      Superscript,
-      Subscript,
-      Youtube.configure({
-        controls: true,
-        allowFullscreen: true,
-        width: 640,
-        height: 360,
-        HTMLAttributes: {
-          class: 'mx-auto my-4 rounded-lg shadow',
-        },
-      }),
-      Color, // <-- Color must come before TextStyle
-      TextStyle,
-      FontFamily,
-      FontSize,
-      Highlight.configure({
-        multicolor: true,
-      }),
+      ...defaultExtensions,
+      ...extensions // Merge user-provided extensions
     ],
     content: safeContent,
     editorProps: {
@@ -1027,12 +1042,12 @@ const RicherEditor = ({
   }, [content]);
 
   return (
-    <div className={`richer-editor-roundedMdBorder`}>
-      <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} fontSizeOptions={fontSizeOptions} fontFamilyOptions={fontFamilyOptions} />
-      <div className="richer-editor-overflowAuto" style={{maxHeight: maxHeight}}>
-        <EditorContent editor={editor} />
+      <div className={`richer-editor-roundedMdBorder`}>
+        <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} fontSizeOptions={fontSizeOptions} fontFamilyOptions={fontFamilyOptions} customToolbarButtons={customToolbarButtons} />
+        <div className="richer-editor-overflowAuto" style={{maxHeight: maxHeight}}>
+          <EditorContent editor={editor} />
+        </div>
       </div>
-    </div>
   );
 };
 
