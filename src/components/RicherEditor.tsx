@@ -12,7 +12,6 @@ import Image from "@tiptap/extension-image";
 
 import Youtube from '@tiptap/extension-youtube';
 import Highlight from '@tiptap/extension-highlight';
-import Placeholder from '@tiptap/extension-placeholder';
 
 import BoldIcon from '../icons/BoldIcon';
 import ItalicIcon from '../icons/ItalicIcon';
@@ -55,6 +54,7 @@ import CustomPopover from './ui/CustomPopover';
 
 // Import CSS inside the component so it is bundled
 import './RicherEditor.css';
+import { getSafeContent } from "@/lib/utils";
 
 
 const fontSizes = [
@@ -128,20 +128,17 @@ const orderedListStyles = [
   { name: 'Upper Roman', value: 'upper-roman', icon: 'I.', aria: 'Upper Roman' },
 ];
 
-// Update TiptapEditor to accept props
+// Update RicherEditorProps to accept only { json: object }
 interface RicherEditorProps {
-  content?: string | object;
-  onChange?: (value: string | object) => void;
+  content?: { json?: object | string, html?: string };
+  onChange?: (value: { html: string; json: object | string }) => void;
   imageUploadUrl?: string;
   minHeight?: string;
   maxHeight?: string;
-  editorProps?: any;
-  outputFormat?: 'html' | 'json';
+  editorProps?: Record<string, any>;
   readOnly?: boolean;
-  placeholder?: string;
   className?: string;
   excludeToolbarButtons?: string[];
-  style?: React.CSSProperties;
   i18n?: Record<string, string>;
   fontSizeOptions?: { name: string; value: string }[];
   fontFamilyOptions?: { name: string; value: string }[];
@@ -939,36 +936,6 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   );
 };
 
-const getSafeContent = (content: any, outputFormat: 'html' | 'json') => {
-  if (outputFormat === 'json') {
-    if (typeof content === 'object' && content !== null) {
-      return content;
-    }
-    if (typeof content === 'string') {
-      try {
-        const parsed = JSON.parse(content);
-        if (typeof parsed === 'object' && parsed !== null) {
-          return parsed;
-        }
-      } catch {
-        // ignore
-      }
-    }
-    // fallback to empty doc
-    return { type: 'doc', content: [{ type: 'paragraph' }] };
-  } else {
-    // outputFormat === 'html'
-    if (typeof content === 'string') {
-      return content;
-    }
-    if (typeof content === 'object' && content !== null) {
-      // Try to convert JSON to HTML using Tiptap's generateHTML if available
-      // But since we don't have access here, fallback to empty string
-      return '';
-    }
-    return '';
-  }
-};
 
 // Blog-friendly color palette (expanded)
 const colorPalette: string[] = [
@@ -980,24 +947,21 @@ const colorPalette: string[] = [
 ];
 
 const RicherEditor = ({
-  content = '',
+  content = {},
   onChange,
   imageUploadUrl,
   minHeight,
   maxHeight,
   editorProps = {},
-  outputFormat = 'html',
   readOnly = false,
-  placeholder,
   className = '',
   excludeToolbarButtons = [],
-  style = {},
   i18n = {},
   fontSizeOptions,
   fontFamilyOptions,
 }: RicherEditorProps) => {
   // Use safe content conversion
-  const safeContent = React.useMemo(() => getSafeContent(content, outputFormat), [content, outputFormat]);
+  const safeContent = React.useMemo(() => getSafeContent(content), [content]);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -1026,9 +990,6 @@ const RicherEditor = ({
       Highlight.configure({
         multicolor: true,
       }),
-      Placeholder.configure({
-        placeholder: placeholder || 'Write something...'
-      }),
     ],
     content: safeContent,
     editorProps: {
@@ -1038,17 +999,15 @@ const RicherEditor = ({
         style: `${minHeight ? `min-height:${minHeight};` : ''}${editorProps?.attributes?.style || ''}`,
         spellCheck: 'true',
         readOnly: readOnly ? 'true' : undefined,
-        placeholder: placeholder || undefined,
         ...editorProps?.attributes,
       },
     },
     onUpdate({ editor }) {
       if (onChange) {
-        if (outputFormat === 'json') {
-          onChange(editor.getJSON());
-        } else {
-          onChange(editor.getHTML());
-        }
+        onChange({
+          html: editor.getHTML(),
+          json: JSON.stringify(editor.getJSON()),
+        });
       }
     },
     editable: !readOnly,
@@ -1058,25 +1017,10 @@ const RicherEditor = ({
   // If content prop changes, update the editor content
   React.useEffect(() => {
     if (editor && content !== undefined) {
-      const current = outputFormat === 'json' ? editor.getJSON() : editor.getHTML();
-      // Only update if different
-      if (outputFormat === 'json') {
-        let parsed: any = content;
-        if (typeof content === 'string') {
-          try {
-            parsed = JSON.parse(content);
-          } catch {
-            parsed = { type: 'doc', content: [{ type: 'paragraph' }] };
-          }
-        }
-        if (JSON.stringify(current) !== JSON.stringify(parsed)) {
-          editor.commands.setContent(getSafeContent(content, outputFormat));
-        }
-      } else {
-        // html
-        if (current !== content) {
-          editor.commands.setContent(getSafeContent(content, outputFormat));
-        }
+      const current = editor.getJSON();
+      const parsed = getSafeContent(content);
+      if (JSON.stringify(current) !== JSON.stringify(parsed)) {
+        editor.commands.setContent(parsed);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

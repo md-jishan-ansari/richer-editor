@@ -21,17 +21,16 @@ const ThemeToggle = () => {
   );
 };
 
-
 export default function Home() {
-  // Store JSON as object for large editor
-  const [largeContent, setLargeContent] = useState<any>("");
-  const [smallContent, setSmallContent] = useState<any>("");
+  // Store content as { json: object } for both editors
+  const [largeContent, setLargeContent] = useState<{ json?: object | string, html?: string }>({});
+  const [smallContent, setSmallContent] = useState<{ json?: object | string, html?: string }>({});
 
-  // Accepts string or object, stores as object for JSON, string for HTML
-  const handleLargeChange = (value: any) => {
+  // Accepts { html, json } and stores as { json: object }
+  const handleLargeChange = (value: { html: string; json: object | string }) => {
     setLargeContent(value);
   };
-  const handleSmallChange = (value: string | object) => {
+  const handleSmallChange = (value: { html: string; json: object | string }) => {
     setSmallContent(value);
   };
 
@@ -41,6 +40,7 @@ export default function Home() {
 
   const classes = "prose dark:prose-invert prose-sm lg:prose-lg prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full";
 
+  console.log(largeContent, smallContent);
 
   return (
     <div className="bg-white dark:bg-black">
@@ -51,12 +51,8 @@ export default function Home() {
         maxHeight="300px"
         content={largeContent}
         onChange={handleLargeChange}
-        outputFormat="html"
         // excludeToolbarButtons={["image", "code", "video"]}
-        readOnly={false}
-        placeholder="Start typing in the large editor..."
         className={classes}
-        style={{ minHeight: 300 }}
         i18n={i18nLarge}
         imageUploadUrl="/api/temp-image-upload"
         fontSizeOptions={[
@@ -69,8 +65,8 @@ export default function Home() {
           { name: 'Inter', value: 'Inter, sans-serif' },
         ]}
       />
-      <RicherContent content={largeContent} className={classes} />
 
+      <RicherContent content={largeContent.html || ""} className={classes}  />
 
       <h2>Small Editor (SmallRicherEditor)</h2>
       <SmallTiptapEditor
@@ -78,15 +74,14 @@ export default function Home() {
         maxHeight="300px"
         content={smallContent}
         onChange={handleSmallChange}
-        outputFormat="html"
         excludeToolbarButtons={["fontFamily"]}
-        placeholder="Read-only small editor..."
         className={classes}
-        style={{ minHeight: 150 }}
         i18n={i18nSmall}
         imageUploadUrl="/api/temp-image-upload"
       />
-      <RicherContent content={smallContent}  className={classes} />
+
+      <RicherContent content={smallContent.html || ""} className={classes}  />
+
     </div>
   );
 }

@@ -250,21 +250,6 @@
   margin-left: 0.75rem;
 }
 
-.richer-editor-prose {
-  font-family: var(--richer-editor-font);
-  font-size: 1.05rem;
-  color: var(--richer-editor-text);
-  background: var(--richer-editor-bg);
-  border-radius: var(--richer-editor-radius);
-  padding: 1.25rem;
-  line-height: 1.7;
-  box-shadow: var(--richer-editor-shadow);
-}
-.dark .richer-editor-prose {
-  color: var(--richer-editor-text-dark);
-  background: var(--richer-editor-bg-dark);
-}
-
 /* Toolbar divider for logical group separation */
 .toolbar-divider {
   width: 1px;
@@ -280,13 +265,8 @@
 
 @media (max-width: 700px) {
   .richer-editor-toolbar {
-    flex-direction: column;
     gap: 0.5rem;
     padding: 0.5rem;
-  }
-  .richer-editor-prose {
-    padding: 0.75rem;
-    font-size: 0.98rem;
   }
 }
 

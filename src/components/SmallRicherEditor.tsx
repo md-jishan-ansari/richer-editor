@@ -8,7 +8,6 @@ import Youtube from '@tiptap/extension-youtube';
 import TextAlign from "@tiptap/extension-text-align";
 import { TextStyle } from '@tiptap/extension-text-style';
 import FontSize from '@tiptap/extension-font-size';
-import Placeholder from '@tiptap/extension-placeholder';
 import Image from "@tiptap/extension-image";
 
 
@@ -31,6 +30,7 @@ import FontSizeIcon from '../icons/FontSizeIcon';
 
 // Import CSS inside the component so it is bundled
 import './RicherEditor.css';
+import { getSafeContent } from "@/lib/utils";
 
 const fontSizes = [
   { name: '10px', value: '10px' },
@@ -517,75 +517,38 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   );
 };
 
-// Update SmallRicherEditorProps to match RicherEditor
+// Update SmallRicherEditorProps to accept only { json: object }
 interface SmallRicherEditorProps {
-  content?: string | object;
-  onChange?: (value: string | object) => void;
+  content?: { json?: object | string, html?: string };
+  onChange?: (value: { html: string; json: object | string }) => void;
   imageUploadUrl?: string;
-  placeholder?: string;
   minHeight?: string;
   maxHeight?: string;
   editorProps?: any;
-  outputFormat?: 'html' | 'json';
   readOnly?: boolean;
   className?: string;
-  style?: React.CSSProperties;
   excludeToolbarButtons?: string[];
   i18n?: Record<string, string>;
   fontSizeOptions?: { name: string; value: string }[];
   fontFamilyOptions?: { name: string; value: string }[];
 }
 
-const getSafeContent = (content: any, outputFormat: 'html' | 'json') => {
-  if (outputFormat === 'json') {
-    if (typeof content === 'object' && content !== null) {
-      return content;
-    }
-    if (typeof content === 'string') {
-      try {
-        const parsed = JSON.parse(content);
-        if (typeof parsed === 'object' && parsed !== null) {
-          return parsed;
-        }
-      } catch {
-        // ignore
-      }
-    }
-    // fallback to empty doc
-    return { type: 'doc', content: [{ type: 'paragraph' }] };
-  } else {
-    // outputFormat === 'html'
-    if (typeof content === 'string') {
-      return content;
-    }
-    if (typeof content === 'object' && content !== null) {
-      // Try to convert JSON to HTML using Tiptap's generateHTML if available
-      // But since we don't have access here, fallback to empty string
-      return '';
-    }
-    return '';
-  }
-};
-
 const SmallRicherEditor  = ({
-  content = '',
+  content = {},
   onChange,
   imageUploadUrl,
-  placeholder,
   minHeight,
   maxHeight,
   editorProps = {},
-  outputFormat = 'html',
   readOnly = false,
   className = '',
-  style = {},
   excludeToolbarButtons = [],
   i18n = {},
   fontSizeOptions,
   fontFamilyOptions,
 }: SmallRicherEditorProps) => {
   // Use safe content conversion
-  const safeContent = React.useMemo(() => getSafeContent(content, outputFormat), [content, outputFormat]);
+  const safeContent = React.useMemo(() => getSafeContent(content), [content]);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -603,10 +566,7 @@ const SmallRicherEditor  = ({
         },
       }),
       TextStyle,
-      FontSize,
-      Placeholder.configure({
-        placeholder: placeholder || 'Write something...'
-      }),
+      FontSize
     ],
     content: safeContent,
     editorProps: {
@@ -621,11 +581,10 @@ const SmallRicherEditor  = ({
     },
     onUpdate({ editor }) {
       if (onChange) {
-        if (outputFormat === 'json') {
-          onChange(editor.getJSON());
-        } else {
-          onChange(editor.getHTML());
-        }
+        onChange({
+          html: editor.getHTML(),
+          json: JSON.stringify(editor.getJSON()),
+        });
       }
     },
     editable: !readOnly,
@@ -635,25 +594,10 @@ const SmallRicherEditor  = ({
   // In the useEffect, compare against safeContent instead of content
   React.useEffect(() => {
     if (editor && content !== undefined) {
-      const current = outputFormat === 'json' ? editor.getJSON() : editor.getHTML();
-      // Only update if different
-      if (outputFormat === 'json') {
-        let parsed: any = content;
-        if (typeof content === 'string') {
-          try {
-            parsed = JSON.parse(content);
-          } catch {
-            parsed = { type: 'doc', content: [{ type: 'paragraph' }] };
-          }
-        }
-        if (JSON.stringify(current) !== JSON.stringify(parsed)) {
-          editor.commands.setContent(getSafeContent(content, outputFormat));
-        }
-      } else {
-        // html
-        if (current !== content) {
-          editor.commands.setContent(getSafeContent(content, outputFormat));
-        }
+      const current = editor.getJSON();
+      const parsed = getSafeContent(content);
+      if (JSON.stringify(current) !== JSON.stringify(parsed)) {
+        editor.commands.setContent(parsed);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
