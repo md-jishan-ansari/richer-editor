@@ -3,18 +3,20 @@ import * as _tiptap_core from '@tiptap/core';
 import * as _tiptap_extension_list from '@tiptap/extension-list';
 
 interface RicherEditorProps {
-    content?: string | object;
-    onChange?: (value: string | object) => void;
+    content?: {
+        json?: object | string;
+        html?: string;
+    };
+    onChange?: (value: {
+        html: string;
+        json: object | string;
+    }) => void;
     imageUploadUrl?: string;
     minHeight?: string;
     maxHeight?: string;
     editorProps?: any;
-    outputFormat?: 'html' | 'json';
-    readOnly?: boolean;
-    placeholder?: string;
     className?: string;
     excludeToolbarButtons?: string[];
-    style?: React.CSSProperties;
     i18n?: Record<string, string>;
     fontSizeOptions?: {
         name: string;
@@ -24,21 +26,25 @@ interface RicherEditorProps {
         name: string;
         value: string;
     }[];
+    extensions?: any[];
+    customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode);
 }
-declare const RicherEditor: ({ content, onChange, imageUploadUrl, minHeight, maxHeight, editorProps, outputFormat, readOnly, placeholder, className, excludeToolbarButtons, style, i18n, fontSizeOptions, fontFamilyOptions, }: RicherEditorProps) => React.JSX.Element;
+declare const RicherEditor: ({ content, onChange, imageUploadUrl, minHeight, maxHeight, editorProps, className, excludeToolbarButtons, i18n, fontSizeOptions, fontFamilyOptions, extensions, customToolbarButtons, }: RicherEditorProps) => React.JSX.Element;
 
 interface SmallRicherEditorProps {
-    content?: string | object;
-    onChange?: (value: string | object) => void;
+    content?: {
+        json?: object | string;
+        html?: string;
+    };
+    onChange?: (value: {
+        html: string;
+        json: object | string;
+    }) => void;
     imageUploadUrl?: string;
-    placeholder?: string;
     minHeight?: string;
     maxHeight?: string;
     editorProps?: any;
-    outputFormat?: 'html' | 'json';
-    readOnly?: boolean;
     className?: string;
-    style?: React.CSSProperties;
     excludeToolbarButtons?: string[];
     i18n?: Record<string, string>;
     fontSizeOptions?: {
@@ -49,8 +55,10 @@ interface SmallRicherEditorProps {
         name: string;
         value: string;
     }[];
+    extensions?: any[];
+    customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode);
 }
-declare const SmallRicherEditor: ({ content, onChange, imageUploadUrl, placeholder, minHeight, maxHeight, editorProps, outputFormat, readOnly, className, style, excludeToolbarButtons, i18n, fontSizeOptions, fontFamilyOptions, }: SmallRicherEditorProps) => React.JSX.Element;
+declare const SmallRicherEditor: ({ content, onChange, imageUploadUrl, minHeight, maxHeight, editorProps, className, excludeToolbarButtons, i18n, fontSizeOptions, fontFamilyOptions, extensions, customToolbarButtons, }: SmallRicherEditorProps) => React.JSX.Element;
 
 type Props = {
     content: string;
