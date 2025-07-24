@@ -67,6 +67,19 @@ export default function Home() {
           { name: 'Georgia', value: 'Georgia, serif' },
           { name: 'Inter', value: 'Inter, sans-serif' },
         ]}
+
+      />
+
+      <RicherContent content={largeContent.html || ""} className={classes}  />
+
+      <h2>Small Editor (SmallRicherEditor)</h2>
+
+      <SmallTiptapEditor
+        minHeight="150px"
+        maxHeight="300px"
+        content={smallContent}
+        onChange={handleSmallChange}
+        className={classes}
         extensions={[Superscript, Subscript]}
         customToolbarButtons={editor => (
           <>
@@ -90,18 +103,6 @@ export default function Home() {
             </button>
           </>
         )}
-      />
-
-      <RicherContent content={largeContent.html || ""} className={classes}  />
-
-      <h2>Small Editor (SmallRicherEditor)</h2>
-
-      <SmallTiptapEditor
-        minHeight="150px"
-        maxHeight="300px"
-        content={smallContent}
-        onChange={handleSmallChange}
-        className={classes}
       />
 
       <RicherContent content={smallContent.html || ""} className={classes}  />

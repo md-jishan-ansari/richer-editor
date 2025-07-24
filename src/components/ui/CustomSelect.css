@@ -1,7 +1,7 @@
 .selectWrapper {
   position: relative;
   display: inline-block;
-  min-width: 90px;
+  min-width: fit-content;
   font-family: inherit;
 }
 .label {

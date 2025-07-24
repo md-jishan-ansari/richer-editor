@@ -14,7 +14,7 @@ interface CustomSelectProps {
   options: Option[];
   onChange: (value: string) => void;
   className?: string;
-  placeholder?: string; // e.g. 'Font Size', 'Font Family', etc.
+  placeholder?: any; // e.g. 'Font Size', 'Font Family', etc.
   label?: string; // for accessibility and visual clarity
 }
 

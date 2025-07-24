@@ -40,6 +40,7 @@ import Heading6 from "@/icons/Heading6";
 import ItalicIcon from "@/icons/ItalicIcon";
 import StrikeIcon from "@/icons/StrikeIcon";
 import BlockquoteIcon from "@/icons/BlockquoteIcon";
+import Heading from "@/icons/Heading";
 
 function isSafeUrl(url: string): boolean {
   try {
@@ -266,13 +267,12 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 }
               }}
               className="richer-editor-select"
-              placeholder="Heading"
+              placeholder={<Heading size={16} />} // Use Heading1 icon as placeholder
               aria-label="Heading Level"
             />
             <div className="toolbar-divider" />
           </>
         )}
-
 
         {/* Font Size Dropdown */}
         {!excludeToolbarButtons.includes('fontSize') && (
@@ -281,21 +281,11 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             options={(fontSizeOptions || fontSizes).map(f => ({ value: f.value, label: f.name }))}
             onChange={val => editor.chain().focus().setFontSize(val).run()}
             className="richer-editor-select"
-            placeholder={labels.fontSize || 'Font Size'}
+            placeholder={<FontSizeIcon size={20} />} // Use FontSizeIcon as placeholder
             aria-label={labels.fontSize || 'Font Size'}
           />
         )}
-        {/* Font Family Dropdown */}
-        {!excludeToolbarButtons.includes('fontFamily') && (
-          <CustomSelect
-            value={editor.getAttributes('fontFamily').fontFamily || ''}
-            options={(fontFamilyOptions || fontFamilies).map(f => ({ value: f.value, label: <span style={{ fontFamily: f.value }}>{f.name}</span> }))}
-            onChange={val => editor.chain().focus().setFontFamily(val).run()}
-            className="richer-editor-select"
-            placeholder="Font Family"
-            aria-label="Font Family"
-          />
-        )}
+
         <div className="toolbar-divider" />
         {/* Bold */}
         {!excludeToolbarButtons.includes('bold') && (
@@ -595,7 +585,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             options={alignmentOptions.map(opt => ({ value: opt.value, label: <>{opt.label} {opt.name}</> }))}
             onChange={val => editor.chain().focus().setTextAlign(val).run()}
             className="richer-editor-select"
-            placeholder={labels.align}
+            placeholder={<AlignJustify size={16} />}
           />
         )}
         {/* Custom Toolbar Buttons (rendered at the end) */}
@@ -661,7 +651,7 @@ const SmallRicherEditor  = ({
   const editor = useEditor({
     extensions: [
       ...defaultExtensions,
-      ...extensions // Merge user-provided extensions
+      ...extensions
     ],
     content: safeContent,
     editorProps: {
