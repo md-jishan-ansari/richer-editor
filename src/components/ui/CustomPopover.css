@@ -1,4 +1,5 @@
-.popover {
+/* RicherEditor-prefixed popover styles */
+.richer-editor-popover {
   background: #fff;
   color: #222;
   border: 1.5px solid #bfc7d1;
@@ -8,14 +9,14 @@
   min-width: 240px;
   max-width: 420px;
   outline: none;
-  animation: fadeIn 0.15s;
+  animation: richerEditorFadeIn 0.15s;
   position: relative;
 }
-@keyframes fadeIn {
+@keyframes richerEditorFadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.header {
+.richer-editor-popover-header {
   font-size: 1.08em;
   font-weight: 600;
   margin-bottom: 12px;
@@ -25,7 +26,7 @@
   align-items: center;
   justify-content: space-between;
 }
-.closeBtn {
+.richer-editor-closeBtn {
   background: none;
   border: none;
   color: #b0b0b0;
@@ -36,23 +37,23 @@
   border-radius: 4px;
   transition: background 0.13s, color 0.13s;
 }
-.closeBtn:hover, .closeBtn:focus {
+.richer-editor-closeBtn:hover, .richer-editor-closeBtn:focus {
   background: #f2f7ff;
   color: #2563eb;
 }
-.dark .popover {
+.dark .richer-editor-popover {
   background: #1f2937;
   color: #f3f4f6;
   border: 1.5px solid #374151;
   box-shadow: 0 8px 32px rgba(0,0,0,0.33);
 }
-.dark .header {
+.dark .richer-editor-popover-header {
   color: #60a5fa;
 }
-.dark .closeBtn {
+.dark .richer-editor-closeBtn {
   color: #9ca3af;
 }
-.dark .closeBtn:hover, .dark .closeBtn:focus {
+.dark .richer-editor-closeBtn:hover, .dark .richer-editor-closeBtn:focus {
   background: #1e293b;
   color: #60a5fa;
 }

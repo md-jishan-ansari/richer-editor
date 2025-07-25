@@ -101,31 +101,31 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, options, onChange, c
   const selectedOption = options.find(o => o.value === value);
 
   return (
-    <div className={cn("selectWrapper", className)}
+    <div className={cn("richer-editor-selectWrapper", className)}
       tabIndex={0}
       onBlur={e => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
       }}
       style={{display: 'inline-block'}}
     >
-      {label && <div className="label">{label}</div>}
+      {label && <div className="richer-editor-label">{label}</div>}
       <button
         ref={triggerRef}
-        className="trigger"
+        className="richer-editor-trigger"
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen(o => !o)}
         onKeyDown={handleKeyDown}
         type="button"
       >
-        <span className={selectedOption ? undefined : "placeholder"}>
+        <span className={selectedOption ? undefined : "richer-editor-placeholder"}>
           {selectedOption ? selectedOption.label : placeholder || 'Select...'}
         </span>
-        <span className="chevron" aria-hidden>▼</span>
+        <span className="richer-editor-chevron" aria-hidden>▼</span>
       </button>
       {open && ReactDOM.createPortal(
         <ul
-          className="options"
+          className="richer-editor-options"
           ref={listRef}
           role="listbox"
           tabIndex={-1}
@@ -142,7 +142,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, options, onChange, c
             <li
               key={opt.value}
               className={
-                `option ${value === opt.value ? "selected" : ''} ${highlighted === idx ? "highlighted" : ''}`
+                `richer-editor-option${value === opt.value ? " richer-editor-selected" : ''}${highlighted === idx ? " richer-editor-highlighted" : ''}`
               }
               role="option"
               aria-selected={value === opt.value}

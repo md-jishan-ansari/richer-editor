@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import SmallTiptapEditor from "@/components/SmallRicherEditor";
-import TiptapEditor from "@/components/RicherEditor";
+import SmallRicherEditor from "@/components/SmallRicherEditor";
+import RicherEditor from "@/components/RicherEditor";
 import RicherContent from "@/components/RicherContent";
 import Italic from '@tiptap/extension-italic';
 import SubscriptIcon from "@/icons/SubscriptIcon";
@@ -51,7 +51,7 @@ export default function Home() {
     <div className="bg-white dark:bg-black">
       <ThemeToggle />
       <h2>Large Editor (RicherEditor)</h2>
-      <TiptapEditor
+      <RicherEditor
         minHeight="200px"
         maxHeight="300px"
         content={largeContent}
@@ -74,7 +74,7 @@ export default function Home() {
 
       <h2>Small Editor (SmallRicherEditor)</h2>
 
-      <SmallTiptapEditor
+      <SmallRicherEditor
         minHeight="150px"
         maxHeight="300px"
         content={smallContent}

@@ -267,10 +267,10 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 }
               }}
               className="richer-editor-select"
-              placeholder={<Heading size={16} />} // Use Heading1 icon as placeholder
+              placeholder={<Heading size={16}  />} // Use Heading1 icon as placeholder
               aria-label="Heading Level"
             />
-            <div className="toolbar-divider" />
+            <div className="richer-editor-toolbar-divider" />
           </>
         )}
 
@@ -286,7 +286,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
           />
         )}
 
-        <div className="toolbar-divider" />
+        <div className="richer-editor-toolbar-divider" />
         {/* Bold */}
         {!excludeToolbarButtons.includes('bold') && (
           <button onClick={() => editor.chain().focus().toggleBold().run()} className={`richer-editor-button${editor.isActive("bold") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label={labels.bold} title={labels.bold}><BoldIcon size={16} /></button>
@@ -309,7 +309,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         {!excludeToolbarButtons.includes('code') && (
           <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button${editor.isActive("codeBlock") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
         )}
-        <div className="toolbar-divider" />
+        <div className="richer-editor-toolbar-divider" />
         {/* Unordered List */}
         {!excludeToolbarButtons.includes('bulletList') && (
           <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={`richer-editor-button${editor.isActive("bulletList") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label={labels.bulletList} title={labels.bulletList}><BulletListIcon size={16} /></button>
@@ -318,7 +318,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         {!excludeToolbarButtons.includes('orderedList') && (
           <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`richer-editor-button${editor.isActive("orderedList") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label={labels.orderedList} title={labels.orderedList}><OrderedListIcon size={16} /></button>
         )}
-        <div className="toolbar-divider" />
+        <div className="richer-editor-toolbar-divider" />
         {/* Blockquote, hr */}
         {!excludeToolbarButtons.includes('blockquote') && (
           <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`richer-editor-button ${editor.isActive("blockquote") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.blockquote} title={labels.blockquote}><BlockquoteIcon size={16} /></button>
@@ -326,10 +326,10 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         {!excludeToolbarButtons.includes('hr') && (
           <>
             <button onClick={() => editor.chain().focus().setHorizontalRule().run()} className="richer-editor-button" type="button" aria-label={labels.hr} title={labels.hr}>HR</button>
-            <div className="toolbar-divider" />
+            <div className="richer-editor-toolbar-divider" />
           </>
         )}
-        <div className="toolbar-divider" />
+        <div className="richer-editor-toolbar-divider" />
         {/* Link Popover */}
         {!excludeToolbarButtons.includes('link') && (
           <>
@@ -354,7 +354,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               closeButton
               onEsc={() => setLinkPopoverOpen(false)}
             >
-              <div className="mb-2 font-semibold text-base">{labels.link}</div>
+              <div className="richer-editor-mb2 richer-editor-fontSemibold richer-editor-textBase">{labels.link}</div>
               <input
                 type="text"
                 placeholder="Paste link URL here..."
@@ -417,7 +417,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               closeButton
               onEsc={() => setImagePopoverOpen(false)}
             >
-              <div className="mb-2 font-semibold text-base flex gap-4 border-b pb-2">
+              <div className="richer-editor-mb2 richer-editor-fontSemibold richer-editor-textBase flex gap-4 border-b pb-2">
                 <button className={`richer-editor-button${imageTab === 'url' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('url')}>URL</button>
                 {imageUploadUrl && (
                   <button className={`richer-editor-button${imageTab === 'upload' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('upload')}>Upload</button>
@@ -467,17 +467,17 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                         type="file"
                         accept="image/*"
                         onChange={handleUploadInputChange}
-                        className="mb2"
+                        className="richer-editor-mb2"
                         disabled={uploading}
                       />
-                      {uploading && <div className="text-sm text-blue-600 mb-2">Uploading...</div>}
-                      {uploadError && <div className="text-sm text-red-600 mb-2">{uploadError}</div>}
+                      {uploading && <div className="richer-editor-textSm richer-editor-textBlue600 richer-editor-mb2">Uploading...</div>}
+                      {uploadError && <div className="richer-editor-textSm richer-editor-textRed600 richer-editor-mb2">{uploadError}</div>}
                     </>
                   )}
                   {uploadedImageUrl && (
                     <>
-                      <div className="mb-2 flex flex-col items-center">
-                        <img src={uploadedImageUrl} alt="Preview" className="max-h-40 max-w-full rounded border mb-2" />
+                      <div className="richer-editor-mb2 flex flex-col items-center">
+                        <img src={uploadedImageUrl} alt="Preview" className="richer-editor-maxH40 richer-editor-maxWFull rounded border mb-2" />
                       </div>
                       <div className="richer-editor-flexRowMb2">
                         <input
@@ -542,7 +542,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               closeButton
               onEsc={() => setVideoPopoverOpen(false)}
             >
-              <div className="mb-2 font-semibold text-base">{labels.video}</div>
+              <div className="richer-editor-mb2 richer-editor-fontSemibold richer-editor-textBase">{labels.video}</div>
               <input
                 type="text"
                 placeholder="Paste YouTube video URL here..."

@@ -1,5 +1,5 @@
 // File: src/components/ui/CustomPopover.tsx
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { cn } from "@/lib/utils";
 
@@ -30,6 +30,18 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({ open, onOpenChange, ancho
     }
   }, [open, anchorEl]);
 
+  // Dynamically adjust left position after popover renders to prevent right overflow
+  useLayoutEffect(() => {
+    if (open && popoverRef.current) {
+      const popoverRect = popoverRef.current.getBoundingClientRect();
+      let left = position.left;
+      if (popoverRect.right > window.innerWidth - 8) {
+        left = Math.max(8, window.innerWidth - popoverRect.width - 8);
+        setPosition(pos => ({ ...pos, left }));
+      }
+    }
+  }, [open, position.left]);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (popoverRef.current && !popoverRef.current.contains(event.target as Node) && anchorEl && !anchorEl.contains(event.target as Node)) {
@@ -56,7 +68,7 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({ open, onOpenChange, ancho
   return ReactDOM.createPortal(
     <div
       ref={popoverRef}
-      className={cn("popover", className)}
+      className={cn("richer-editor-popover", className)}
       style={{ top: position.top, left: position.left, position: 'absolute', zIndex: 1000 }}
       tabIndex={-1}
       role="dialog"
@@ -64,7 +76,7 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({ open, onOpenChange, ancho
     >
       {closeButton && (
         <button
-          className="closeBtn"
+          className="richer-editor-closeBtn"
           aria-label="Close"
           onClick={() => onOpenChange(false)}
           style={{ position: 'absolute', top: 8, right: 8 }}
