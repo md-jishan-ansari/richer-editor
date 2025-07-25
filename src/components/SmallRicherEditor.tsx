@@ -1,5 +1,5 @@
 
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useImperativeHandle, forwardRef, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -329,7 +329,6 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             <div className="richer-editor-toolbar-divider" />
           </>
         )}
-        <div className="richer-editor-toolbar-divider" />
         {/* Link Popover */}
         {!excludeToolbarButtons.includes('link') && (
           <>
@@ -612,7 +611,7 @@ interface SmallRicherEditorProps {
   customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode);
 }
 
-const SmallRicherEditor  = ({
+const SmallRicherEditor  = forwardRef(function SmallRicherEditor({
   content = {},
   onChange,
   imageUploadUrl,
@@ -626,10 +625,9 @@ const SmallRicherEditor  = ({
   fontFamilyOptions,
   extensions = [], // default to empty array
   customToolbarButtons,
-}: SmallRicherEditorProps) => {
-  const debounceRef = useRef<NodeJS.Timeout | null>(null);
-  // Use safe content conversion
-  const safeContent = React.useMemo(() => getSafeContent(content), [content]);
+}: SmallRicherEditorProps, ref) {
+  // Use safe content conversion only for initial value
+  const initialContent = React.useMemo(() => getSafeContent(content), []);
   const defaultExtensions = [
     StarterKit,
     Link.configure({ openOnClick: true }),
@@ -653,7 +651,7 @@ const SmallRicherEditor  = ({
       ...defaultExtensions,
       ...extensions
     ],
-    content: safeContent,
+    content: initialContent,
     editorProps: {
       ...editorProps,
       attributes: {
@@ -663,40 +661,36 @@ const SmallRicherEditor  = ({
         ...editorProps?.attributes,
       },
     },
-    onUpdate({ editor }) {
-      if (onChange) {
-        if (debounceRef.current) clearTimeout(debounceRef.current);
-        debounceRef.current = setTimeout(() => {
-          onChange({
-            html: editor.getHTML(),
-            json: JSON.stringify(editor.getJSON()),
-          });
-        }, 300);
-      }
-    },
     immediatelyRender: false,
   });
 
-  // In the useEffect, compare against safeContent instead of content
-  React.useEffect(() => {
-    if (editor && content !== undefined) {
-      const current = editor.getJSON();
-      const parsed = getSafeContent(content);
-      if (JSON.stringify(current) !== JSON.stringify(parsed)) {
-        editor.commands.setContent(parsed);
-      }
+  // Handler to call onChange with current content
+  const save = useCallback(() => {
+    if (editor && onChange) {
+      onChange({
+        html: editor.getHTML(),
+        json: JSON.stringify(editor.getJSON()),
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content]);
+  }, [editor, onChange]);
+
+  // Handler for blur event
+  const handleBlur = useCallback(() => {
+    save();
+  }, [save]);
+
+  // Expose save() via ref
+  useImperativeHandle(ref, () => ({ save }), [save]);
 
   return (
       <div className={`richer-editor-roundedMdBorder`}>
         <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} fontSizeOptions={fontSizeOptions} fontFamilyOptions={fontFamilyOptions} customToolbarButtons={customToolbarButtons} />
         <div className="richer-editor-overflowAuto" style={{maxHeight: maxHeight}}>
-          <EditorContent editor={editor} />
+          <EditorContent editor={editor} onBlur={handleBlur} />
         </div>
+        {/* Save button removed as per user request */}
       </div>
   );
-};
+});
 
 export default SmallRicherEditor;

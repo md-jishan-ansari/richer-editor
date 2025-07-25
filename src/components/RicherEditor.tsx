@@ -1,5 +1,5 @@
 
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState, useRef, useImperativeHandle, forwardRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -856,18 +856,23 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <TextColorIcon size={16} />
-                  <input
-                    type="color"
-                    value={editor.getAttributes('textStyle').color || '#000000'}
-                    onChange={e => {
-                      editor.commands.focus();
-                      editor.commands.setColor(e.target.value);
-                      setTextColorPopoverOpen(false);
-                    }}
-                    style={{ width: 28, height: 28, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
-                    className="richer-editor-colorInput"
-                    aria-label="Custom text color picker"
-                  />
+                  {/* Use the popover context to prevent closing on color input interaction */}
+                  {(() => {
+                    return (
+                      <input
+                        type="color"
+                        value={editor.getAttributes('textStyle').color || '#000000'}
+                        onChange={e => {
+                          editor.commands.focus();
+                          editor.commands.setColor(e.target.value);
+                          setTextColorPopoverOpen(false);
+                        }}
+                        style={{ width: 28, height: 28, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+                        className="richer-editor-colorInput"
+                        aria-label="Custom text color picker"
+                      />
+                    );
+                  })()}
                 </div>
               </div>
             </CustomPopover>
@@ -1019,7 +1024,7 @@ const colorPalette: string[] = [
   '#a2c4c9', '#a4c2f4', '#6fa8dc', '#8e7cc3', '#b4a7d6', '#d5a6bd', '#e06666', '#f6b26b',
 ];
 
-const RicherEditor = ({
+const RicherEditor = forwardRef(function RicherEditor({
   content = {},
   onChange,
   imageUploadUrl,
@@ -1033,9 +1038,9 @@ const RicherEditor = ({
   fontFamilyOptions,
   extensions = [], // default to empty array
   customToolbarButtons,
-}: RicherEditorProps) => {
-  // Use safe content conversion
-  const safeContent = React.useMemo(() => getSafeContent(content), [content]);
+}: RicherEditorProps, ref) {
+  // Use safe content conversion only for initial value
+  const initialContent = React.useMemo(() => getSafeContent(content), []);
   const defaultExtensions = [
     StarterKit,
     Link.configure({ openOnClick: true }),
@@ -1071,7 +1076,7 @@ const RicherEditor = ({
       ...defaultExtensions,
       ...extensions // Merge user-provided extensions
     ],
-    content: safeContent,
+    content: initialContent,
     editorProps: {
       ...editorProps,
       attributes: {
@@ -1081,40 +1086,36 @@ const RicherEditor = ({
         ...editorProps?.attributes,
       },
     },
-    onUpdate({ editor }) {
-      if (onChange) {
-        if (debounceRef.current) clearTimeout(debounceRef.current);
-        debounceRef.current = setTimeout(() => {
-          onChange({
-            html: editor.getHTML(),
-            json: JSON.stringify(editor.getJSON()),
-          });
-        }, 300);
-      }
-    },
     immediatelyRender: false,
   });
 
-  // If content prop changes, update the editor content
-  React.useEffect(() => {
-    if (editor && content !== undefined) {
-      const current = editor.getJSON();
-      const parsed = getSafeContent(content);
-      if (JSON.stringify(current) !== JSON.stringify(parsed)) {
-        editor.commands.setContent(parsed);
-      }
+  // Handler to call onChange with current content
+  const save = useCallback(() => {
+    if (editor && onChange) {
+      onChange({
+        html: editor.getHTML(),
+        json: JSON.stringify(editor.getJSON()),
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content]);
+  }, [editor, onChange]);
+
+  // Handler for blur event
+  const handleBlur = useCallback(() => {
+    save();
+  }, [save]);
+
+  // Expose save() via ref
+  useImperativeHandle(ref, () => ({ save }), [save]);
 
   return (
       <div className={`richer-editor-roundedMdBorder`}>
         <MenuBar editor={editor} imageUploadUrl={imageUploadUrl} excludeToolbarButtons={excludeToolbarButtons} i18n={i18n} fontSizeOptions={fontSizeOptions} fontFamilyOptions={fontFamilyOptions} customToolbarButtons={customToolbarButtons} />
         <div className="richer-editor-overflowAuto" style={{maxHeight: maxHeight}}>
-          <EditorContent editor={editor} />
+          <EditorContent editor={editor} onBlur={handleBlur} />
         </div>
+        {/* Save button removed as per user request */}
       </div>
   );
-};
+});
 
 export default RicherEditor;

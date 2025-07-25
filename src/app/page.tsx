@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import SmallRicherEditor from "@/components/SmallRicherEditor";
 import RicherEditor from "@/components/RicherEditor";
 import RicherContent from "@/components/RicherContent";
@@ -27,9 +27,13 @@ const ThemeToggle = () => {
 };
 
 export default function Home() {
-  // Store content as { json: object } for both editors
+  // Store last saved content for both editors
   const [largeContent, setLargeContent] = useState<{ json?: object | string, html?: string }>({});
   const [smallContent, setSmallContent] = useState<{ json?: object | string, html?: string }>({});
+
+  // Refs for imperative save
+  const largeEditorRef = useRef<any>(null);
+  const smallEditorRef = useRef<any>(null);
 
   // Accepts { html, json } and stores as { json: object }
   const handleLargeChange = (value: { html: string; json: object | string }) => {
@@ -45,16 +49,19 @@ export default function Home() {
 
   const classes = "prose dark:prose-invert prose-sm lg:prose-lg prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full";
 
-  console.log(largeContent, smallContent);
+  // Initial content for demonstration (optional)
+  const initialLargeContent = { html: '', json: '' };
+  const initialSmallContent = { html: '', json: '' };
 
   return (
     <div className="bg-white dark:bg-black">
       <ThemeToggle />
       <h2>Large Editor (RicherEditor)</h2>
       <RicherEditor
+        ref={largeEditorRef}
         minHeight="200px"
         maxHeight="300px"
-        content={largeContent}
+        content={initialLargeContent}
         onChange={handleLargeChange}
         className={classes}
         i18n={i18nLarge}
@@ -67,17 +74,20 @@ export default function Home() {
           { name: 'Georgia', value: 'Georgia, serif' },
           { name: 'Inter', value: 'Inter, sans-serif' },
         ]}
-
       />
-
-      <RicherContent content={largeContent.html || ""} className={classes}  />
-
+      <button type="button" className="richer-editor-primaryBtn mt-2" onClick={() => largeEditorRef.current?.save()}>
+        Save Large Editor (from outside)
+      </button>
+      <div className="mt-2">
+        <strong>Last Saved Content (Large):</strong>
+        <RicherContent content={largeContent.html || ""} className={classes}  />
+      </div>
       <h2>Small Editor (SmallRicherEditor)</h2>
-
       <SmallRicherEditor
+        ref={smallEditorRef}
         minHeight="150px"
         maxHeight="300px"
-        content={smallContent}
+        content={initialSmallContent}
         onChange={handleSmallChange}
         className={classes}
         extensions={[Superscript, Subscript]}
@@ -104,9 +114,13 @@ export default function Home() {
           </>
         )}
       />
-
-      <RicherContent content={smallContent.html || ""} className={classes}  />
-
+      <button type="button" className="richer-editor-primaryBtn mt-2" onClick={() => smallEditorRef.current?.save()}>
+        Save Small Editor (from outside)
+      </button>
+      <div className="mt-2">
+        <strong>Last Saved Content (Small):</strong>
+        <RicherContent content={smallContent.html || ""} className={classes}  />
+      </div>
     </div>
   );
 }
