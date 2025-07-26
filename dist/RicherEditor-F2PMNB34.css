@@ -55,6 +55,10 @@
   /* font-size and font-family are set via inline style or style attribute for customization */
 }
 
+.richer-editor-dragactive {
+  padding-left: 36px;
+}
+
 .richer-editor-toolbar::-webkit-scrollbar {
   height: 6px;
 }
@@ -83,6 +87,17 @@
   align-items: center;
   gap: 0.25rem;
   outline: none;
+
+}
+
+.richer-editor-colorpicker-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid var(--richer-editor-border);
+  border-radius: 0.3rem;
+  padding: 0.1rem 0.6rem;
+  background: none;
 }
 .richer-editor-button:hover,
 .richer-editor-button:focus {
@@ -263,10 +278,26 @@
   background: var(--richer-editor-border-dark);
 }
 
+/* Additions for richer-editor-prefixed classes replacing Tailwind CSS */
+.richer-editor-mb2 { margin-bottom: 0.5rem; }
+.richer-editor-fontSemibold { font-weight: 600; }
+.richer-editor-textBase { font-size: 1rem; }
+.richer-editor-flex { display: flex; }
+.richer-editor-gap4 { gap: 1rem; }
+.richer-editor-borderB { border-bottom: 1px solid var(--richer-editor-border); }
+.richer-editor-pb2 { padding-bottom: 0.5rem; }
+.richer-editor-flexCol { flex-direction: column; }
+.richer-editor-itemsCenter { align-items: center; }
+.richer-editor-maxH40 { max-height: 10rem; }
+.richer-editor-maxWFull { max-width: 100%; }
+.richer-editor-rounded { border-radius: 0.5rem; }
+.richer-editor-border { border: 1px solid var(--richer-editor-border); }
+.richer-editor-textSm { font-size: 0.875rem; }
+.richer-editor-textBlue600 { color: #2563eb; }
+.richer-editor-textRed600 { color: #dc2626; }
+.richer-editor-toolbar-divider { width: 1px; height: 28px; background: var(--richer-editor-border); margin: 0 0.25rem; display: inline-block; opacity: 0.6; }
 @media (max-width: 700px) {
-  .richer-editor-toolbar {
-    gap: 0.5rem;
-    padding: 0.5rem;
-  }
+  .richer-editor-gap4 { gap: 0.5rem; }
+  .richer-editor-pb2 { padding-bottom: 0.5rem; }
 }
 

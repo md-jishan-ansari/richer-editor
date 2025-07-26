@@ -29,7 +29,7 @@ interface RicherEditorProps {
     extensions?: any[];
     customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode);
 }
-declare const RicherEditor: ({ content, onChange, imageUploadUrl, minHeight, maxHeight, editorProps, className, excludeToolbarButtons, i18n, fontSizeOptions, fontFamilyOptions, extensions, customToolbarButtons, }: RicherEditorProps) => React.JSX.Element;
+declare const RicherEditor: React.ForwardRefExoticComponent<RicherEditorProps & React.RefAttributes<unknown>>;
 
 interface SmallRicherEditorProps {
     content?: {
@@ -58,7 +58,7 @@ interface SmallRicherEditorProps {
     extensions?: any[];
     customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode);
 }
-declare const SmallRicherEditor: ({ content, onChange, imageUploadUrl, minHeight, maxHeight, editorProps, className, excludeToolbarButtons, i18n, fontSizeOptions, fontFamilyOptions, extensions, customToolbarButtons, }: SmallRicherEditorProps) => React.JSX.Element;
+declare const SmallRicherEditor: React.ForwardRefExoticComponent<SmallRicherEditorProps & React.RefAttributes<unknown>>;
 
 type Props = {
     content: string;

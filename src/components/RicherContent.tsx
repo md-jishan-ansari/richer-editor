@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 
 type Props = {
@@ -8,7 +6,7 @@ type Props = {
 }
 
 const RicherContent = ({ content, className = '' }: Props) => {
-  const [highlightedContent, setHighlightedContent] = React.useState<string>('')
+  // const [highlightedContent, setHighlightedContent] = React.useState<string>('')
 
   // React.useEffect(() => {
   //   let isMounted = true
