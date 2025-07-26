@@ -87,6 +87,17 @@
   align-items: center;
   gap: 0.25rem;
   outline: none;
+
+}
+
+.richer-editor-colorpicker-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid var(--richer-editor-border);
+  border-radius: 0.3rem;
+  padding: 0.1rem 0.6rem;
+  background: none;
 }
 .richer-editor-button:hover,
 .richer-editor-button:focus {

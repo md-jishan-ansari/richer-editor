@@ -1,5 +1,5 @@
 
-import React, { useCallback, useState, useRef, useImperativeHandle, forwardRef } from "react";
+import React, { useCallback, useState, useImperativeHandle, forwardRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -191,6 +191,7 @@ type ToolbarButtonKey =
   | 'undo'
   | 'redo';
 
+// Add/expand defaultI18n with all needed keys
 const defaultI18n = {
   heading: 'Heading',
   fontSize: 'Font Size',
@@ -224,6 +225,29 @@ const defaultI18n = {
   remove: 'Remove',
   add: 'Add',
   cancel: 'Cancel',
+  paragraph: 'Paragraph',
+  h1: 'Heading 1',
+  h2: 'Heading 2',
+  h3: 'Heading 3',
+  h4: 'Heading 4',
+  h5: 'Heading 5',
+  h6: 'Heading 6',
+  url: 'URL',
+  upload: 'Upload',
+  pasteImageUrl: 'Paste image URL here...',
+  pasteLinkUrl: 'Paste link URL here...',
+  pasteVideoUrl: 'Paste YouTube video URL here...',
+  width: 'Width',
+  height: 'Height',
+  ulStyle: 'UL Style',
+  olStyle: 'OL Style',
+  removeColor: 'Remove Color',
+  uploading: 'Uploading...',
+  uploadFailed: 'Upload failed',
+  newTab: 'New Tab (_blank)',
+  sameTab: 'Same Tab (_self)',
+  parentFrame: 'Parent Frame (_parent)',
+  topFrame: 'Top Frame (_top)',
 };
 
 const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, fontSizeOptions, fontFamilyOptions, customToolbarButtons }: {
@@ -379,7 +403,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 return activeHeading ? activeHeading.level.toString() : '';
               })()}
               options={[
-                { value: 'paragraph', label: 'Paragraph' },
+                { value: 'paragraph', label: labels.paragraph },
                 ...headingOptions.map(opt => ({ value: opt.level.toString(), label: `H${opt.level}` }))
               ]}
               onChange={(val: string) => {
@@ -390,7 +414,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 }
               }}
               className="richer-editor-select"
-              placeholder="Heading"
+              placeholder={labels.heading}
               aria-label="Heading Level"
             />
             <div className="richer-editor-toolbar-divider" />
@@ -403,7 +427,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             options={(fontSizeOptions || fontSizes).map(f => ({ value: f.value, label: f.name }))}
             onChange={(val: string) => editor.chain().focus().setFontSize(val).run()}
             className="richer-editor-select"
-            placeholder="Font Size"
+            placeholder={labels.fontSize}
             aria-label="Font Size"
           />
         )}
@@ -419,30 +443,32 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               }))}
               onChange={(val: string) => editor.chain().focus().setFontFamily(val).run()}
               className="richer-editor-select"
-              placeholder="Font Family"
+              placeholder={labels.fontFamily}
               aria-label="Font Family"
             />
             <div className="richer-editor-toolbar-divider" />
           </>
         )}
         {/* Line Height Dropdown */}
-        <CustomSelect
-          value={'__placeholder__'}
-          options={[
-            ...lineHeights.map(lh => ({ value: lh.value, label: lh.name })),
-            { value: '', label: 'Reset' },
-          ]}
-          onChange={(val: string) => {
-            if (val === '') {
-              editor.chain().focus().unsetLineHeight().run();
-            } else {
-              editor.chain().focus().setLineHeight(val).run();
-            }
-          }}
-          className="richer-editor-select"
-          placeholder={<LineHeightIcon size={16} />}
-          aria-label="Line Height"
-        />
+        {!excludeToolbarButtons.includes('lineHeight') && (
+          <CustomSelect
+            value={'__placeholder__'}
+            options={[
+              ...lineHeights.map(lh => ({ value: lh.value, label: lh.name })),
+              { value: '', label: 'Reset' },
+            ]}
+            onChange={(val: string) => {
+              if (val === '') {
+                editor.chain().focus().unsetLineHeight().run();
+              } else {
+                editor.chain().focus().setLineHeight(val).run();
+              }
+            }}
+            className="richer-editor-select"
+            placeholder={<LineHeightIcon size={16} />}
+            aria-label="Line Height"
+          />
+        )}
         {/* Font styles */}
         {!excludeToolbarButtons.includes('bold') && (
           <button onClick={() => editor.chain().focus().toggleBold().run()} className={`richer-editor-button ${editor.isActive("bold") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.bold} title={labels.bold}><BoldIcon size={16} /></button>
@@ -481,7 +507,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 }
               }}
               className="richer-editor-select"
-              placeholder="UL Style"
+              placeholder={labels.ulStyle}
               aria-label="Unordered List Style"
             />
           </>
@@ -502,16 +528,18 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 }
               }}
               className="richer-editor-select"
-              placeholder="OL Style"
+              placeholder={labels.olStyle}
               aria-label="Ordered List Style"
             />
           </>
         )}
 
         {!excludeToolbarButtons.includes('taskList') && (
-          <button onClick={() => editor.chain().focus().toggleTaskList().run()} className={`richer-editor-button ${editor.isActive("taskList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.taskList} title={labels.taskList}><TaskListIcon size={16} /></button>
+          <>
+            <button onClick={() => editor.chain().focus().toggleTaskList().run()} className={`richer-editor-button ${editor.isActive("taskList") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.taskList} title={labels.taskList}><TaskListIcon size={16} /></button>
+            <div className="richer-editor-toolbar-divider" />
+          </>
         )}
-        <div className="richer-editor-toolbar-divider" />
         {/* Blockquote, hr */}
         {!excludeToolbarButtons.includes('blockquote') && (
           <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`richer-editor-button ${editor.isActive("blockquote") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.blockquote} title={labels.blockquote}><BlockquoteIcon size={16} /></button>
@@ -548,11 +576,11 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               onEsc={() => setLinkPopoverOpen(false)}
             >
               <div className="richer-editor-mb2 richer-editor-fontSemibold richer-editor-textBase">
-                Insert Link
+                {labels.link}
               </div>
               <input
                 type="text"
-                placeholder="Paste link URL here..."
+                placeholder={labels.pasteLinkUrl}
                 value={linkUrl}
                 onChange={e => setLinkUrl(e.target.value)}
                 className="richer-editor-input"
@@ -565,7 +593,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 className="richer-editor-input"
                 style={{ marginBottom: 8 }}
               >
-                <option value="_blank">New Tab (_blank)</option>
+                <option value="_blank">{labels.newTab}</option>
                 <option value="_self">Same Tab (_self)</option>
                 <option value="_parent">Parent Frame (_parent)</option>
                 <option value="_top">Top Frame (_top)</option>
@@ -611,16 +639,16 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               onEsc={() => setImagePopoverOpen(false)}
             >
               <div className="richer-editor-mb2 richer-editor-fontSemibold richer-editor-textBase flex gap-4 border-b pb-2">
-                <button className={`richer-editor-button${imageTab === 'url' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('url')}>URL</button>
+                <button className={`richer-editor-button${imageTab === 'url' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('url')}>{labels.url}</button>
                 {imageUploadUrl && (
-                  <button className={`richer-editor-button${imageTab === 'upload' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('upload')}>Upload</button>
+                  <button className={`richer-editor-button${imageTab === 'upload' ? ' richer-editor-buttonActive' : ''}`} onClick={() => setImageTab('upload')}>{labels.upload}</button>
                 )}
               </div>
               {imageTab === 'url' && (
                 <>
                   <input
                     type="text"
-                    placeholder="Paste image URL here..."
+                    placeholder={labels.pasteImageUrl}
                     value={imageUrl}
                     onChange={e => setImageUrl(e.target.value)}
                     className="richer-editor-input"
@@ -629,14 +657,14 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                   <div className="richer-editor-flexRowMb2">
                     <input
                       type="text"
-                      placeholder="Width (e.g. 400 or 50%)"
+                      placeholder={labels.width}
                       value={imageWidth}
                       onChange={e => setImageWidth(e.target.value)}
                       className="richer-editor-input"
                     />
                     <input
                       type="text"
-                      placeholder="Height (e.g. 300 or 50%)"
+                      placeholder={labels.height}
                       value={imageHeight}
                       onChange={e => setImageHeight(e.target.value)}
                       className="richer-editor-input"
@@ -663,8 +691,8 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                         className="richer-editor-mb2"
                         disabled={uploading}
                       />
-                      {uploading && <div className="richer-editor-textSm richer-editor-textBlue600 richer-editor-mb2">Uploading...</div>}
-                      {uploadError && <div className="richer-editor-textSm richer-editor-textRed600 richer-editor-mb2">{uploadError}</div>}
+                      {uploading && <div className="richer-editor-textSm richer-editor-textBlue600 richer-editor-mb2">{labels.uploading}</div>}
+                      {uploadError && <div className="richer-editor-textSm richer-editor-textRed600 richer-editor-mb2">{labels.uploadFailed}</div>}
                     </>
                   )}
                   {uploadedImageUrl && (
@@ -675,14 +703,14 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                       <div className="richer-editor-flexRowMb2">
                         <input
                           type="text"
-                          placeholder="Width (e.g. 400 or 50%)"
+                          placeholder={labels.width}
                           value={imageWidth}
                           onChange={e => setImageWidth(e.target.value)}
                           className="richer-editor-input"
                         />
                         <input
                           type="text"
-                          placeholder="Height (e.g. 300 or 50%)"
+                          placeholder={labels.height}
                           value={imageHeight}
                           onChange={e => setImageHeight(e.target.value)}
                           className="richer-editor-input"
@@ -734,11 +762,11 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               onEsc={() => setVideoPopoverOpen(false)}
             >
               <div className="richer-editor-mb2 richer-editor-fontSemibold richer-editor-textBase">
-                Insert YouTube Video
+                {labels.video}
               </div>
               <input
                 type="text"
-                placeholder="Paste YouTube video URL here..."
+                placeholder={labels.pasteVideoUrl}
                 value={videoUrl}
                 onChange={e => setVideoUrl(e.target.value)}
                 className="richer-editor-input"
@@ -747,14 +775,14 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               <div className="richer-editor-flexRowMb2">
                 <input
                   type="text"
-                  placeholder="Width (e.g. 400 or 50%)"
+                  placeholder={labels.width}
                   value={videoWidth}
                   onChange={e => setVideoWidth(e.target.value)}
                   className="richer-editor-input"
                 />
                 <input
                   type="text"
-                  placeholder="Height (e.g. 300 or 50%)"
+                  placeholder={labels.height}
                   value={videoHeight}
                   onChange={e => setVideoHeight(e.target.value)}
                   className="richer-editor-input"
@@ -786,7 +814,12 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         )}
         {/* Text Color Picker (Dropdown) */}
         {!excludeToolbarButtons.includes('textColor') && (
-          <>
+          <div  className="richer-editor-colorpicker-wrapper">
+            {/* Icon (not clickable) */}
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+              <TextColorIcon size={16} />
+            </span>
+            {/* Color Swatch (opens palette popover) */}
             <button
               ref={textColorButtonRef}
               onClick={() => setTextColorPopoverOpen(open => !open)}
@@ -794,20 +827,30 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               type="button"
               aria-label={labels.textColor}
               title={labels.textColor}
-              style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}
+              style={{ display: 'flex', alignItems: 'center', padding: 0, border: 'none', background: 'none', boxShadow: 'none' }}
             >
-              <TextColorIcon size={16} />
-              {/* Color swatch indicator */}
               <span style={{
                 display: 'inline-block',
-                width: 14,
-                height: 14,
+                width: 18,
+                height: 18,
                 borderRadius: '50%',
                 background: editor.getAttributes('textStyle').color || '#000',
                 border: '1px solid #ccc',
-                marginLeft: 2,
               }} />
             </button>
+            {/* Always visible color input */}
+            <input
+              type="color"
+              value={editor.getAttributes('textStyle').color || '#000000'}
+              onChange={e => {
+                editor.commands.focus();
+                editor.commands.setColor(e.target.value);
+              }}
+              style={{ width: 24, height: 24, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+              className="richer-editor-colorInput"
+              aria-label="Custom text color picker"
+            />
+            {/* Palette Popover */}
             <CustomPopover
               open={textColorPopoverOpen}
               onOpenChange={setTextColorPopoverOpen}
@@ -826,7 +869,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                     }}
                     style={{ marginBottom: 8, width: '100%' }}
                   >
-                    Remove Color
+                    {labels.removeColor}
                   </button>
                 )}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8, marginBottom: 12 }}>
@@ -854,33 +897,18 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                     />
                   ))}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <TextColorIcon size={16} />
-                  {/* Use the popover context to prevent closing on color input interaction */}
-                  {(() => {
-                    return (
-                      <input
-                        type="color"
-                        value={editor.getAttributes('textStyle').color || '#000000'}
-                        onChange={e => {
-                          editor.commands.focus();
-                          editor.commands.setColor(e.target.value);
-                          setTextColorPopoverOpen(false);
-                        }}
-                        style={{ width: 28, height: 28, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
-                        className="richer-editor-colorInput"
-                        aria-label="Custom text color picker"
-                      />
-                    );
-                  })()}
-                </div>
               </div>
             </CustomPopover>
-          </>
+          </div>
         )}
         {/* Background Color Picker (Dropdown) */}
         {!excludeToolbarButtons.includes('bgColor') && (
-          <>
+          <div className="richer-editor-colorpicker-wrapper" >
+            {/* Icon (not clickable) */}
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+              <PaintBucket size={16} />
+            </span>
+            {/* Color Swatch (opens palette popover) */}
             <button
               ref={bgColorButtonRef}
               onClick={() => setBgColorPopoverOpen(open => !open)}
@@ -888,20 +916,30 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
               type="button"
               aria-label={labels.bgColor}
               title={labels.bgColor}
-              style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}
+              style={{ display: 'flex', alignItems: 'center', padding: 0, border: 'none', background: 'none', boxShadow: 'none' }}
             >
-              <PaintBucket size={16} />
-              {/* Color swatch indicator */}
               <span style={{
                 display: 'inline-block',
-                width: 14,
-                height: 14,
+                width: 18,
+                height: 18,
                 borderRadius: '50%',
                 background: editor.getAttributes('highlight').color || '#ffff00',
                 border: '1px solid #ccc',
-                marginLeft: 2,
               }} />
             </button>
+            {/* Always visible color input */}
+            <input
+              type="color"
+              value={editor.getAttributes('highlight').color || '#ffff00'}
+              onChange={e => {
+                editor.commands.focus();
+                editor.commands.setHighlight({ color: e.target.value });
+              }}
+              style={{ width: 24, height: 24, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+              className="richer-editor-colorInput"
+              aria-label="Custom background color picker"
+            />
+            {/* Palette Popover */}
             <CustomPopover
               open={bgColorPopoverOpen}
               onOpenChange={setBgColorPopoverOpen}
@@ -921,7 +959,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                     }}
                     style={{ marginBottom: 8, width: '100%' }}
                   >
-                    Remove Color
+                    {labels.removeColor}
                   </button>
                 )}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8, marginBottom: 12 }}>
@@ -949,24 +987,9 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                     />
                   ))}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <PaintBucket size={16} />
-                  <input
-                    type="color"
-                    value={editor.getAttributes('highlight').color || '#ffff00'}
-                    onChange={e => {
-                      editor.commands.focus();
-                      editor.commands.setHighlight({ color: e.target.value });
-                      setBgColorPopoverOpen(false);
-                    }}
-                    style={{ width: 28, height: 28, border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
-                    className="richer-editor-colorInput"
-                    aria-label="Custom background color picker"
-                  />
-                </div>
               </div>
             </CustomPopover>
-          </>
+          </div>
         )}
         {/* Subscript/Superscript Buttons */}
         {!excludeToolbarButtons.includes('subscript') && (
@@ -974,7 +997,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             onClick={() => editor.chain().focus().toggleSubscript().run()}
             className={`richer-editor-button ${editor.isActive('subscript') ? 'richer-editor-buttonActive' : ''}`}
             type="button"
-            title="Subscript"
+            title={labels.subscript}
             aria-label={labels.subscript}
           >
             <SubscriptIcon size={16} />
@@ -985,7 +1008,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             onClick={() => editor.chain().focus().toggleSuperscript().run()}
             className={`richer-editor-button ${editor.isActive('superscript') ? 'richer-editor-buttonActive' : ''}`}
             type="button"
-            title="Superscript"
+            title={labels.superscript}
             aria-label={labels.superscript}
           >
             <SuperscriptIcon size={16} />
@@ -1006,9 +1029,11 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
           )}
 
       </div>
-          <DragHandle editor={editor}>
-            <DragIcon size={18} style={{marginTop: 3}} />
-          </DragHandle>
+      {!excludeToolbarButtons.includes('dragHandle') && (
+        <DragHandle editor={editor}>
+          <DragIcon size={18} style={{marginTop: 3}} />
+        </DragHandle>
+      )}
 
     </>
   );
@@ -1070,7 +1095,6 @@ const RicherEditor = forwardRef(function RicherEditor({
       multicolor: true,
     }),
   ];
-  const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const editor = useEditor({
     extensions: [
       ...defaultExtensions,
@@ -1105,7 +1129,7 @@ const RicherEditor = forwardRef(function RicherEditor({
   }, [save]);
 
   // Expose save() via ref
-  useImperativeHandle(ref, () => ({ save }), [save]);
+  useImperativeHandle(ref, () => ({ save, editor }), [save, editor]);
 
   return (
       <div className={`richer-editor-roundedMdBorder`}>

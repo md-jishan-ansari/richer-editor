@@ -117,6 +117,26 @@ export default function Home() {
       <button type="button" className="richer-editor-primaryBtn mt-2" onClick={() => smallEditorRef.current?.save()}>
         Save Small Editor (from outside)
       </button>
+      <>
+            <button
+              onClick={() => smallEditorRef.current?.editor.chain().focus().toggleSubscript().run()}
+              className={`richer-editor-button ${smallEditorRef.current?.editor.isActive('subscript') ? 'richer-editor-buttonActive' : ''}`}
+              type="button"
+              title="Subscript"
+              aria-label='Subscript'
+            >
+              <SubscriptIcon size={16} />
+            </button>
+            <button
+              onClick={() => smallEditorRef.current?.editor.chain().focus().toggleSuperscript().run()}
+              className={`richer-editor-button ${smallEditorRef.current?.editor.isActive('superscript') ? 'richer-editor-buttonActive' : ''}`}
+              type="button"
+              title="Superscript"
+              aria-label="Superscript"
+            >
+              <SuperscriptIcon size={16} />
+            </button>
+          </>
       <div className="mt-2">
         <strong>Last Saved Content (Small):</strong>
         <RicherContent content={smallContent.html || ""} className={classes}  />
