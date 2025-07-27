@@ -52,8 +52,10 @@ import TextColorIcon from '../icons/TextColorIcon';
 
 import { CustomBulletList } from './tiptap-extensions/CustomBulletList';
 import { CustomOrderedList } from './tiptap-extensions/CustomOrderedList';
+import { CustomCodeBlock } from './tiptap-extensions/CustomCodeBlock';
 import CustomSelect from './ui/CustomSelect';
 import CustomDropdown from './ui/CustomDropdown';
+import CodeLanguageSelect from './ui/CodeLanguageSelect';
 
 // Import CSS inside the component so it is bundled
 import './RicherEditor.css';
@@ -253,6 +255,35 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   fontFamilyOptions?: { name: string; value: string }[],
   customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode)
 }) => {
+  // Add state to track editor changes in real-time
+  const [editorState, setEditorState] = useState({
+    isCodeBlockActive: false,
+    codeBlockLanguage: null as string | null,
+  });
+
+  // Update state when editor changes
+  React.useEffect(() => {
+    if (!editor) return;
+
+    const updateState = () => {
+      setEditorState({
+        isCodeBlockActive: editor.isActive("codeBlock"),
+        codeBlockLanguage: editor.getAttributes('codeBlock').language,
+      });
+    };
+
+    // Update state immediately
+    updateState();
+
+    // Listen for editor changes
+    editor.on('selectionUpdate', updateState);
+    editor.on('transaction', updateState);
+
+    return () => {
+      editor.off('selectionUpdate', updateState);
+      editor.off('transaction', updateState);
+    };
+  }, [editor]);
   // Dropdown state for link, image, video
   const [imageDropdownOpen, setImageDropdownOpen] = useState(false);
   const [imageTab, setImageTab] = useState<'url' | 'upload'>('url');
@@ -475,7 +506,16 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         )}
         {!excludeToolbarButtons.includes('code') && (
           <>
-            <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button ${editor.isActive("codeBlock") ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
+            <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button ${editorState.isCodeBlockActive ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
+            {editorState.isCodeBlockActive && (
+              <CodeLanguageSelect
+                editor={editor}
+                currentLanguage={editorState.codeBlockLanguage}
+                onLanguageChange={(language) => {
+                  editor.chain().focus().setCodeBlockLanguage(language).run();
+                }}
+              />
+            )}
             <div className="richer-editor-toolbar-divider" />
           </>
         )}
@@ -1047,7 +1087,10 @@ const RicherEditor = forwardRef(function RicherEditor({
   // Use safe content conversion only for initial value
   const initialContent = getSafeContent(content);
   const defaultExtensions = [
-    StarterKit,
+    StarterKit.configure({
+      codeBlock: false, // Disable default code block to use our custom one
+    }),
+    CustomCodeBlock,
     Link.configure({ openOnClick: true }),
     CustomBulletList,
     CustomOrderedList,

@@ -29,6 +29,9 @@
 - Modular and lightweight architecture
 - Works with React, Next.js, and TypeScript
 - Easy customization for your workflow
+- **Code block language selection** — automatically detects language from clipboard or manually select from 50+ languages
+- **Automatic language detection** — when you paste code from VS Code or other editors, the language is automatically detected
+- **Manual language override** — click the language dropdown next to code blocks to change the language
 
 ---
 

@@ -245,6 +245,9 @@
   background: var(--richer-editor-bg);
   box-shadow: var(--richer-editor-shadow);
 }
+.richer-editor-roundedMdBorder > * {
+  box-sizing: border-box;
+}
 .dark .richer-editor-roundedMdBorder {
   border: 1px solid var(--richer-editor-border-dark);
   background: var(--richer-editor-bg-dark);
@@ -296,6 +299,56 @@
 .richer-editor-textBlue600 { color: #2563eb; }
 .richer-editor-textRed600 { color: #dc2626; }
 .richer-editor-toolbar-divider { width: 1px; height: 28px; background: var(--richer-editor-border); margin: 0 0.25rem; display: inline-block; opacity: 0.6; }
+
+/* Code language selector styles */
+.richer-editor-code-language-select {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.richer-editor-code-language-select .richer-editor-button {
+  font-size: 11px;
+  padding: 4px 8px;
+  min-width: auto;
+  height: auto;
+  border: 1px solid var(--richer-editor-border);
+  background: var(--richer-editor-bg);
+  color: var(--richer-editor-text);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.richer-editor-code-language-select .richer-editor-button:hover {
+  background: var(--richer-editor-primary);
+  color: white;
+  border-color: var(--richer-editor-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.richer-editor-code-language-select .richer-editor-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.dark .richer-editor-code-language-select .richer-editor-button {
+  background: var(--richer-editor-bg-dark);
+  border-color: var(--richer-editor-border-dark);
+  color: var(--richer-editor-text-dark);
+}
+
+.dark .richer-editor-code-language-select .richer-editor-button:hover {
+  background: var(--richer-editor-primary);
+  color: white;
+  border-color: var(--richer-editor-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
 @media (max-width: 700px) {
   .richer-editor-gap4 { gap: 0.5rem; }
   .richer-editor-pb2 { padding-bottom: 0.5rem; }

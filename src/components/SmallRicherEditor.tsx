@@ -11,8 +11,10 @@ import FontSize from '@tiptap/extension-font-size';
 import Image from "@tiptap/extension-image";
 
 
+import { CustomCodeBlock } from './tiptap-extensions/CustomCodeBlock';
 import CustomSelect from './ui/CustomSelect';
 import CustomDropdown from './ui/CustomDropdown';
+import CodeLanguageSelect from './ui/CodeLanguageSelect';
 import BoldIcon from '../icons/BoldIcon';
 import UnderlineIcon from '../icons/UnderlineIcon';
 import Highlighter from '../icons/Highlighter';
@@ -133,6 +135,35 @@ const defaultI18n = {
 
 // Update MenuBar to accept customToolbarButtons
 const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, fontSizeOptions, fontFamilyOptions, customToolbarButtons }: { editor: any, imageUploadUrl?: string, excludeToolbarButtons?: string[], i18n?: Record<string, string>, fontSizeOptions?: { name: string; value: string }[], fontFamilyOptions?: { name: string; value: string }[], customToolbarButtons?: React.ReactNode | ((editor: any) => React.ReactNode) }) => {
+  // Add state to track editor changes in real-time
+  const [editorState, setEditorState] = useState({
+    isCodeBlockActive: false,
+    codeBlockLanguage: null as string | null,
+  });
+
+  // Update state when editor changes
+  React.useEffect(() => {
+    if (!editor) return;
+
+    const updateState = () => {
+      setEditorState({
+        isCodeBlockActive: editor.isActive("codeBlock"),
+        codeBlockLanguage: editor.getAttributes('codeBlock').language,
+      });
+    };
+
+    // Update state immediately
+    updateState();
+
+    // Listen for editor changes
+    editor.on('selectionUpdate', updateState);
+    editor.on('transaction', updateState);
+
+    return () => {
+      editor.off('selectionUpdate', updateState);
+      editor.off('transaction', updateState);
+    };
+  }, [editor]);
   // Dropdown state for link, image, video
   const [imageDropdownOpen, setImageDropdownOpen] = useState(false);
   const [imageTab, setImageTab] = useState<'url' | 'upload'>('url');
@@ -319,7 +350,16 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         {/* Code block */}
         {!excludeToolbarButtons.includes('code') && (
           <>
-            <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button${editor.isActive("codeBlock") ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
+            <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button${editorState.isCodeBlockActive ? ' richer-editor-buttonActive' : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
+            {editorState.isCodeBlockActive && (
+              <CodeLanguageSelect
+                editor={editor}
+                currentLanguage={editorState.codeBlockLanguage}
+                onLanguageChange={(language) => {
+                  editor.chain().focus().setCodeBlockLanguage(language).run();
+                }}
+              />
+            )}
             <div className="richer-editor-toolbar-divider" />
           </>
         )}
@@ -634,7 +674,10 @@ const SmallRicherEditor  = forwardRef(function SmallRicherEditor({
   // Use safe content conversion only for initial value
   const initialContent = getSafeContent(content);
   const defaultExtensions = [
-    StarterKit,
+    StarterKit.configure({
+      codeBlock: false, // Disable default code block to use our custom one
+    }),
+    CustomCodeBlock,
     Link.configure({ openOnClick: true }),
     Highlight.configure({ multicolor: false, HTMLAttributes: { style: 'background-color: #fff59d' } }),
     TextAlign.configure({ types: ["paragraph"] }),
@@ -709,7 +752,6 @@ const SmallRicherEditor  = forwardRef(function SmallRicherEditor({
         <div className="richer-editor-overflowAuto" style={{maxHeight: maxHeight}}>
           <EditorContent editor={editor} onBlur={handleBlur} />
         </div>
-        {/* Save button removed as per user request */}
       </div>
   );
 });

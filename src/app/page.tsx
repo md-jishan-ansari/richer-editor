@@ -50,8 +50,37 @@ export default function Home() {
   const classes = "prose dark:prose-invert prose-sm lg:prose-lg prose-p:mt-0 prose-p:mb-1 leading-6 prose-blockquote:bg-muted/50 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-border prose-blockquote:not-italic prose-blockquote:rounded-r-lg [&_blockquote>p]:after:content-none [&_blockquote>p]:before:content-none  prose-li:marker:text-muted-foreground w-full max-w-full";
 
   // Initial content for demonstration (optional)
-  const initialLargeContent = { html: '', json: '' };
-  const initialSmallContent = { html: '', json: '' };
+  const initialLargeContent = {
+    html: `
+      <h1>Code Block Language Class Test</h1>
+      <p>This editor now properly applies language classes to the &lt;code&gt; element!</p>
+      <pre><code class="language-javascript">// This is JavaScript code
+function hello() {
+  console.log("Hello, World!");
+}</code></pre>
+      <pre><code class="language-typescript">// This is TypeScript code
+interface User {
+  name: string;
+  age: number;
+}</code></pre>
+      <pre><code class="language-json">{
+  "name": "test",
+  "value": 123
+}</code></pre>
+      <p>Notice that the language class is now on the &lt;code&gt; element, not the &lt;pre&gt; element.</p>
+    `,
+    json: ''
+  };
+  const initialSmallContent = {
+    html: `
+      <h2>Small Editor Test</h2>
+      <p>This editor also applies language classes correctly.</p>
+      <pre><code class="language-python"># This is Python code
+def hello():
+    print("Hello, World!")</code></pre>
+    `,
+    json: ''
+  };
 
   return (
     <div className="bg-white dark:bg-black">

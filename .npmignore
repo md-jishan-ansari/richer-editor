@@ -12,6 +12,7 @@ postcss.config.mjs
 next.config.mjs
 package-lock.json
 package_publish.json
+package-backup.txt
 *.log
 *.test.*
 *.spec.*
