@@ -57,6 +57,10 @@ export default function Home() {
     <div className="bg-white dark:bg-black">
       <ThemeToggle />
       <h2>Large Editor (RicherEditor)</h2>
+      <div className="mt-2">
+        <strong>Last Saved Content (Large):</strong>
+        <RicherContent content={largeContent.html || ""} className={classes}  />
+      </div>
       <RicherEditor
         ref={largeEditorRef}
         minHeight="200px"
@@ -78,10 +82,7 @@ export default function Home() {
       <button type="button" className="richer-editor-primaryBtn mt-2" onClick={() => largeEditorRef.current?.save()}>
         Save Large Editor (from outside)
       </button>
-      <div className="mt-2">
-        <strong>Last Saved Content (Large):</strong>
-        <RicherContent content={largeContent.html || ""} className={classes}  />
-      </div>
+
       <h2>Small Editor (SmallRicherEditor)</h2>
       <SmallRicherEditor
         ref={smallEditorRef}

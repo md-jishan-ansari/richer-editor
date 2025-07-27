@@ -2506,7 +2506,7 @@ var RicherEditor = (0, import_react34.forwardRef)(function RicherEditor2({
   customToolbarButtons
 }, ref) {
   var _a;
-  const initialContent = import_react34.default.useMemo(() => getSafeContent(content), []);
+  const initialContent = getSafeContent(content);
   const defaultExtensions = [
     import_starter_kit.default,
     import_extension_link.default.configure({ openOnClick: true }),
@@ -2555,11 +2555,20 @@ var RicherEditor = (0, import_react34.forwardRef)(function RicherEditor2({
     },
     immediatelyRender: false
   });
+  import_react34.default.useEffect(() => {
+    if (editor && content && editor.isEmpty) {
+      const safeContent = getSafeContent(content);
+      const currentContent = editor.getJSON();
+      if (JSON.stringify(currentContent) !== JSON.stringify(safeContent)) {
+        editor.commands.setContent(safeContent);
+      }
+    }
+  }, [content, editor]);
   const save = (0, import_react34.useCallback)(() => {
     if (editor && onChange) {
       onChange({
         html: editor.getHTML(),
-        json: JSON.stringify(editor.getJSON())
+        json: editor.getJSON()
       });
     }
   }, [editor, onChange]);
@@ -3098,7 +3107,7 @@ var SmallRicherEditor = (0, import_react37.forwardRef)(function SmallRicherEdito
   customToolbarButtons
 }, ref) {
   var _a;
-  const initialContent = import_react37.default.useMemo(() => getSafeContent(content), []);
+  const initialContent = getSafeContent(content);
   const defaultExtensions = [
     import_starter_kit2.default,
     import_extension_link2.default.configure({ openOnClick: true }),
@@ -3134,11 +3143,20 @@ var SmallRicherEditor = (0, import_react37.forwardRef)(function SmallRicherEdito
     },
     immediatelyRender: false
   });
+  import_react37.default.useEffect(() => {
+    if (editor && content && editor.isEmpty) {
+      const safeContent = getSafeContent(content);
+      const currentContent = editor.getJSON();
+      if (JSON.stringify(currentContent) !== JSON.stringify(safeContent)) {
+        editor.commands.setContent(safeContent);
+      }
+    }
+  }, [content, editor]);
   const save = (0, import_react37.useCallback)(() => {
     if (editor && onChange) {
       onChange({
         html: editor.getHTML(),
-        json: JSON.stringify(editor.getJSON())
+        json: editor.getJSON()
       });
     }
   }, [editor, onChange]);

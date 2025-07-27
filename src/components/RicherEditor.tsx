@@ -196,6 +196,7 @@ const defaultI18n = {
   heading: 'Heading',
   fontSize: 'Font Size',
   fontFamily: 'Font Family',
+  lineHeight: 'Line Height',
   bold: 'Bold',
   italic: 'Italic',
   underline: 'Underline',
@@ -207,7 +208,6 @@ const defaultI18n = {
   taskList: 'Task List',
   blockquote: 'Blockquote',
   hr: 'Horizontal Rule',
-  table: 'Insert Table',
   link: 'Insert/Edit Link',
   image: 'Insert Image',
   video: 'Insert YouTube Video',
@@ -226,12 +226,6 @@ const defaultI18n = {
   add: 'Add',
   cancel: 'Cancel',
   paragraph: 'Paragraph',
-  h1: 'Heading 1',
-  h2: 'Heading 2',
-  h3: 'Heading 3',
-  h4: 'Heading 4',
-  h5: 'Heading 5',
-  h6: 'Heading 6',
   url: 'URL',
   upload: 'Upload',
   pasteImageUrl: 'Paste image URL here...',
@@ -466,7 +460,8 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             }}
             className="richer-editor-select"
             placeholder={<LineHeightIcon size={16} />}
-            aria-label="Line Height"
+            aria-label={labels.lineHeight}
+            title={labels.lineHeight}
           />
         )}
         {/* Font styles */}
@@ -561,6 +556,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 setLinkUrl(editor.getAttributes('link').href || '');
                 setLinkTarget(editor.getAttributes('link').target || '_blank');
               }}
+              onMouseDown={e => e.preventDefault()}
               className={`richer-editor-button${editor.isActive("link") ? ' richer-editor-buttonActive' : ''}`}
               type="button"
               aria-label={labels.link}
@@ -626,8 +622,10 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
                 setImagePopoverOpen((open) => !open);
                 if (!imageUploadUrl) setImageTab('url');
               }}
+              onMouseDown={e => e.preventDefault()}
               className="richer-editor-button"
               type="button"
+              title={labels.image}
             >
               <ImageIcon size={16} />
             </button>
@@ -749,8 +747,10 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             <button
               ref={videoButtonRef}
               onClick={() => setVideoPopoverOpen((open) => !open)}
+              onMouseDown={e => e.preventDefault()}
               className="richer-editor-button"
               type="button"
+              title={labels.video}
             >
               <VideoIcon size={16} />
             </button>
@@ -823,6 +823,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             <button
               ref={textColorButtonRef}
               onClick={() => setTextColorPopoverOpen(open => !open)}
+              onMouseDown={e => e.preventDefault()}
               className={`richer-editor-button${editor.getAttributes('textStyle').color ? ' richer-editor-buttonActive' : ''}`}
               type="button"
               aria-label={labels.textColor}
@@ -912,6 +913,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
             <button
               ref={bgColorButtonRef}
               onClick={() => setBgColorPopoverOpen(open => !open)}
+              onMouseDown={e => e.preventDefault()}
               className={`richer-editor-button${editor.getAttributes('highlight').color ? ' richer-editor-buttonActive' : ''}`}
               type="button"
               aria-label={labels.bgColor}
@@ -1065,7 +1067,7 @@ const RicherEditor = forwardRef(function RicherEditor({
   customToolbarButtons,
 }: RicherEditorProps, ref) {
   // Use safe content conversion only for initial value
-  const initialContent = React.useMemo(() => getSafeContent(content), []);
+  const initialContent = getSafeContent(content);
   const defaultExtensions = [
     StarterKit,
     Link.configure({ openOnClick: true }),
@@ -1113,12 +1115,24 @@ const RicherEditor = forwardRef(function RicherEditor({
     immediatelyRender: false,
   });
 
+  // Add effect to update content if prop changes and editor is empty
+  React.useEffect(() => {
+    if (editor && content && editor.isEmpty) {
+      const safeContent = getSafeContent(content);
+      const currentContent = editor.getJSON();
+      // Only update if the new content is different from current
+      if (JSON.stringify(currentContent) !== JSON.stringify(safeContent)) {
+        editor.commands.setContent(safeContent);
+      }
+    }
+  }, [content, editor]);
+
   // Handler to call onChange with current content
   const save = useCallback(() => {
     if (editor && onChange) {
       onChange({
         html: editor.getHTML(),
-        json: JSON.stringify(editor.getJSON()),
+        json: editor.getJSON(),
       });
     }
   }, [editor, onChange]);
@@ -1128,8 +1142,12 @@ const RicherEditor = forwardRef(function RicherEditor({
     save();
   }, [save]);
 
-  // Expose save() via ref
-  useImperativeHandle(ref, () => ({ save, editor }), [save, editor]);
+  // Expose save() and clear() via ref
+  useImperativeHandle(ref, () => ({
+    save,
+    editor,
+    clear: () => editor?.commands.clearContent(),
+  }), [save, editor]);
 
   return (
       <div className={`richer-editor-roundedMdBorder`}>

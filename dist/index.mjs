@@ -2466,7 +2466,7 @@ var RicherEditor = forwardRef(function RicherEditor2({
   customToolbarButtons
 }, ref) {
   var _a;
-  const initialContent = React34.useMemo(() => getSafeContent(content), []);
+  const initialContent = getSafeContent(content);
   const defaultExtensions = [
     StarterKit,
     Link.configure({ openOnClick: true }),
@@ -2515,11 +2515,20 @@ var RicherEditor = forwardRef(function RicherEditor2({
     },
     immediatelyRender: false
   });
+  React34.useEffect(() => {
+    if (editor && content && editor.isEmpty) {
+      const safeContent = getSafeContent(content);
+      const currentContent = editor.getJSON();
+      if (JSON.stringify(currentContent) !== JSON.stringify(safeContent)) {
+        editor.commands.setContent(safeContent);
+      }
+    }
+  }, [content, editor]);
   const save = useCallback(() => {
     if (editor && onChange) {
       onChange({
         html: editor.getHTML(),
-        json: JSON.stringify(editor.getJSON())
+        json: editor.getJSON()
       });
     }
   }, [editor, onChange]);
@@ -3058,7 +3067,7 @@ var SmallRicherEditor = forwardRef2(function SmallRicherEditor2({
   customToolbarButtons
 }, ref) {
   var _a;
-  const initialContent = React36.useMemo(() => getSafeContent(content), []);
+  const initialContent = getSafeContent(content);
   const defaultExtensions = [
     StarterKit2,
     Link2.configure({ openOnClick: true }),
@@ -3094,11 +3103,20 @@ var SmallRicherEditor = forwardRef2(function SmallRicherEditor2({
     },
     immediatelyRender: false
   });
+  React36.useEffect(() => {
+    if (editor && content && editor.isEmpty) {
+      const safeContent = getSafeContent(content);
+      const currentContent = editor.getJSON();
+      if (JSON.stringify(currentContent) !== JSON.stringify(safeContent)) {
+        editor.commands.setContent(safeContent);
+      }
+    }
+  }, [content, editor]);
   const save = useCallback2(() => {
     if (editor && onChange) {
       onChange({
         html: editor.getHTML(),
-        json: JSON.stringify(editor.getJSON())
+        json: editor.getJSON()
       });
     }
   }, [editor, onChange]);

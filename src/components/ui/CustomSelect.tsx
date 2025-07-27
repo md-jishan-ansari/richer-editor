@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './CustomSelect.css';
 import { cn } from "@/lib/utils";
+import ExpandIcon from '@/icons/ExpandIcon';
 
 interface Option {
   value: string;
@@ -16,9 +17,10 @@ interface CustomSelectProps {
   className?: string;
   placeholder?: any; // e.g. 'Font Size', 'Font Family', etc.
   label?: string; // for accessibility and visual clarity
+  title?: string;
 }
 
-const CustomSelect: React.FC<CustomSelectProps> = ({ value, options, onChange, className, placeholder, label }) => {
+const CustomSelect: React.FC<CustomSelectProps> = ({ value, options, onChange, className, placeholder, label, title }) => {
   const [open, setOpen] = useState(false);
   const [highlighted, setHighlighted] = useState<number>(-1);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -117,11 +119,14 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, options, onChange, c
         onClick={() => setOpen(o => !o)}
         onKeyDown={handleKeyDown}
         type="button"
+        title={title || ""}
       >
         <span className={selectedOption ? undefined : "richer-editor-placeholder"}>
           {selectedOption ? selectedOption.label : placeholder || 'Select...'}
         </span>
-        <span className="richer-editor-chevron" aria-hidden>▼</span>
+        <span className="richer-editor-chevron" aria-hidden>
+          <ExpandIcon size={18} />
+        </span>
       </button>
       {open && ReactDOM.createPortal(
         <ul

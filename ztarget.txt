@@ -8,3 +8,6 @@ You can do this manually, or with:
 
 
 npm publish --access public
+
+
+dropdwon of heading should be always be fixed
