@@ -26,17 +26,36 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, options, onChange, c
   const triggerRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const [dropdownPos, setDropdownPos] = useState<{top: number, left: number, width: number}>({top: 0, left: 0, width: 0});
+  const [positionAbove, setPositionAbove] = useState(false);
 
   useEffect(() => {
     if (open && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
+
+      // Calculate available space below and above
+      const spaceBelow = window.innerHeight - rect.bottom - 8; // 8px margin
+      const spaceAbove = rect.top - 8; // 8px margin
+
+      // Estimate dropdown height based on number of options
+      const optionHeight = 32; // Approximate height per option
+      const maxVisibleOptions = 8; // Max options to show before scrolling
+      const estimatedDropdownHeight = Math.min(options.length * optionHeight, maxVisibleOptions * optionHeight) + 16; // +16 for padding
+
+      // Determine if we should position above or below
+      const shouldPositionAbove = spaceBelow < estimatedDropdownHeight && spaceAbove > estimatedDropdownHeight;
+      setPositionAbove(shouldPositionAbove);
+
+      const top = shouldPositionAbove
+        ? rect.top + window.scrollY - estimatedDropdownHeight - 4 // 4px gap above
+        : rect.bottom + window.scrollY + 4; // 4px gap below
+
       setDropdownPos({
-        top: rect.bottom + window.scrollY,
+        top,
         left: rect.left + window.scrollX,
         width: rect.width
       });
     }
-  }, [open]);
+  }, [open, options.length]);
 
   useEffect(() => {
     if (open && listRef.current && highlighted >= 0) {
@@ -60,13 +79,43 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, options, onChange, c
         setOpen(false);
       }
     }
+
+    function handleResize() {
+      // Recalculate position on window resize
+      if (open && triggerRef.current) {
+        const rect = triggerRef.current.getBoundingClientRect();
+
+        const spaceBelow = window.innerHeight - rect.bottom - 8;
+        const spaceAbove = rect.top - 8;
+
+        const optionHeight = 32;
+        const maxVisibleOptions = 8;
+        const estimatedDropdownHeight = Math.min(options.length * optionHeight, maxVisibleOptions * optionHeight) + 16;
+
+        const shouldPositionAbove = spaceBelow < estimatedDropdownHeight && spaceAbove > estimatedDropdownHeight;
+        setPositionAbove(shouldPositionAbove);
+
+        const top = shouldPositionAbove
+          ? rect.top + window.scrollY - estimatedDropdownHeight - 4
+          : rect.bottom + window.scrollY + 4;
+
+        setDropdownPos({
+          top,
+          left: rect.left + window.scrollX,
+          width: rect.width
+        });
+      }
+    }
+
     if (open) {
       document.addEventListener('mousedown', handleClickOutside);
+      window.addEventListener('resize', handleResize);
     }
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('resize', handleResize);
     };
-  }, [open]);
+  }, [open, options.length]);
 
   function handleKeyDown(e: React.KeyboardEvent) {
     if (!open) {
@@ -130,7 +179,10 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, options, onChange, c
       </button>
       {open && ReactDOM.createPortal(
         <ul
-          className="richer-editor-options"
+          className={cn(
+            "richer-editor-options",
+            positionAbove && "richer-editor-options-above"
+          )}
           ref={listRef}
           role="listbox"
           tabIndex={-1}
