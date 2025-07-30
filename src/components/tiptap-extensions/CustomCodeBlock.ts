@@ -27,7 +27,7 @@ export const CustomCodeBlock = CodeBlock.extend({
   addCommands() {
     return {
       ...this.parent?.(),
-      setCodeBlockLanguage: (language: string) => ({ commands }: { commands: any }) => {
+            setCodeBlockLanguage: (language: string) => ({ commands }: { commands: any }) => {
         return commands.updateAttributes('codeBlock', { language });
       },
     };

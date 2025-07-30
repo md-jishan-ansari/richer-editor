@@ -355,3 +355,62 @@
   .richer-editor-pb2 { padding-bottom: 0.5rem; }
 }
 
+/* Language list styles for CodeLanguageSelect */
+.richer-editor-language-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+.richer-editor-language-option {
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  margin-bottom: 1px;
+  font-size: 13px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--richer-editor-text);
+  transition: all 0.15s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.richer-editor-language-option:hover {
+  background: var(--richer-editor-bg);
+  color: var(--richer-editor-text);
+}
+
+.richer-editor-language-option-active {
+  background: var(--richer-editor-primary) !important;
+  color: white !important;
+}
+
+.richer-editor-language-option-active:hover {
+  background: var(--richer-editor-primary-hover) !important;
+  color: white !important;
+}
+
+/* Dark mode support for language options */
+.dark .richer-editor-language-option {
+  color: var(--richer-editor-text-dark);
+}
+
+.dark .richer-editor-language-option:hover {
+  background: var(--richer-editor-bg-dark);
+  color: var(--richer-editor-text-dark);
+}
+
+.dark .richer-editor-language-option-active {
+  background: var(--richer-editor-primary) !important;
+  color: white !important;
+}
+
+.dark .richer-editor-language-option-active:hover {
+  background: var(--richer-editor-primary-hover) !important;
+  color: white !important;
+}
+

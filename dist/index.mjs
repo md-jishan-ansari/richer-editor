@@ -5033,19 +5033,21 @@ var commonLanguages = [
   { name: "Vue", value: "vue" },
   { name: "Svelte", value: "svelte" },
   { name: "Angular", value: "angular" },
-  { name: "React", value: "react" },
-  { name: "Next.js", value: "nextjs" },
-  { name: "Tailwind CSS", value: "tailwindcss" },
-  { name: "Prisma", value: "prisma" },
-  { name: "MongoDB", value: "mongodb" },
-  { name: "PostgreSQL", value: "postgresql" },
-  { name: "MySQL", value: "mysql" },
-  { name: "Redis", value: "redis" },
-  { name: "Nginx", value: "nginx" },
-  { name: "Apache", value: "apache" },
-  { name: "Linux", value: "linux" },
-  { name: "Windows", value: "windows" },
-  { name: "macOS", value: "macos" }
+  { name: "TypeScript React", value: "tsx" },
+  { name: "JavaScript React", value: "jsx" },
+  { name: "React", value: "jsx" },
+  { name: "Next.js", value: "javascript" },
+  { name: "Tailwind CSS", value: "css" },
+  { name: "Prisma", value: "sql" },
+  { name: "MongoDB", value: "javascript" },
+  { name: "PostgreSQL", value: "sql" },
+  { name: "MySQL", value: "sql" },
+  { name: "Redis", value: "bash" },
+  { name: "Linux", value: "bash" },
+  { name: "Windows", value: "powershell" },
+  { name: "macOS", value: "bash" },
+  { name: "Nginx", value: "bash" },
+  { name: "Apache", value: "bash" }
 ];
 var CodeLanguageSelect = ({
   editor,
@@ -5071,52 +5073,23 @@ var CodeLanguageSelect = ({
       trigger: /* @__PURE__ */ React33.createElement(
         "button",
         {
-          className: "richer-editor-button richer-editor-textXs richer-editor-code-language-select",
+          className: "richer-editor-button richer-editor-code-language-select",
           type: "button",
           "aria-label": "Select code language",
           title: "Select code language"
         },
         /* @__PURE__ */ React33.createElement("span", null, getLanguageDisplayName(currentLanguage)),
-        /* @__PURE__ */ React33.createElement(
-          "svg",
-          {
-            width: "12",
-            height: "12",
-            viewBox: "0 0 24 24",
-            fill: "none",
-            stroke: "currentColor",
-            strokeWidth: "2",
-            strokeLinecap: "round",
-            strokeLinejoin: "round",
-            style: {
-              marginLeft: "4px",
-              transition: "transform 0.2s ease",
-              transform: dropdownOpen ? "rotate(180deg)" : "rotate(0deg)"
-            }
-          },
-          /* @__PURE__ */ React33.createElement("polyline", { points: "6,9 12,15 18,9" })
-        )
+        /* @__PURE__ */ React33.createElement(ExpandIcon_default, { size: 12 })
       ),
       width: "200px"
     },
-    /* @__PURE__ */ React33.createElement("div", { className: "richer-editor-mb2 richer-editor-fontSemibold richer-editor-textBase", style: { color: "var(--richer-editor-primary)", borderBottom: "1px solid var(--richer-editor-border)", paddingBottom: "8px" } }, "Select Language"),
-    /* @__PURE__ */ React33.createElement("div", { style: { maxHeight: "300px", overflowY: "auto" } }, commonLanguages.map((lang) => /* @__PURE__ */ React33.createElement(
+    /* @__PURE__ */ React33.createElement("div", { className: "richer-editor-dropdown-header" }, "Select Language"),
+    /* @__PURE__ */ React33.createElement("div", { className: "richer-editor-language-list" }, commonLanguages.map((lang) => /* @__PURE__ */ React33.createElement(
       "button",
       {
         key: lang.value,
         onClick: () => handleLanguageSelect(lang.value),
-        className: `richer-editor-button richer-editor-textSm richer-editor-wFull richer-editor-textLeft ${currentLanguage === lang.value ? "richer-editor-buttonActive" : ""}`,
-        style: {
-          justifyContent: "flex-start",
-          padding: "8px 12px",
-          marginBottom: "1px",
-          fontSize: "13px",
-          borderRadius: "4px",
-          border: "none",
-          background: currentLanguage === lang.value ? "var(--richer-editor-primary)" : "transparent",
-          color: currentLanguage === lang.value ? "white" : "var(--richer-editor-text)",
-          transition: "all 0.15s ease"
-        },
+        className: `richer-editor-language-option ${currentLanguage === lang.value ? "richer-editor-language-option-active" : ""}`,
         type: "button"
       },
       lang.name
@@ -5126,7 +5099,7 @@ var CodeLanguageSelect = ({
 var CodeLanguageSelect_default = CodeLanguageSelect;
 
 // src/components/RicherEditor.tsx
-import "./RicherEditor-YHKS4JYK.css";
+import "./RicherEditor-3BZLWGOW.css";
 
 // src/icons/LineHeightIcon.tsx
 import React34 from "react";
@@ -5505,7 +5478,13 @@ var MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}, 
       "aria-label": labels.lineHeight,
       title: labels.lineHeight
     }
-  ), !excludeToolbarButtons.includes("bold") && /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleBold().run(), className: `richer-editor-button ${editor.isActive("bold") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bold, title: labels.bold }, /* @__PURE__ */ React36.createElement(BoldIcon_default, { size: 16 })), !excludeToolbarButtons.includes("italic") && /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleItalic().run(), className: `richer-editor-button ${editor.isActive("italic") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.italic, title: labels.italic }, /* @__PURE__ */ React36.createElement(ItalicIcon_default, { size: 16 })), !excludeToolbarButtons.includes("underline") && /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleUnderline().run(), className: `richer-editor-button ${editor.isActive("underline") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.underline, title: labels.underline }, /* @__PURE__ */ React36.createElement(UnderlineIcon_default, { size: 16 })), !excludeToolbarButtons.includes("strike") && /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleStrike().run(), className: `richer-editor-button ${editor.isActive("strike") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.strike, title: labels.strike }, /* @__PURE__ */ React36.createElement(StrikeIcon_default, { size: 16 })), !excludeToolbarButtons.includes("highlight") && /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleHighlight().run(), className: `richer-editor-button ${editor.isActive("highlight") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.highlight, title: labels.highlight }, /* @__PURE__ */ React36.createElement(Highlighter_default, { size: 16 })), !excludeToolbarButtons.includes("code") && /* @__PURE__ */ React36.createElement(React36.Fragment, null, /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleCodeBlock().run(), className: `richer-editor-button ${editorState.isCodeBlockActive ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.code, title: labels.code }, /* @__PURE__ */ React36.createElement(CodeIcon_default, { size: 16 })), editorState.isCodeBlockActive && /* @__PURE__ */ React36.createElement(
+  ), !excludeToolbarButtons.includes("bold") && /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleBold().run(), className: `richer-editor-button ${editor.isActive("bold") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bold, title: labels.bold }, /* @__PURE__ */ React36.createElement(BoldIcon_default, { size: 16 })), !excludeToolbarButtons.includes("italic") && /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleItalic().run(), className: `richer-editor-button ${editor.isActive("italic") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.italic, title: labels.italic }, /* @__PURE__ */ React36.createElement(ItalicIcon_default, { size: 16 })), !excludeToolbarButtons.includes("underline") && /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleUnderline().run(), className: `richer-editor-button ${editor.isActive("underline") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.underline, title: labels.underline }, /* @__PURE__ */ React36.createElement(UnderlineIcon_default, { size: 16 })), !excludeToolbarButtons.includes("strike") && /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleStrike().run(), className: `richer-editor-button ${editor.isActive("strike") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.strike, title: labels.strike }, /* @__PURE__ */ React36.createElement(StrikeIcon_default, { size: 16 })), !excludeToolbarButtons.includes("highlight") && /* @__PURE__ */ React36.createElement("button", { onClick: () => editor.chain().focus().toggleHighlight().run(), className: `richer-editor-button ${editor.isActive("highlight") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.highlight, title: labels.highlight }, /* @__PURE__ */ React36.createElement(Highlighter_default, { size: 16 })), !excludeToolbarButtons.includes("code") && /* @__PURE__ */ React36.createElement(React36.Fragment, null, /* @__PURE__ */ React36.createElement("button", { onClick: () => {
+    if (editor.isActive("codeBlock")) {
+      editor.chain().focus().toggleCodeBlock().run();
+    } else {
+      editor.chain().focus().toggleCodeBlock().insertContent(" ").run();
+    }
+  }, className: `richer-editor-button ${editorState.isCodeBlockActive ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.code, title: labels.code }, /* @__PURE__ */ React36.createElement(CodeIcon_default, { size: 16 })), editorState.isCodeBlockActive && /* @__PURE__ */ React36.createElement(
     CodeLanguageSelect_default,
     {
       editor,
@@ -6103,7 +6082,7 @@ import TextAlign2 from "@tiptap/extension-text-align";
 import { TextStyle as TextStyle2 } from "@tiptap/extension-text-style";
 import FontSize2 from "@tiptap/extension-font-size";
 import Image2 from "@tiptap/extension-image";
-import "./RicherEditor-YHKS4JYK.css";
+import "./RicherEditor-3BZLWGOW.css";
 
 // src/icons/Heading.tsx
 import React37 from "react";
@@ -6360,7 +6339,13 @@ var MenuBar2 = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {},
       placeholder: labels.fontSize,
       "aria-label": labels.fontSize || "Font Size"
     }
-  ), !excludeToolbarButtons.includes("bold") && /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleBold().run(), className: `richer-editor-button${editor.isActive("bold") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bold, title: labels.bold }, /* @__PURE__ */ React38.createElement(BoldIcon_default, { size: 16 })), !excludeToolbarButtons.includes("italic") && /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleItalic().run(), className: `richer-editor-button ${editor.isActive("italic") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.italic, title: labels.italic }, /* @__PURE__ */ React38.createElement(ItalicIcon_default, { size: 16 })), !excludeToolbarButtons.includes("underline") && /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleUnderline().run(), className: `richer-editor-button${editor.isActive("underline") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.underline, title: labels.underline }, /* @__PURE__ */ React38.createElement(UnderlineIcon_default, { size: 16 })), !excludeToolbarButtons.includes("strike") && /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleStrike().run(), className: `richer-editor-button ${editor.isActive("strike") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.strike, title: labels.strike }, /* @__PURE__ */ React38.createElement(StrikeIcon_default, { size: 16 })), !excludeToolbarButtons.includes("highlight") && /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleHighlight({ color: "#fff59d" }).run(), className: `richer-editor-button${editor.isActive("highlight") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.highlight, title: labels.highlight }, /* @__PURE__ */ React38.createElement(Highlighter_default, { size: 16 })), !excludeToolbarButtons.includes("code") && /* @__PURE__ */ React38.createElement(React38.Fragment, null, /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleCodeBlock().run(), className: `richer-editor-button${editorState.isCodeBlockActive ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.code, title: labels.code }, /* @__PURE__ */ React38.createElement(CodeIcon_default, { size: 16 })), editorState.isCodeBlockActive && /* @__PURE__ */ React38.createElement(
+  ), !excludeToolbarButtons.includes("bold") && /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleBold().run(), className: `richer-editor-button${editor.isActive("bold") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.bold, title: labels.bold }, /* @__PURE__ */ React38.createElement(BoldIcon_default, { size: 16 })), !excludeToolbarButtons.includes("italic") && /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleItalic().run(), className: `richer-editor-button ${editor.isActive("italic") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.italic, title: labels.italic }, /* @__PURE__ */ React38.createElement(ItalicIcon_default, { size: 16 })), !excludeToolbarButtons.includes("underline") && /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleUnderline().run(), className: `richer-editor-button${editor.isActive("underline") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.underline, title: labels.underline }, /* @__PURE__ */ React38.createElement(UnderlineIcon_default, { size: 16 })), !excludeToolbarButtons.includes("strike") && /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleStrike().run(), className: `richer-editor-button ${editor.isActive("strike") ? "richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.strike, title: labels.strike }, /* @__PURE__ */ React38.createElement(StrikeIcon_default, { size: 16 })), !excludeToolbarButtons.includes("highlight") && /* @__PURE__ */ React38.createElement("button", { onClick: () => editor.chain().focus().toggleHighlight({ color: "#fff59d" }).run(), className: `richer-editor-button${editor.isActive("highlight") ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.highlight, title: labels.highlight }, /* @__PURE__ */ React38.createElement(Highlighter_default, { size: 16 })), !excludeToolbarButtons.includes("code") && /* @__PURE__ */ React38.createElement(React38.Fragment, null, /* @__PURE__ */ React38.createElement("button", { onClick: () => {
+    if (editor.isActive("codeBlock")) {
+      editor.chain().focus().toggleCodeBlock().run();
+    } else {
+      editor.chain().focus().toggleCodeBlock().insertContent(" ").run();
+    }
+  }, className: `richer-editor-button${editorState.isCodeBlockActive ? " richer-editor-buttonActive" : ""}`, type: "button", "aria-label": labels.code, title: labels.code }, /* @__PURE__ */ React38.createElement(CodeIcon_default, { size: 16 })), editorState.isCodeBlockActive && /* @__PURE__ */ React38.createElement(
     CodeLanguageSelect_default,
     {
       editor,

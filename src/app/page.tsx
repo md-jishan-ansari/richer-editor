@@ -86,10 +86,7 @@ def hello():
     <div className="bg-white dark:bg-black">
       <ThemeToggle />
       <h2>Large Editor (RicherEditor)</h2>
-      <div className="mt-2">
-        <strong>Last Saved Content (Large):</strong>
-        <RicherContent content={largeContent.html || ""} className={classes}  />
-      </div>
+
       <RicherEditor
         ref={largeEditorRef}
         minHeight="200px"
@@ -111,6 +108,10 @@ def hello():
       <button type="button" className="richer-editor-primaryBtn mt-2" onClick={() => largeEditorRef.current?.save()}>
         Save Large Editor (from outside)
       </button>
+      <div className="mt-2">
+        <strong>Last Saved Content (Large):</strong>
+        <RicherContent content={largeContent.html || ""} className={classes}  />
+      </div>
 
       <h2>Small Editor (SmallRicherEditor)</h2>
       <SmallRicherEditor
@@ -118,55 +119,14 @@ def hello():
         minHeight="150px"
         maxHeight="300px"
         content={initialSmallContent}
-        onChange={handleSmallChange}
+        onChange={setSmallContent}
         className={classes}
-        extensions={[Superscript, Subscript]}
-        customToolbarButtons={editor => (
-          <>
-            <button
-              onClick={() => editor.chain().focus().toggleSubscript().run()}
-              className={`richer-editor-button ${editor.isActive('subscript') ? 'richer-editor-buttonActive' : ''}`}
-              type="button"
-              title="Subscript"
-              aria-label='Subscript'
-            >
-              <SubscriptIcon size={16} />
-            </button>
-            <button
-              onClick={() => editor.chain().focus().toggleSuperscript().run()}
-              className={`richer-editor-button ${editor.isActive('superscript') ? 'richer-editor-buttonActive' : ''}`}
-              type="button"
-              title="Superscript"
-              aria-label="Superscript"
-            >
-              <SuperscriptIcon size={16} />
-            </button>
-          </>
-        )}
+
       />
       <button type="button" className="richer-editor-primaryBtn mt-2" onClick={() => smallEditorRef.current?.save()}>
         Save Small Editor (from outside)
       </button>
-      <>
-            <button
-              onClick={() => smallEditorRef.current?.editor.chain().focus().toggleSubscript().run()}
-              className={`richer-editor-button ${smallEditorRef.current?.editor.isActive('subscript') ? 'richer-editor-buttonActive' : ''}`}
-              type="button"
-              title="Subscript"
-              aria-label='Subscript'
-            >
-              <SubscriptIcon size={16} />
-            </button>
-            <button
-              onClick={() => smallEditorRef.current?.editor.chain().focus().toggleSuperscript().run()}
-              className={`richer-editor-button ${smallEditorRef.current?.editor.isActive('superscript') ? 'richer-editor-buttonActive' : ''}`}
-              type="button"
-              title="Superscript"
-              aria-label="Superscript"
-            >
-              <SuperscriptIcon size={16} />
-            </button>
-          </>
+
       <div className="mt-2">
         <strong>Last Saved Content (Small):</strong>
         <RicherContent content={smallContent.html || ""} className={classes}  />

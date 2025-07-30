@@ -265,7 +265,7 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
   React.useEffect(() => {
     if (!editor) return;
 
-    const updateState = () => {
+            const updateState = () => {
       setEditorState({
         isCodeBlockActive: editor.isActive("codeBlock"),
         codeBlockLanguage: editor.getAttributes('codeBlock').language,
@@ -506,12 +506,19 @@ const MenuBar = ({ editor, imageUploadUrl, excludeToolbarButtons = [], i18n = {}
         )}
         {!excludeToolbarButtons.includes('code') && (
           <>
-            <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`richer-editor-button ${editorState.isCodeBlockActive ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
+            <button onClick={() => {
+              if (editor.isActive('codeBlock')) {
+                editor.chain().focus().toggleCodeBlock().run();
+              } else {
+                // Create a code block with a space to ensure it's not empty
+                editor.chain().focus().toggleCodeBlock().insertContent(' ').run();
+              }
+            }} className={`richer-editor-button ${editorState.isCodeBlockActive ? "richer-editor-buttonActive" : ''}`} type="button" aria-label={labels.code} title={labels.code}><CodeIcon size={16} /></button>
             {editorState.isCodeBlockActive && (
               <CodeLanguageSelect
                 editor={editor}
                 currentLanguage={editorState.codeBlockLanguage}
-                onLanguageChange={(language) => {
+                                onLanguageChange={(language) => {
                   editor.chain().focus().setCodeBlockLanguage(language).run();
                 }}
               />

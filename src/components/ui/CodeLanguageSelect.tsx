@@ -45,19 +45,21 @@ const commonLanguages = [
   { name: 'Vue', value: 'vue' },
   { name: 'Svelte', value: 'svelte' },
   { name: 'Angular', value: 'angular' },
-  { name: 'React', value: 'react' },
-  { name: 'Next.js', value: 'nextjs' },
-  { name: 'Tailwind CSS', value: 'tailwindcss' },
-  { name: 'Prisma', value: 'prisma' },
-  { name: 'MongoDB', value: 'mongodb' },
-  { name: 'PostgreSQL', value: 'postgresql' },
-  { name: 'MySQL', value: 'mysql' },
-  { name: 'Redis', value: 'redis' },
-  { name: 'Nginx', value: 'nginx' },
-  { name: 'Apache', value: 'apache' },
-  { name: 'Linux', value: 'linux' },
-  { name: 'Windows', value: 'windows' },
-  { name: 'macOS', value: 'macos' },
+  { name: 'TypeScript React', value: 'tsx' },
+  { name: 'JavaScript React', value: 'jsx' },
+  { name: 'React', value: 'jsx' },
+  { name: 'Next.js', value: 'javascript' },
+  { name: 'Tailwind CSS', value: 'css' },
+  { name: 'Prisma', value: 'sql' },
+  { name: 'MongoDB', value: 'javascript' },
+  { name: 'PostgreSQL', value: 'sql' },
+  { name: 'MySQL', value: 'sql' },
+  { name: 'Redis', value: 'bash' },
+  { name: 'Linux', value: 'bash' },
+  { name: 'Windows', value: 'powershell' },
+  { name: 'macOS', value: 'bash' },
+  { name: 'Nginx', value: 'bash' },
+  { name: 'Apache', value: 'bash' },
 ];
 
 const CodeLanguageSelect: React.FC<CodeLanguageSelectProps> = ({
@@ -96,28 +98,17 @@ const CodeLanguageSelect: React.FC<CodeLanguageSelectProps> = ({
       }
       width="200px"
     >
-      <div className="richer-editor-mb2 richer-editor-fontSemibold richer-editor-textBase" style={{ color: 'var(--richer-editor-primary)', borderBottom: '1px solid var(--richer-editor-border)', paddingBottom: '8px' }}>
+      <div className="richer-editor-dropdown-header">
         Select Language
       </div>
-      <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+      <div className="richer-editor-language-list">
         {commonLanguages.map((lang) => (
           <button
             key={lang.value}
             onClick={() => handleLanguageSelect(lang.value)}
-            className={`richer-editor-button richer-editor-textSm richer-editor-wFull richer-editor-textLeft ${
-              currentLanguage === lang.value ? 'richer-editor-buttonActive' : ''
+            className={`richer-editor-language-option ${
+              currentLanguage === lang.value ? 'richer-editor-language-option-active' : ''
             }`}
-            style={{
-              justifyContent: 'flex-start',
-              padding: '8px 12px',
-              marginBottom: '1px',
-              fontSize: '13px',
-              borderRadius: '4px',
-              border: 'none',
-              background: currentLanguage === lang.value ? 'var(--richer-editor-primary)' : 'transparent',
-              color: currentLanguage === lang.value ? 'white' : 'var(--richer-editor-text)',
-              transition: 'all 0.15s ease'
-            }}
             type="button"
           >
             {lang.name}
