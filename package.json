@@ -1,6 +1,6 @@
 {
   "name": "richer-editor",
-  "version": "0.1.11",
+  "version": "1.0.0",
   "description": "A modern, customizable React and Next.js rich text editor built with Tiptap and ProseMirror. Fast, extensible, and perfect for blogs, CMS, and web apps.",
   "keywords": [
     "rich text editor",

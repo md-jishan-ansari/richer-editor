@@ -245,7 +245,7 @@
   background: var(--richer-editor-bg);
   box-shadow: var(--richer-editor-shadow);
 }
-.richer-editor-roundedMdBorder > * {
+.richer-editor-roundedMdBorder * {
   box-sizing: border-box;
 }
 .dark .richer-editor-roundedMdBorder {

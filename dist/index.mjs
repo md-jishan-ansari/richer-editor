@@ -4715,7 +4715,7 @@ var CustomCodeBlock = CodeBlock.extend({
 // src/components/ui/CustomSelect.tsx
 import React31, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
-import "./CustomSelect-U6MJMVUK.css";
+import "./CustomSelect-HZHFFJIR.css";
 
 // src/lib/utils.ts
 import { clsx } from "clsx";
@@ -4766,16 +4766,25 @@ var CustomSelect = ({ value, options, onChange, className, placeholder, label, t
   const triggerRef = useRef(null);
   const listRef = useRef(null);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
+  const [positionAbove, setPositionAbove] = useState(false);
   useEffect(() => {
     if (open && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom - 8;
+      const spaceAbove = rect.top - 8;
+      const optionHeight = 32;
+      const maxVisibleOptions = 8;
+      const estimatedDropdownHeight = Math.min(options.length * optionHeight, maxVisibleOptions * optionHeight) + 16;
+      const shouldPositionAbove = spaceBelow < estimatedDropdownHeight && spaceAbove > estimatedDropdownHeight;
+      setPositionAbove(shouldPositionAbove);
+      const top = shouldPositionAbove ? rect.top + window.scrollY - estimatedDropdownHeight - 4 : rect.bottom + window.scrollY + 4;
       setDropdownPos({
-        top: rect.bottom + window.scrollY,
+        top,
         left: rect.left + window.scrollX,
         width: rect.width
       });
     }
-  }, [open]);
+  }, [open, options.length]);
   useEffect(() => {
     if (open && listRef.current && highlighted >= 0) {
       const el = listRef.current.children[highlighted];
@@ -4791,13 +4800,33 @@ var CustomSelect = ({ value, options, onChange, className, placeholder, label, t
         setOpen(false);
       }
     }
+    function handleResize() {
+      if (open && triggerRef.current) {
+        const rect = triggerRef.current.getBoundingClientRect();
+        const spaceBelow = window.innerHeight - rect.bottom - 8;
+        const spaceAbove = rect.top - 8;
+        const optionHeight = 32;
+        const maxVisibleOptions = 8;
+        const estimatedDropdownHeight = Math.min(options.length * optionHeight, maxVisibleOptions * optionHeight) + 16;
+        const shouldPositionAbove = spaceBelow < estimatedDropdownHeight && spaceAbove > estimatedDropdownHeight;
+        setPositionAbove(shouldPositionAbove);
+        const top = shouldPositionAbove ? rect.top + window.scrollY - estimatedDropdownHeight - 4 : rect.bottom + window.scrollY + 4;
+        setDropdownPos({
+          top,
+          left: rect.left + window.scrollX,
+          width: rect.width
+        });
+      }
+    }
     if (open) {
       document.addEventListener("mousedown", handleClickOutside);
+      window.addEventListener("resize", handleResize);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("resize", handleResize);
     };
-  }, [open]);
+  }, [open, options.length]);
   function handleKeyDown(e) {
     if (!open) {
       if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
@@ -4859,7 +4888,10 @@ var CustomSelect = ({ value, options, onChange, className, placeholder, label, t
       /* @__PURE__ */ React31.createElement(
         "ul",
         {
-          className: "richer-editor-options",
+          className: cn(
+            "richer-editor-options",
+            positionAbove && "richer-editor-options-above"
+          ),
           ref: listRef,
           role: "listbox",
           tabIndex: -1,
@@ -4897,7 +4929,7 @@ var CustomSelect_default = CustomSelect;
 // src/components/ui/CustomDropdown.tsx
 import React32, { useRef as useRef2, useState as useState2, useEffect as useEffect2 } from "react";
 import ReactDOM2 from "react-dom";
-import "./CustomDropdown-OFQTNL5O.css";
+import "./CustomDropdown-LCN5GE67.css";
 var DEFAULT_WIDTH = 320;
 var CustomDropdown = ({
   open,
@@ -4911,6 +4943,7 @@ var CustomDropdown = ({
   const dropdownRef = useRef2(null);
   const triggerRef = useRef2(null);
   const [position, setPosition] = useState2({ top: 0, left: 0 });
+  const [positionAbove, setPositionAbove] = useState2(false);
   useEffect2(() => {
     if (open && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
@@ -4920,6 +4953,14 @@ var CustomDropdown = ({
       } else if (width && typeof width === "string" && width.endsWith("px")) {
         dropdownWidth = parseInt(width);
       }
+      const spaceBelow = window.innerHeight - rect.bottom - 8;
+      const spaceAbove = rect.top - 8;
+      let estimatedDropdownHeight = 300;
+      if (dropdownRef.current) {
+        estimatedDropdownHeight = dropdownRef.current.offsetHeight;
+      }
+      const shouldPositionAbove = spaceBelow < estimatedDropdownHeight && spaceAbove > estimatedDropdownHeight;
+      setPositionAbove(shouldPositionAbove);
       let left = rect.left;
       if (left + dropdownWidth > window.innerWidth - 8) {
         left = Math.max(8, window.innerWidth - dropdownWidth - 8);
@@ -4927,8 +4968,9 @@ var CustomDropdown = ({
       if (left < 8) {
         left = 8;
       }
+      const top = shouldPositionAbove ? rect.top - estimatedDropdownHeight - 4 : rect.bottom + 4;
       setPosition({
-        top: rect.bottom + 4,
+        top,
         left
       });
     }
@@ -4944,15 +4986,48 @@ var CustomDropdown = ({
         onOpenChange(false);
       }
     }
+    function handleResize() {
+      if (open && triggerRef.current) {
+        const rect = triggerRef.current.getBoundingClientRect();
+        let dropdownWidth = DEFAULT_WIDTH;
+        if (dropdownRef.current) {
+          dropdownWidth = dropdownRef.current.offsetWidth || DEFAULT_WIDTH;
+        } else if (width && typeof width === "string" && width.endsWith("px")) {
+          dropdownWidth = parseInt(width);
+        }
+        const spaceBelow = window.innerHeight - rect.bottom - 8;
+        const spaceAbove = rect.top - 8;
+        let estimatedDropdownHeight = 300;
+        if (dropdownRef.current) {
+          estimatedDropdownHeight = dropdownRef.current.offsetHeight;
+        }
+        const shouldPositionAbove = spaceBelow < estimatedDropdownHeight && spaceAbove > estimatedDropdownHeight;
+        setPositionAbove(shouldPositionAbove);
+        let left = rect.left;
+        if (left + dropdownWidth > window.innerWidth - 8) {
+          left = Math.max(8, window.innerWidth - dropdownWidth - 8);
+        }
+        if (left < 8) {
+          left = 8;
+        }
+        const top = shouldPositionAbove ? rect.top - estimatedDropdownHeight - 4 : rect.bottom + 4;
+        setPosition({
+          top,
+          left
+        });
+      }
+    }
     if (open) {
       document.addEventListener("mousedown", handleClickOutside);
       document.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("resize", handleResize);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleResize);
     };
-  }, [open, onOpenChange]);
+  }, [open, onOpenChange, width]);
   return /* @__PURE__ */ React32.createElement(React32.Fragment, null, /* @__PURE__ */ React32.createElement("div", { className: "richer-editor-dropdown-container", ref: triggerRef }, React32.cloneElement(trigger, {
     onClick: (e) => {
       e.preventDefault();
@@ -4967,6 +5042,7 @@ var CustomDropdown = ({
         className: cn(
           "richer-editor-dropdown",
           `richer-editor-dropdown-${align}`,
+          positionAbove && "richer-editor-dropdown-above",
           className
         ),
         style: {
@@ -5033,21 +5109,18 @@ var commonLanguages = [
   { name: "Vue", value: "vue" },
   { name: "Svelte", value: "svelte" },
   { name: "Angular", value: "angular" },
-  { name: "TypeScript React", value: "tsx" },
-  { name: "JavaScript React", value: "jsx" },
-  { name: "React", value: "jsx" },
-  { name: "Next.js", value: "javascript" },
-  { name: "Tailwind CSS", value: "css" },
-  { name: "Prisma", value: "sql" },
-  { name: "MongoDB", value: "javascript" },
-  { name: "PostgreSQL", value: "sql" },
-  { name: "MySQL", value: "sql" },
-  { name: "Redis", value: "bash" },
-  { name: "Linux", value: "bash" },
-  { name: "Windows", value: "powershell" },
-  { name: "macOS", value: "bash" },
-  { name: "Nginx", value: "bash" },
-  { name: "Apache", value: "bash" }
+  { name: "Next.js", value: "javascript-nextjs" },
+  { name: "Tailwind CSS", value: "css-tailwind" },
+  { name: "Prisma", value: "sql-prisma" },
+  { name: "MongoDB", value: "javascript-mongodb" },
+  { name: "PostgreSQL", value: "sql-postgresql" },
+  { name: "MySQL", value: "sql-mysql" },
+  { name: "Redis", value: "bash-redis" },
+  { name: "Linux", value: "bash-linux" },
+  { name: "Windows", value: "powershell-windows" },
+  { name: "macOS", value: "bash-macos" },
+  { name: "Nginx", value: "bash-nginx" },
+  { name: "Apache", value: "bash-apache" }
 ];
 var CodeLanguageSelect = ({
   editor,
@@ -5058,10 +5131,20 @@ var CodeLanguageSelect = ({
   const getLanguageDisplayName = (value) => {
     if (!value) return "Plain Text";
     const lang = commonLanguages.find((l) => l.value === value);
-    return lang ? lang.name : value;
+    if (lang) return lang.name;
+    const baseLang = commonLanguages.find((l) => {
+      if (l.value === value) return true;
+      if (value && l.value && value.startsWith(l.value + "-")) return true;
+      return false;
+    });
+    return baseLang ? baseLang.name : value;
   };
   const handleLanguageSelect = (language) => {
-    onLanguageChange(language);
+    let baseLanguage = language;
+    if (language.includes("-")) {
+      baseLanguage = language.split("-")[0];
+    }
+    onLanguageChange(baseLanguage);
     setDropdownOpen(false);
     editor.commands.focus();
   };
@@ -5099,7 +5182,7 @@ var CodeLanguageSelect = ({
 var CodeLanguageSelect_default = CodeLanguageSelect;
 
 // src/components/RicherEditor.tsx
-import "./RicherEditor-3BZLWGOW.css";
+import "./RicherEditor-QDW6TPVJ.css";
 
 // src/icons/LineHeightIcon.tsx
 import React34 from "react";
@@ -6082,7 +6165,7 @@ import TextAlign2 from "@tiptap/extension-text-align";
 import { TextStyle as TextStyle2 } from "@tiptap/extension-text-style";
 import FontSize2 from "@tiptap/extension-font-size";
 import Image2 from "@tiptap/extension-image";
-import "./RicherEditor-3BZLWGOW.css";
+import "./RicherEditor-QDW6TPVJ.css";
 
 // src/icons/Heading.tsx
 import React37 from "react";

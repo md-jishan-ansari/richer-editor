@@ -45,21 +45,18 @@ const commonLanguages = [
   { name: 'Vue', value: 'vue' },
   { name: 'Svelte', value: 'svelte' },
   { name: 'Angular', value: 'angular' },
-  { name: 'TypeScript React', value: 'tsx' },
-  { name: 'JavaScript React', value: 'jsx' },
-  { name: 'React', value: 'jsx' },
-  { name: 'Next.js', value: 'javascript' },
-  { name: 'Tailwind CSS', value: 'css' },
-  { name: 'Prisma', value: 'sql' },
-  { name: 'MongoDB', value: 'javascript' },
-  { name: 'PostgreSQL', value: 'sql' },
-  { name: 'MySQL', value: 'sql' },
-  { name: 'Redis', value: 'bash' },
-  { name: 'Linux', value: 'bash' },
-  { name: 'Windows', value: 'powershell' },
-  { name: 'macOS', value: 'bash' },
-  { name: 'Nginx', value: 'bash' },
-  { name: 'Apache', value: 'bash' },
+  { name: 'Next.js', value: 'javascript-nextjs' },
+  { name: 'Tailwind CSS', value: 'css-tailwind' },
+  { name: 'Prisma', value: 'sql-prisma' },
+  { name: 'MongoDB', value: 'javascript-mongodb' },
+  { name: 'PostgreSQL', value: 'sql-postgresql' },
+  { name: 'MySQL', value: 'sql-mysql' },
+  { name: 'Redis', value: 'bash-redis' },
+  { name: 'Linux', value: 'bash-linux' },
+  { name: 'Windows', value: 'powershell-windows' },
+  { name: 'macOS', value: 'bash-macos' },
+  { name: 'Nginx', value: 'bash-nginx' },
+  { name: 'Apache', value: 'bash-apache' },
 ];
 
 const CodeLanguageSelect: React.FC<CodeLanguageSelectProps> = ({
@@ -71,12 +68,31 @@ const CodeLanguageSelect: React.FC<CodeLanguageSelectProps> = ({
 
   const getLanguageDisplayName = (value: string | null | undefined) => {
     if (!value) return 'Plain Text';
+
+    // First try to find an exact match
     const lang = commonLanguages.find(l => l.value === value);
-    return lang ? lang.name : value;
+    if (lang) return lang.name;
+
+    // If no exact match, try to find a base language match
+    // This handles cases where the editor might store base language values
+    const baseLang = commonLanguages.find(l => {
+      if (l.value === value) return true;
+      // Handle extended values by checking if they start with the base value
+      if (value && l.value && value.startsWith(l.value + '-')) return true;
+      return false;
+    });
+
+    return baseLang ? baseLang.name : value;
   };
 
   const handleLanguageSelect = (language: string) => {
-    onLanguageChange(language);
+    // Map extended language values back to base language values for the editor
+    let baseLanguage = language;
+    if (language.includes('-')) {
+      baseLanguage = language.split('-')[0];
+    }
+
+    onLanguageChange(baseLanguage);
     setDropdownOpen(false);
     editor.commands.focus();
   };
